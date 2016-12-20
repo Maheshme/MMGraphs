@@ -10,10 +10,8 @@
 		3D91DD981E090EFF002F12BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD971E090EFF002F12BB /* main.m */; };
 		3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9A1E090EFF002F12BB /* AppDelegate.m */; };
 		3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9D1E090EFF002F12BB /* ViewController.m */; };
-		3D91DDA11E090EFF002F12BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DD9F1E090EFF002F12BB /* Main.storyboard */; };
 		3D91DDA41E090EFF002F12BB /* MMGraphs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */; };
 		3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA51E090EFF002F12BB /* Assets.xcassets */; };
-		3D91DDA91E090EFF002F12BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */; };
 		3D91DDB41E090EFF002F12BB /* MMGraphsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */; };
 		3D91DDBF1E090EFF002F12BB /* MMGraphsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */; };
 /* End PBXBuildFile section */
@@ -42,10 +40,8 @@
 		3D91DD9A1E090EFF002F12BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3D91DD9C1E090EFF002F12BB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3D91DD9D1E090EFF002F12BB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		3D91DDA01E090EFF002F12BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D91DDA31E090EFF002F12BB /* MMGraphs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MMGraphs.xcdatamodel; sourceTree = "<group>"; };
 		3D91DDA51E090EFF002F12BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3D91DDA81E090EFF002F12BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D91DDAA1E090EFF002F12BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D91DDAF1E090EFF002F12BB /* MMGraphsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMGraphsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMGraphsTests.m; sourceTree = "<group>"; };
@@ -107,11 +103,6 @@
 				3D91DD9A1E090EFF002F12BB /* AppDelegate.m */,
 				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
 				3D91DD9D1E090EFF002F12BB /* ViewController.m */,
-				3D91DD9F1E090EFF002F12BB /* Main.storyboard */,
-				3D91DDA51E090EFF002F12BB /* Assets.xcassets */,
-				3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */,
-				3D91DDAA1E090EFF002F12BB /* Info.plist */,
-				3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */,
 				3D91DD961E090EFF002F12BB /* Supporting Files */,
 			);
 			path = MMGraphs;
@@ -120,6 +111,9 @@
 		3D91DD961E090EFF002F12BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D91DDA51E090EFF002F12BB /* Assets.xcassets */,
+				3D91DDAA1E090EFF002F12BB /* Info.plist */,
+				3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */,
 				3D91DD971E090EFF002F12BB /* main.m */,
 			);
 			name = "Supporting Files";
@@ -252,9 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D91DDA91E090EFF002F12BB /* LaunchScreen.storyboard in Resources */,
 				3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */,
-				3D91DDA11E090EFF002F12BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,25 +308,6 @@
 			targetProxy = 3D91DDBB1E090EFF002F12BB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3D91DD9F1E090EFF002F12BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D91DDA01E090EFF002F12BB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D91DDA81E090EFF002F12BB /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3D91DDC11E090EFF002F12BB /* Debug */ = {
@@ -520,6 +493,7 @@
 				3D91DDC51E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D91DDC61E090EFF002F12BB /* Build configuration list for PBXNativeTarget "MMGraphsTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +502,7 @@
 				3D91DDC81E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D91DDC91E090EFF002F12BB /* Build configuration list for PBXNativeTarget "MMGraphsUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +511,7 @@
 				3D91DDCB1E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
