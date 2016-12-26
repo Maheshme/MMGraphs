@@ -41,14 +41,15 @@
         if (_linePath == nil)
             _linePath = [[UIBezierPath alloc]init];
         [_linePath setLineWidth:2];
-        [[UIColor whiteColor] setStroke];
+        [[UIColor colorWithWhite:1 alpha:0.4] setStroke];
         
         //Left CAShapeLayer for graph allocation
         if (_lineLayer == nil)
             _lineLayer = [CAShapeLayer layer];
         _lineLayer.fillColor = [[UIColor clearColor] CGColor];
-        _lineLayer.strokeColor = [UIColor whiteColor].CGColor;
+        _lineLayer.strokeColor = [UIColor colorWithWhite:1 alpha:0.4].CGColor;
         _lineLayer.lineWidth = 2;
+        _lineLayer.lineJoin = @"round";
         _lineLayer.path = [_linePath CGPath];
         [self.layer addSublayer:_lineLayer];
         
@@ -98,7 +99,7 @@
 -(void)menuClicked
 {
     _menuOpen = YES;
-    [_linePath moveToPoint:MENU_CENTER];
+    [_linePath moveToPoint:CGPointMake(MENU_CENTER.x, MENU_CENTER.y+MENU_SIZE.height/2)];
 
     for (UIButton *menu in _arrayOfGraphButtons)
     {

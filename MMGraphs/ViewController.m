@@ -31,7 +31,7 @@
     
     _menuButton = [[UIButton alloc]init];
     [_menuButton addTarget:self  action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
-    _menuButton.backgroundColor = [UIColor whiteColor];
+    _menuButton.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
     [_menuButton.layer setShadowColor:[UIColor whiteColor].CGColor];
     [_menuButton.layer setShadowRadius:MINIMUM_WIDTH_OF_BUTTON/3];
     [_menuButton.layer setShadowOpacity:1];
