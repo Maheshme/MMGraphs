@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6B31E11484C00608C81 /* MenuView.m */; };
 		3D91DD981E090EFF002F12BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD971E090EFF002F12BB /* main.m */; };
 		3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9A1E090EFF002F12BB /* AppDelegate.m */; };
 		3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9D1E090EFF002F12BB /* ViewController.m */; };
@@ -34,6 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D6CD6B01E11431400608C81 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		3D6CD6B11E11432F00608C81 /* AppCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCommon.h; sourceTree = "<group>"; };
+		3D6CD6B21E11484C00608C81 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
+		3D6CD6B31E11484C00608C81 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
 		3D91DD931E090EFF002F12BB /* MMGraphs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMGraphs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DD971E090EFF002F12BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D91DD991E090EFF002F12BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -76,6 +81,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D6CD6AF1E1142F500608C81 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6B01E11431400608C81 /* PrefixHeader.pch */,
+				3D6CD6B11E11432F00608C81 /* AppCommon.h */,
+			);
+			name = Commons;
+			sourceTree = "<group>";
+		};
 		3D91DD8A1E090EFF002F12BB = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +113,8 @@
 		3D91DD951E090EFF002F12BB /* MMGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6AF1E1142F500608C81 /* Commons */,
+				3D91DDD01E093C54002F12BB /* Menu */,
 				3D91DD991E090EFF002F12BB /* AppDelegate.h */,
 				3D91DD9A1E090EFF002F12BB /* AppDelegate.m */,
 				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
@@ -135,6 +151,15 @@
 				3D91DDC01E090EFF002F12BB /* Info.plist */,
 			);
 			path = MMGraphsUITests;
+			sourceTree = "<group>";
+		};
+		3D91DDD01E093C54002F12BB /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6B21E11484C00608C81 /* MenuView.h */,
+				3D6CD6B31E11484C00608C81 /* MenuView.m */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +300,7 @@
 				3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */,
 				3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */,
 				3D91DD981E090EFF002F12BB /* main.m in Sources */,
+				3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +431,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S7663BSBBY;
+				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
@@ -417,6 +444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S7663BSBBY;
+				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
