@@ -14,5 +14,6 @@
 @property (nonatomic, strong) UIButton *backgroundButton;
 
 -(instancetype)initWithArrayOfLabels:(NSArray *)arrayOfLabels andBlurEffect:(UIBlurEffect *)blurrEffect;
+-(void)removePath;
 
 @end

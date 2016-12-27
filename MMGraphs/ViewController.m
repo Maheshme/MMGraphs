@@ -8,6 +8,10 @@
 
 #import "ViewController.h"
 #import "MenuView.h"
+#import "GraphModel.h"
+
+#import "InteractiveBar.h"
+#import "HorizantalGraph.h"
 
 @interface ViewController ()
 
@@ -15,6 +19,8 @@
 @property (nonatomic, strong) MenuView *menuView;
 @property (nonatomic, strong) NSArray *arrayOfGraphs;
 @property (nonatomic, strong) UIImageView *backGroundImageView;
+
+@property (nonatomic, strong) UIScrollView *graphView;
 
 @end
 
@@ -31,7 +37,7 @@
     
     _menuButton = [[UIButton alloc]init];
     [_menuButton addTarget:self  action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
-    _menuButton.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
+    _menuButton.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
     [_menuButton.layer setShadowColor:[UIColor whiteColor].CGColor];
     [_menuButton.layer setShadowRadius:MINIMUM_WIDTH_OF_BUTTON/3];
     [_menuButton.layer setShadowOpacity:1];
@@ -46,6 +52,10 @@
     _menuButton.layer.cornerRadius = _menuButton.frame.size.width/2;
     _menuButton.center = MENU_CENTER;
     _menuView.frame = self.view.bounds;
+    
+    _graphView.frame = CGRectMake(0, self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.6);
+    _graphView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + MENU_CENTER.y);
+    
     [self.view bringSubviewToFront:_menuButton];
 }
 
@@ -67,7 +77,7 @@
                               delay:0
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             
+                             [_menuView removePath];
                              for (UIButton *menu in _menuView.arrayOfGraphButtons)
                                  menu.center = CGPointMake(-2*MENU_SIZE.width, menu.center.y);
                              
@@ -80,7 +90,31 @@
 
 -(void)graphSelectedWith:(id)sender
 {
-
+    [self menuClicked];
+    
+    if (_graphView != nil)
+    {
+        [_graphView removeFromSuperview];
+        _graphView =  nil;
+    }
+    
+    UIButton *clickedButton = (UIButton *)sender;
+    
+    if ([clickedButton.titleLabel.text isEqualToString:@"Interactive Bar"])
+    {
+        InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        _graphView = interaciveBar;
+    }
+    
+    else if([clickedButton.titleLabel.text isEqualToString:@"Horizontal bar"])
+    {
+        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        _graphView = interaciveHorizantalBar;
+    }
+   
+    if (_graphView != nil)
+        [self.view addSubview:_graphView];
+    
 }
 
 @end

@@ -126,4 +126,10 @@
                      }];
 }
 
+-(void)removePath
+{
+    [_linePath removeAllPoints];
+    [_lineLayer removeFromSuperlayer];
+}
+
 @end
