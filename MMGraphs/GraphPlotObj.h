@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Coordinates.h"
 
 @interface GraphPlotObj : NSObject
 
@@ -17,6 +18,8 @@
 @property (nonatomic) int64_t timeStamp;
 //X axis label name
 @property (nonatomic, strong) NSString *labelName;
+
+@property (nonatomic, strong) Coordinates *coordinate;
 
 
 @end

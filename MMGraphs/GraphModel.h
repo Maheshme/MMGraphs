@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GraphPlotObj.h"
 
 @interface GraphModel : NSObject
 
 +(NSArray *)getDataForDays:(int)days;
++(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper forMinute:(int)min;
++(NSArray *)getMinuteDataFor:(int)numberOfMinutes;
 
 @end

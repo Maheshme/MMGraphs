@@ -15,6 +15,13 @@
 		3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */; };
 		3D6CD6D31E127FFB00608C81 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6D21E127FFB00608C81 /* BubbleView.m */; };
 		3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */; };
+		3D6CD6F81E13830D00608C81 /* SymmetryBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */; };
+		3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */; };
+		3D6CD7001E139A1300608C81 /* MultiScatterGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */; };
+		3D6CD7051E13BF4900608C81 /* DynamicLineGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7041E13BF4900608C81 /* DynamicLineGraph.m */; };
+		3D6CD7081E13D7A900608C81 /* InteractiveLineGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */; };
+		3D6CD70C1E13D7DC00608C81 /* DynamicBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD70B1E13D7DC00608C81 /* DynamicBarGraph.m */; };
+		3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD70F1E13E78300608C81 /* Coordinates.m */; };
 		3D91DD981E090EFF002F12BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD971E090EFF002F12BB /* main.m */; };
 		3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9A1E090EFF002F12BB /* AppDelegate.m */; };
 		3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9D1E090EFF002F12BB /* ViewController.m */; };
@@ -60,6 +67,20 @@
 		3D6CD6D21E127FFB00608C81 /* BubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleView.m; sourceTree = "<group>"; };
 		3D6CD6F31E12922E00608C81 /* HorizantalGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizantalGraph.h; sourceTree = "<group>"; };
 		3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizantalGraph.m; sourceTree = "<group>"; };
+		3D6CD6F61E13830D00608C81 /* SymmetryBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymmetryBarGraph.h; sourceTree = "<group>"; };
+		3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SymmetryBarGraph.m; sourceTree = "<group>"; };
+		3D6CD6FA1E13969A00608C81 /* ScatterPlotGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScatterPlotGraph.h; sourceTree = "<group>"; };
+		3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScatterPlotGraph.m; sourceTree = "<group>"; };
+		3D6CD6FE1E139A1300608C81 /* MultiScatterGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScatterGraph.h; sourceTree = "<group>"; };
+		3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScatterGraph.m; sourceTree = "<group>"; };
+		3D6CD7031E13BF4900608C81 /* DynamicLineGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLineGraph.h; sourceTree = "<group>"; };
+		3D6CD7041E13BF4900608C81 /* DynamicLineGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicLineGraph.m; sourceTree = "<group>"; };
+		3D6CD7061E13D7A900608C81 /* InteractiveLineGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractiveLineGraph.h; sourceTree = "<group>"; };
+		3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractiveLineGraph.m; sourceTree = "<group>"; };
+		3D6CD70A1E13D7DC00608C81 /* DynamicBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicBarGraph.h; sourceTree = "<group>"; };
+		3D6CD70B1E13D7DC00608C81 /* DynamicBarGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicBarGraph.m; sourceTree = "<group>"; };
+		3D6CD70E1E13E78300608C81 /* Coordinates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinates.h; sourceTree = "<group>"; };
+		3D6CD70F1E13E78300608C81 /* Coordinates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinates.m; sourceTree = "<group>"; };
 		3D91DD931E090EFF002F12BB /* MMGraphs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMGraphs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DD971E090EFF002F12BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D91DD991E090EFF002F12BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -114,6 +135,7 @@
 		3D6CD6B61E1160FC00608C81 /* BarGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD7091E13D7AF00608C81 /* DynamicBar */,
 				3D6CD6BD1E11617500608C81 /* HorizantalBar */,
 				3D6CD6BC1E11615F00608C81 /* SymmetryBar */,
 				3D6CD6BB1E11614D00608C81 /* BarGraph */,
@@ -124,6 +146,8 @@
 		3D6CD6B71E11610800608C81 /* LineGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD7021E13BE6D00608C81 /* DynamicLine */,
+				3D6CD7011E13BE5C00608C81 /* InteractiveStaticLine */,
 			);
 			name = LineGraphs;
 			sourceTree = "<group>";
@@ -131,6 +155,8 @@
 		3D6CD6B81E11611600608C81 /* ScatterGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6FD1E1399D500608C81 /* MultiScatter */,
+				3D6CD6F91E13966B00608C81 /* SingleScatter */,
 			);
 			name = ScatterGraphs;
 			sourceTree = "<group>";
@@ -164,6 +190,8 @@
 		3D6CD6BC1E11615F00608C81 /* SymmetryBar */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6F61E13830D00608C81 /* SymmetryBarGraph.h */,
+				3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */,
 			);
 			name = SymmetryBar;
 			sourceTree = "<group>";
@@ -196,6 +224,8 @@
 				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
 				3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */,
 				3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */,
+				3D6CD70E1E13E78300608C81 /* Coordinates.h */,
+				3D6CD70F1E13E78300608C81 /* Coordinates.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -220,6 +250,51 @@
 				3D6CD6D21E127FFB00608C81 /* BubbleView.m */,
 			);
 			name = Commons;
+			sourceTree = "<group>";
+		};
+		3D6CD6F91E13966B00608C81 /* SingleScatter */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6FA1E13969A00608C81 /* ScatterPlotGraph.h */,
+				3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */,
+			);
+			name = SingleScatter;
+			sourceTree = "<group>";
+		};
+		3D6CD6FD1E1399D500608C81 /* MultiScatter */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6FE1E139A1300608C81 /* MultiScatterGraph.h */,
+				3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */,
+			);
+			name = MultiScatter;
+			sourceTree = "<group>";
+		};
+		3D6CD7011E13BE5C00608C81 /* InteractiveStaticLine */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7061E13D7A900608C81 /* InteractiveLineGraph.h */,
+				3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */,
+			);
+			name = InteractiveStaticLine;
+			sourceTree = "<group>";
+		};
+		3D6CD7021E13BE6D00608C81 /* DynamicLine */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7031E13BF4900608C81 /* DynamicLineGraph.h */,
+				3D6CD7041E13BF4900608C81 /* DynamicLineGraph.m */,
+			);
+			name = DynamicLine;
+			sourceTree = "<group>";
+		};
+		3D6CD7091E13D7AF00608C81 /* DynamicBar */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD70A1E13D7DC00608C81 /* DynamicBarGraph.h */,
+				3D6CD70B1E13D7DC00608C81 /* DynamicBarGraph.m */,
+			);
+			name = DynamicBar;
 			sourceTree = "<group>";
 		};
 		3D91DD8A1E090EFF002F12BB = {
@@ -431,13 +506,20 @@
 				3D6CD6CD1E12721400608C81 /* VisualScrollView.m in Sources */,
 				3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */,
 				3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */,
+				3D6CD7001E139A1300608C81 /* MultiScatterGraph.m in Sources */,
 				3D6CD6C31E1240FF00608C81 /* GraphModel.m in Sources */,
 				3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */,
 				3D6CD6D31E127FFB00608C81 /* BubbleView.m in Sources */,
 				3D91DD981E090EFF002F12BB /* main.m in Sources */,
+				3D6CD6F81E13830D00608C81 /* SymmetryBarGraph.m in Sources */,
 				3D6CD6C91E12417F00608C81 /* GraphPlotObj.m in Sources */,
 				3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */,
+				3D6CD70C1E13D7DC00608C81 /* DynamicBarGraph.m in Sources */,
+				3D6CD7081E13D7A900608C81 /* InteractiveLineGraph.m in Sources */,
+				3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */,
+				3D6CD7051E13BF4900608C81 /* DynamicLineGraph.m in Sources */,
 				3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */,
+				3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */,
 				3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

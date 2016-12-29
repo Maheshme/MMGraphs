@@ -12,10 +12,15 @@
 
 #import "InteractiveBar.h"
 #import "HorizantalGraph.h"
+#import "SymmetryBarGraph.h"
+#import "ScatterPlotGraph.h"
+#import "MultiScatterGraph.h"
+#import "DynamicLineGraph.h"
+#import "InteractiveLineGraph.h"
 
 @interface ViewController ()
 
-@property (nonatomic, strong) UIButton *menuButton;
+@property (nonatomic, strong) UIButton *menuButton, *removeGraph;
 @property (nonatomic, strong) MenuView *menuView;
 @property (nonatomic, strong) NSArray *arrayOfGraphs;
 @property (nonatomic, strong) UIImageView *backGroundImageView;
@@ -33,7 +38,7 @@
     _backGroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bgimage"]];
     [self.view addSubview:_backGroundImageView];
     
-    _arrayOfGraphs = [[NSArray alloc]initWithObjects:@"Interactive Line",@"Interactive Bar", @"Interactive Symmetry", @"Scattert Plot",@"Multi scatter Plot", @"Stacked bar", @"Area graph", @"Horizontal bar", @"Dynamic line", @"Dynamic Bar", @"Dynamic sctter",nil];
+    _arrayOfGraphs = [[NSArray alloc]initWithObjects:@"Interactive Line", @"Interactive Bar", @"Interactive Symmetry", @"Scattert Plot",@"Multi scatter Plot", @"Stacked bar", @"Area graph", @"Horizontal bar", @"Dynamic line", @"Dynamic Bar",nil];
     
     _menuButton = [[UIButton alloc]init];
     [_menuButton addTarget:self  action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -42,6 +47,18 @@
     [_menuButton.layer setShadowRadius:MINIMUM_WIDTH_OF_BUTTON/3];
     [_menuButton.layer setShadowOpacity:1];
     [self.view addSubview:_menuButton];
+    
+    _removeGraph = [[UIButton alloc]init];
+    [_removeGraph addTarget:self  action:@selector(removeCurrentGraph) forControlEvents:UIControlEventTouchUpInside];
+    _removeGraph.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
+    [_removeGraph.titleLabel setTextColor:[UIColor whiteColor]];
+    [_removeGraph.layer setShadowColor:[UIColor whiteColor].CGColor];
+    [_removeGraph setTitle:@"X" forState:UIControlStateNormal];
+    [_removeGraph.layer setShadowRadius:MINIMUM_WIDTH_OF_BUTTON/3];
+    [_removeGraph.layer setShadowOpacity:1];
+    [self.view addSubview:_removeGraph];
+    
+    _removeGraph.hidden = YES;
 }
 
 -(void)viewWillLayoutSubviews
@@ -53,8 +70,12 @@
     _menuButton.center = MENU_CENTER;
     _menuView.frame = self.view.bounds;
     
-    _graphView.frame = CGRectMake(0, self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.6);
+    _graphView.frame = CGRectMake(0, self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.5);
     _graphView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + MENU_CENTER.y);
+    
+    _removeGraph.frame = CGRectMake(0, _graphView.frame.origin.y - MINIMUM_WIDTH_OF_BUTTON*0.75, MINIMUM_WIDTH_OF_BUTTON, MINIMUM_HEIGHT_OF_BUTTON);
+    _removeGraph.layer.cornerRadius = MINIMUM_WIDTH_OF_BUTTON/2;
+    
     
     [self.view bringSubviewToFront:_menuButton];
 }
@@ -88,15 +109,23 @@
     }
 }
 
--(void)graphSelectedWith:(id)sender
+-(void)removeCurrentGraph
 {
-    [self menuClicked];
-    
     if (_graphView != nil)
     {
         [_graphView removeFromSuperview];
         _graphView =  nil;
+        
+        _removeGraph.hidden = YES;
     }
+}
+
+
+-(void)graphSelectedWith:(id)sender
+{
+    [self menuClicked];
+    
+    [self removeCurrentGraph];
     
     UIButton *clickedButton = (UIButton *)sender;
     
@@ -105,16 +134,44 @@
         InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
         _graphView = interaciveBar;
     }
-    
     else if([clickedButton.titleLabel.text isEqualToString:@"Horizontal bar"])
     {
         HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
         _graphView = interaciveHorizantalBar;
     }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Symmetry"])
+    {
+        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365] andSecondPlotArray:[GraphModel getDataForDays:365]];
+        _graphView = interaciveSymmetryBar;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Scattert Plot"])
+    {
+        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        _graphView = scatterPlotGraph;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Multi scatter Plot"])
+    {
+        MultiScatterGraph *multiScatterPlotGraph = [[MultiScatterGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365] andSecondPlotArray:[GraphModel getDataForDays:365]];
+        _graphView = multiScatterPlotGraph;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic line"])
+    {
+        DynamicLineGraph *dynamicLine = [[DynamicLineGraph alloc]init];
+        _graphView = dynamicLine;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Line"])
+    {
+        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:273]];
+        _graphView = interactiveLine;
+    }
+    
+
    
     if (_graphView != nil)
+    {
         [self.view addSubview:_graphView];
-    
+        _removeGraph.hidden = NO;
+    }
 }
 
 @end

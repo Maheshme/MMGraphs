@@ -56,7 +56,7 @@
         //Animation for drawing the path
         if (_drawAnimation == nil)
             _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        _drawAnimation.duration = 0.5;
+        _drawAnimation.duration = 0.75;
         _drawAnimation.repeatCount = 1.0;
         
         for (int i = 0; i < arrayOfLabels.count ; i++)

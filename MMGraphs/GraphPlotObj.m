@@ -10,4 +10,14 @@
 
 @implementation GraphPlotObj
 
+-(instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _coordinate = [[Coordinates alloc]init];
+    }
+    return self;
+}
+
 @end

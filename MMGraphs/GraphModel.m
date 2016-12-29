@@ -7,7 +7,6 @@
 //
 
 #import "GraphModel.h"
-#import "GraphPlotObj.h"
 
 @implementation GraphModel
 
@@ -50,6 +49,26 @@
 {
     float rndValue = lower + arc4random() % (upper - lower);
     return rndValue;
+}
+
++(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper forMinute:(int)min
+{
+    GraphPlotObj *plotObject = [[GraphPlotObj alloc]init];
+    plotObject.position = min;
+    plotObject.value = [GraphModel getRandomNumberInBetween:lower upper:upper];
+    plotObject.timeStamp = [[NSDate date] timeIntervalSince1970];
+    
+    return plotObject;
+}
+
++(NSArray *)getMinuteDataFor:(int)numberOfMinutes
+{
+    NSMutableArray *minuteData = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i <= numberOfMinutes; i++)
+        [minuteData addObject: [GraphModel getMinuteDataInBetween:0 upper:100 forMinute:i]];
+    
+    return (NSArray *)minuteData;
 }
 
 @end
