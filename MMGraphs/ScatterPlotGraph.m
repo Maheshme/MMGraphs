@@ -139,7 +139,7 @@
     [self.layer addSublayer:_graphLayer];
     
     _xAxisScrollButton = [[UIButton alloc]init];
-    _xAxisScrollButton.backgroundColor = [UIColor blackColor];
+    _xAxisScrollButton.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
     [_xAxisScrollButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
     [_xAxisScrollButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_xAxisScrollButton setTitle:@"--" forState:UIControlStateNormal];
@@ -149,8 +149,8 @@
     _valueLabel = [[UILabel alloc]init];
     _valueLabel.textAlignment = NSTextAlignmentCenter;
     [_valueLabel setClipsToBounds:YES];
-    _valueLabel.backgroundColor = COLOR(65.0, 19.0, 8.0, 0.6);
-    [_valueLabel setTextColor:COLOR(233.0, 245.0, 252.0, 1)];
+    _valueLabel.backgroundColor = COLOR(170.0, 204.0, 225.0, 0.6);
+    [_valueLabel setTextColor:COLOR(8.0, 48.0, 69.0, 1)];
     [self addSubview:_valueLabel];
 }
 

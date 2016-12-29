@@ -127,7 +127,7 @@
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
     _graphLayer.lineWidth = TOTAL_BAR_HEIGHT*PERCENTAGE_OF_BAR;
     _graphLayer.path = [_graphPath CGPath];
-    [self.layer addSublayer:_graphLayer];
+//    [self.layer addSublayer:_graphLayer];
 }
 
 //Alter heights for change in orientation
@@ -160,6 +160,10 @@
     
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
+    
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
     
     self.contentSize = CGSizeMake(self.frame.size.width, TOTAL_BAR_HEIGHT*_plotArray.count);
 }
@@ -221,6 +225,9 @@
         //BubbleView creation
         _bubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Horizantal];
         _bubble.userInteractionEnabled = NO;
+        _bubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+        _bubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+        [_bubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
         [self addSubview:_bubble];
         
         _bubble.alpha = 0;

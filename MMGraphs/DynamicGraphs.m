@@ -1,12 +1,13 @@
 //
-//  DynamicLineGraph.m
+//  DynamicGraphs.m
 //  MMGraphs
 //
-//  Created by Mahesh.me on 12/28/16.
+//  Created by Mahesh.me on 12/29/16.
 //  Copyright © 2016 Mahesh.me. All rights reserved.
 //
 
-#import "DynamicLineGraph.h"
+#import "DynamicGraphs.h"
+
 #import "XAxisGraphLabel.h"
 #import "GraphPlotObj.h"
 #import "GraphModel.h"
@@ -21,24 +22,26 @@
 #define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
 
-@interface DynamicLineGraph ()
+@interface DynamicGraphs ()
 
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
 @property (nonatomic, strong) CABasicAnimation *drawAnimation;
+@property (nonatomic, strong) UIView *separator;
+
 @property (nonatomic) float maxY, minX, maxX, rangeOfX,totalDistanceCovered, xUnit, latestLabel;
 @property (nonatomic) CGPoint lastPoint;
-@property (nonatomic, strong) UIView *separator;
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic) BOOL isScrolling;
 @property (nonatomic, strong) NSMutableArray *dynamicPlotArray;
+@property (nonatomic) NSInteger typeOfGraph;
 
 
 @end
 
-@implementation DynamicLineGraph
+@implementation DynamicGraphs
 
-- (instancetype)init
+- (instancetype)initWithTypeOfGraph:(Graph_Type)typeOfGraph
 {
     self = [super init];
     if (self)
@@ -46,6 +49,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
         
+        _typeOfGraph = typeOfGraph;
         _dynamicPlotArray = [[NSMutableArray alloc]init];
         
         //Range of Y axis
@@ -88,9 +92,19 @@
 
 -(void)drawRect:(CGRect)rect
 {
+    if (_typeOfGraph == Graph_Type_Line)
+    {
+        _graphLayer.lineWidth = 1;
+        _graphPath.lineWidth = 1;
+    }
+    else
+    {
+        _graphLayer.lineWidth = _xUnit*0.9;
+        _graphPath.lineWidth = _xUnit*0.9;
+    }
+    
     [self checkForRangeChanges];
     [self createTimer];
-    [self plotCompleteGraphWithAnimation:NO];
 }
 
 //Allocate needs for grah
@@ -115,8 +129,11 @@
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
     _graphLayer.lineWidth = 1;
-    _graphLayer.lineCap = LINE_CAP_ROUND;
-    _graphLayer.lineJoin = LINE_CAP_ROUND;
+    if (_typeOfGraph == Graph_Type_Line || _typeOfGraph == Graph_Type_Scatter)
+    {
+        _graphLayer.lineCap = LINE_CAP_ROUND;
+        _graphLayer.lineJoin = LINE_CAP_ROUND;
+    }
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
@@ -180,100 +197,83 @@
 -(void)updateGraph
 {
     if ([self checkForRangeChanges])
-        [self plotCompleteGraphWithAnimation:YES];
+    {
+        _lastPoint = CGPointMake(0, 0);
+        _totalDistanceCovered = 0;
+        
+        //Remove complete plot
+        [_graphPath removeAllPoints];
+
+        //Complete plot. Called when complete plot is requried i.e.., when limits changes or on opening of graph for first time
+        [self plotGraphWithArrayOfPlotPoints:_dynamicPlotArray];
+    }
     else
     {
         //Last point to be ploted
         GraphPlotObj *plotObject = [_dynamicPlotArray lastObject];
-        [self plotLatestPointWithXValue:plotObject.position andYValue:plotObject.value];
+        [self plotGraphWithArrayOfPlotPoints:@[plotObject]];
     }
 }
 
-//Complete plot. Called when complete plot is requried i.e.., when limits changes or app coming from background to foreground or on opening of graph for first time
--(void)plotCompleteGraphWithAnimation:(BOOL)isAnimated
+
+-(void)plotGraphWithArrayOfPlotPoints:(NSArray *)arrayOfPlotPoints
 {
-    _lastPoint = CGPointMake(0, 0);
-    _totalDistanceCovered = 0;
-    
-    //Remove complete plot
-    [_graphPath removeAllPoints];
-    
-    for (GraphPlotObj *plotObject in _dynamicPlotArray)
+    float animationStartPercentage = 0;
+    for (GraphPlotObj *plotObject in arrayOfPlotPoints)
     {
         float timStamp = plotObject.position;
         
         CGPoint plotPoint = [self calculatePointwithXValue:plotObject.position andYvalue:plotObject.value];
         
-        if (plotObject.position == 0)
+        if (_typeOfGraph == Graph_Type_Line)
+        {
+            if (plotObject.position == 0)
+                [_graphPath moveToPoint:plotPoint];
+            else
+                [_graphPath addLineToPoint:plotPoint];
+        }
+        else if(_typeOfGraph == Graph_Type_Scatter)
+        {
             [_graphPath moveToPoint:plotPoint];
-        else
             [_graphPath addLineToPoint:plotPoint];
+        }
+        else if(_typeOfGraph == Graph_Type_Bar)
+        {
+            [_graphPath moveToPoint:CGPointMake(plotPoint.x, STARTING_Y)];
+            [_graphPath addLineToPoint:plotPoint];
+        }
+       
         
         //If plot exceeds content size
         if (plotPoint.x >= self.contentSize.width)
-        {
-            self.contentSize = CGSizeMake((timStamp+TIME_INTERVAL)*_xUnit, self.frame.size.height);
-            [self setContentOffset:CGPointMake(self.contentSize.width - self.frame.size.width, 0) animated:YES];
-            
-            int missedLabels =  (((int)timStamp - (int)_latestLabel)%5 == 0) ? ((timStamp - _latestLabel)/5) : ((timStamp - _latestLabel)/5)+1;
-            for (int i = 0; i < missedLabels; i++)
-                [self createLabelsWithLabelCount:_latestLabel+TIME_INTERVAL]; //call layout
-        }
+            [self increaseContentSizeForValue:timStamp];
         
         if (plotObject.position != 0)
         {
             float distanceCovered = sqrtf(powf((plotPoint.y-_lastPoint.y), 2) + powf((plotPoint.x-_lastPoint.x), 2));
             _totalDistanceCovered = _totalDistanceCovered + distanceCovered;
+            if (arrayOfPlotPoints.count <= 1)
+                animationStartPercentage = 1 - (distanceCovered/_totalDistanceCovered);
         }
         _lastPoint = plotPoint;
     }
     
     _graphLayer.path = [_graphPath CGPath];
     
-    //If animation is needed for ploting
-    if (isAnimated)
-    {
-        _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-        _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
-        [_graphLayer addAnimation:_drawAnimation forKey:@"drawCircleAnimation"];
-    }
-}
-
-//Dynamic graph plot
--(void)plotLatestPointWithXValue:(int)xValue andYValue:(float)yValue
-{
-    CGPoint plotPoint = [self calculatePointwithXValue:xValue andYvalue:yValue];
-    
-    if (xValue == 0)
-        [_graphPath moveToPoint:plotPoint];
-    else
-        [_graphPath addLineToPoint:plotPoint];
-    
-    //If plot exceeds content size
-    if (plotPoint.x >= self.contentSize.width)
-    {
-        self.contentSize = CGSizeMake((xValue+TIME_INTERVAL)*_xUnit, self.frame.size.height);
-        [self setContentOffset:CGPointMake(self.contentSize.width - self.frame.size.width, 0) animated:YES];
-        
-        int missedLabels =  (((int)xValue - (int)_latestLabel)%5 == 0) ? ((xValue - _latestLabel)/5) : ((xValue - _latestLabel)/5)+1;
-        for (int i = 0; i < missedLabels; i++)
-            [self createLabelsWithLabelCount:_latestLabel+TIME_INTERVAL]; //call layout
-    }
-    
-    float animationStartPercentage = 0;
-    if (xValue > 0)
-    {
-        float distanceCovered = sqrtf(powf((plotPoint.y-_lastPoint.y), 2) + powf((plotPoint.x-_lastPoint.x), 2));
-        _totalDistanceCovered = _totalDistanceCovered + distanceCovered;
-        animationStartPercentage = 1 - (distanceCovered/_totalDistanceCovered);
-    }
-    _lastPoint = plotPoint;
-    
     _drawAnimation.fromValue = [NSNumber numberWithFloat:animationStartPercentage];
     _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
-    
-    _graphLayer.path = [_graphPath CGPath];
     [_graphLayer addAnimation:_drawAnimation forKey:@"drawCircleAnimation"];
+}
+
+
+-(void)increaseContentSizeForValue:(float)xValue
+{
+    self.contentSize = CGSizeMake((xValue+TIME_INTERVAL)*_xUnit, self.frame.size.height);
+    [self setContentOffset:CGPointMake(self.contentSize.width - self.frame.size.width, 0) animated:YES];
+    
+    int missedLabels =  (((int)xValue - (int)_latestLabel)%5 == 0) ? ((xValue - _latestLabel)/5) : ((xValue - _latestLabel)/5)+1;
+    for (int i = 0; i < missedLabels; i++)
+        [self createLabelsWithLabelCount:_latestLabel+TIME_INTERVAL]; //call layout
 }
 
 //To calculate the x and y points based on X and Y axis length

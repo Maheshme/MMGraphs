@@ -134,7 +134,7 @@
     //CAShapeLayer for graph
     _firstGraphLayer = [CAShapeLayer layer];
     _firstGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _firstGraphLayer.strokeColor = COLOR(168.0, 183.0, 137.0, 1).CGColor;
+    _firstGraphLayer.strokeColor = COLOR(152.0, 73.0, 118.0, 1).CGColor;
     _firstGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _firstGraphLayer.path = [_firstGraphPath CGPath];
     [self.layer addSublayer:_firstGraphLayer];
@@ -142,7 +142,7 @@
     //CAShapeLayer for graph
     _secondGraphLayer = [CAShapeLayer layer];
     _secondGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _secondGraphLayer.strokeColor = COLOR(255.0, 215.0, 71.0, 1).CGColor;
+    _secondGraphLayer.strokeColor = COLOR(40.0, 40.0, 40.0, 1).CGColor;
     _secondGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
@@ -276,10 +276,13 @@
     _secondGraphBubble.userInteractionEnabled = NO;
     [self addSubview:_secondGraphBubble];
     
-    _firstGraphBubble.mainView.backgroundColor = COLOR(160.0, 85.0, 89.0, 1);
-    _firstGraphBubble.indicationView.backgroundColor = COLOR(160.0, 85.0, 89.0, 1);;
-    _secondGraphBubble.mainView.backgroundColor = COLOR(160.0, 85.0, 89.0, 1);;
-    _secondGraphBubble.indicationView.backgroundColor = COLOR(160.0, 85.0, 89.0, 1);;
+    _firstGraphBubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    _firstGraphBubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    _secondGraphBubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    _secondGraphBubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    
+    [_firstGraphBubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
+    [_secondGraphBubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
     
     _firstGraphBubble.alpha = 0;
     _secondGraphBubble.alpha = 0;

@@ -17,6 +17,8 @@
 #import "MultiScatterGraph.h"
 #import "DynamicLineGraph.h"
 #import "InteractiveLineGraph.h"
+#import "AreaGraph.h"
+#import "DynamicGraphs.h"
 
 @interface ViewController ()
 
@@ -38,7 +40,7 @@
     _backGroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bgimage"]];
     [self.view addSubview:_backGroundImageView];
     
-    _arrayOfGraphs = [[NSArray alloc]initWithObjects:@"Interactive Line", @"Interactive Bar", @"Interactive Symmetry", @"Scattert Plot",@"Multi scatter Plot", @"Stacked bar", @"Area graph", @"Horizontal bar", @"Dynamic line", @"Dynamic Bar",nil];
+    _arrayOfGraphs = [[NSArray alloc]initWithObjects:@"Interactive Line", @"Interactive Bar", @"Interactive Symmetry", @"Scattert Plot",@"Multi scatter Plot", @"Area graph", @"Horizontal bar", @"Dynamic line", @"Dynamic Bar", @"Dynamic Scattert",nil];
     
     _menuButton = [[UIButton alloc]init];
     [_menuButton addTarget:self  action:@selector(menuClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -161,11 +163,25 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Line"])
     {
-        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:273]];
+        DynamicGraphs *interactiveLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
         _graphView = interactiveLine;
     }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Area graph"])
+    {
+        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30]];
+        _graphView = areaGraph;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic Bar"])
+    {
+        DynamicGraphs *dynamicBar = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Bar];
+        _graphView = dynamicBar;
+    }
+    else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic Scattert"])
+    {
+        DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Scatter];
+        _graphView = dynamicScattert;
+    }
     
-
    
     if (_graphView != nil)
     {

@@ -216,6 +216,9 @@
         //BubbleView creation
         _bubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Vertical];
         _bubble.userInteractionEnabled = NO;
+        _bubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+        _bubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+        [_bubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
         [self addSubview:_bubble];
         
         _bubble.alpha = 0;

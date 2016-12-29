@@ -32,6 +32,7 @@
 @property (nonatomic, strong) NSArray *plotArray;
 @property (nonatomic, strong) UIButton *graphButton, *scroller;
 @property (nonatomic, strong) Coordinates *previousCoord, *nextCoord;
+@property (nonatomic, strong) CABasicAnimation *drawAnimation;
 
 
 @end
@@ -138,7 +139,8 @@
     [self.layer addSublayer:_graphLayer];
     
     _scroller = [[UIButton alloc]init];
-    _scroller.backgroundColor = COLOR(224.0, 94.0, 51.0, 1);
+    _scroller.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    [_scroller setTitleColor:COLOR(8.0, 48.0, 69.0, 1) forState:UIControlStateNormal];
     [_scroller.titleLabel setFont:[UIFont systemFontOfSize:11]];
     [_scroller setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_scroller setTitle:@"--" forState:UIControlStateNormal];
@@ -146,10 +148,13 @@
     [self addSubview:_scroller];
     
     _graphButton = [[UIButton alloc]init];
-    _graphButton.backgroundColor = COLOR(127.0, 38.0, 82.0, 1);
-//    [_graphButton addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
+    _graphButton.backgroundColor = COLOR(13.0, 60.0, 85.0, 1);
     [self addSubview:_graphButton];
 
+    //Animation for drawing the path
+    _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    _drawAnimation.duration = 2.5;
+    _drawAnimation.repeatCount = 1.0;
 
 }
 
@@ -195,21 +200,16 @@
         if ([graphData isEqual:[_plotArray firstObject]])
             [_graphPath moveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
         else
+//            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*0.2, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*0.2, graphData.coordinate.y)];
             [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
     }
     
-//    for (int i = 0; i < _plotArray.count; i++)
-//    {
-//        GraphPlotObj *graphData = [_plotArray objectAtIndex:i];
-//        
-//        if (i == 0)
-//            [_graphPath moveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
-//        else
-//            [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
-////            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*0.5, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*0.5, graphData.coordinate.y)];
-//    }
+    _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
     
     _graphLayer.path = [_graphPath CGPath];
+    
+    [_graphLayer addAnimation:_drawAnimation forKey:@"drawCircleAnimation"];
     
     self.contentSize = CGSizeMake(_xUnit*_plotArray.count, self.frame.size.height);
 }
