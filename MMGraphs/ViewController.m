@@ -15,7 +15,6 @@
 #import "SymmetryBarGraph.h"
 #import "ScatterPlotGraph.h"
 #import "MultiScatterGraph.h"
-#import "DynamicLineGraph.h"
 #import "InteractiveLineGraph.h"
 #import "AreaGraph.h"
 #import "DynamicGraphs.h"
@@ -158,12 +157,12 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic line"])
     {
-        DynamicLineGraph *dynamicLine = [[DynamicLineGraph alloc]init];
-        _graphView = dynamicLine;
+        DynamicGraphs *interactiveLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
+        _graphView = interactiveLine;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Line"])
     {
-        DynamicGraphs *interactiveLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
+        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:60]];
         _graphView = interactiveLine;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Area graph"])
