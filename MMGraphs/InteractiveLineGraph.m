@@ -138,6 +138,10 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
+    
     _scroller = [[UIButton alloc]init];
     _scroller.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
     [_scroller setTitleColor:COLOR(8.0, 48.0, 69.0, 1) forState:UIControlStateNormal];

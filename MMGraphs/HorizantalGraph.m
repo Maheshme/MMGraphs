@@ -127,7 +127,12 @@
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
     _graphLayer.lineWidth = TOTAL_BAR_HEIGHT*PERCENTAGE_OF_BAR;
     _graphLayer.path = [_graphPath CGPath];
-//    [self.layer addSublayer:_graphLayer];
+    [self.layer addSublayer:_graphLayer];
+    
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
+
 }
 
 //Alter heights for change in orientation
@@ -159,12 +164,7 @@
     }
     
     _graphLayer.path = [_graphPath CGPath];
-    [self.layer addSublayer:_graphLayer];
-    
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_graphLayer])
-            [layer removeFromSuperlayer];
-    
+
     self.contentSize = CGSizeMake(self.frame.size.width, TOTAL_BAR_HEIGHT*_plotArray.count);
 }
 

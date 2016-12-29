@@ -150,6 +150,10 @@
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
     
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_firstGraphLayer] || [layer isEqual:_secondGraphLayer])
+            [layer removeFromSuperlayer];
+    
 }
 
 //Alter heights for change in orientation
@@ -202,10 +206,8 @@
     }
     
     _firstGraphLayer.path = [_firstGraphPath CGPath];
-    [self.layer addSublayer:_firstGraphLayer];
     
     _secondGraphLayer.path = [_secondGraphPath CGPath];
-    [self.layer addSublayer:_secondGraphLayer];
     
     self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*_firstPlotArray.count, self.frame.size.height);
 }

@@ -123,6 +123,10 @@
     _graphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
+    
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
 }
 
 //Alter heights for change in orientation
@@ -154,7 +158,6 @@
     }
     
     _graphLayer.path = [_graphPath CGPath];
-    [self.layer addSublayer:_graphLayer];
     
     self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*_plotArray.count, self.frame.size.height);
 }

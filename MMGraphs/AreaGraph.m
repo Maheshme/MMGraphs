@@ -118,6 +118,10 @@
     _graphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
+    
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
 }
 
 //Alter heights for change in orientation
@@ -148,9 +152,6 @@
     [_graphPath addCurveToPoint:CGPointMake(self.contentSize.width, STARTING_Y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+TOTAL_BAR_WIDTH*0.5, _graphPath.currentPoint.y) controlPoint2:CGPointMake(self.contentSize.width-TOTAL_BAR_WIDTH*0.5, STARTING_Y)];
     
     _graphLayer.path = [_graphPath CGPath];
-    [self.layer addSublayer:_graphLayer];
-    
-    
 }
 
 -(void)labelCreation

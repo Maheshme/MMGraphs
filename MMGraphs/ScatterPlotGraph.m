@@ -138,6 +138,10 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
+    
     _xAxisScrollButton = [[UIButton alloc]init];
     _xAxisScrollButton.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
     [_xAxisScrollButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
@@ -180,7 +184,6 @@
     }
     
     _graphLayer.path = [_graphPath CGPath];
-    [self.layer addSublayer:_graphLayer];
     
     self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*_plotArray.count, self.frame.size.height);
 }

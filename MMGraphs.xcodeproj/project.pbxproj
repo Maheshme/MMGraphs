@@ -171,9 +171,9 @@
 		3D6CD6BA1E11613200608C81 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
-				3D6CD6BF1E1240C000608C81 /* Model */,
+				3D6CD6BF1E1240C000608C81 /* Graph Model */,
 				3D6CD6BE1E1240AD00608C81 /* GraphViews */,
-				3D6CD6C01E1240CA00608C81 /* Controller */,
+				3D6CD6C01E1240CA00608C81 /* Graph Controller */,
 			);
 			name = Graphs;
 			sourceTree = "<group>";
@@ -218,7 +218,7 @@
 			name = GraphViews;
 			sourceTree = "<group>";
 		};
-		3D6CD6BF1E1240C000608C81 /* Model */ = {
+		3D6CD6BF1E1240C000608C81 /* Graph Model */ = {
 			isa = PBXGroup;
 			children = (
 				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
@@ -228,16 +228,16 @@
 				3D6CD70E1E13E78300608C81 /* Coordinates.h */,
 				3D6CD70F1E13E78300608C81 /* Coordinates.m */,
 			);
-			name = Model;
+			name = "Graph Model";
 			sourceTree = "<group>";
 		};
-		3D6CD6C01E1240CA00608C81 /* Controller */ = {
+		3D6CD6C01E1240CA00608C81 /* Graph Controller */ = {
 			isa = PBXGroup;
 			children = (
 				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
 				3D91DD9D1E090EFF002F12BB /* ViewController.m */,
 			);
-			name = Controller;
+			name = "Graph Controller";
 			sourceTree = "<group>";
 		};
 		3D6CD6CA1E12710000608C81 /* Commons */ = {

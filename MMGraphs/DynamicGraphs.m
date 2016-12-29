@@ -137,6 +137,10 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
+    for (CALayer *layer in self.blurrView.layer.sublayers)
+        if ([layer isEqual:_graphLayer])
+            [layer removeFromSuperlayer];
+    
     //Animation for drawing the path
     _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     _drawAnimation.duration = 0.5;
