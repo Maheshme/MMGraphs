@@ -129,7 +129,11 @@
 {
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _plotArray)
+    {
         barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
+        barData.coordinate.y = barData.barHeight;
+    }
 }
 
 -(void)drawBarGraph
@@ -147,7 +151,7 @@
     [_graphPath moveToPoint:CGPointMake(STARTING_X, STARTING_Y)];
     
     for (GraphPlotObj *barSource in _plotArray)
-        [_graphPath addCurveToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, barSource.barHeight) controlPoint1:CGPointMake(_graphPath.currentPoint.x+TOTAL_BAR_WIDTH*0.1, _graphPath.currentPoint.y) controlPoint2:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X-TOTAL_BAR_WIDTH*0.1, barSource.coordinate.y)];
+        [_graphPath addCurveToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+TOTAL_BAR_WIDTH*0.1, _graphPath.currentPoint.y) controlPoint2:CGPointMake(barSource.coordinate.x-TOTAL_BAR_WIDTH*0.1, barSource.coordinate.y)];
         
     [_graphPath addCurveToPoint:CGPointMake(self.contentSize.width, STARTING_Y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+TOTAL_BAR_WIDTH*0.5, _graphPath.currentPoint.y) controlPoint2:CGPointMake(self.contentSize.width-TOTAL_BAR_WIDTH*0.5, STARTING_Y)];
     

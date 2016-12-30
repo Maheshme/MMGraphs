@@ -160,10 +160,18 @@
     
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _firstPlotArray)
+    {
         barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
+        barData.coordinate.y = barData.barHeight;
+    }
     
     for (GraphPlotObj *barData in _secondPlotArray)
+    {
         barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 + barData.value/_yMax) + ENDING_Y;
+        barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
+        barData.coordinate.y = barData.barHeight;
+    }
 }
 
 -(void)drawBarGraph
@@ -191,14 +199,14 @@
     
     for (GraphPlotObj *barSource in _firstPlotArray)
     {
-        [_firstGraphPath moveToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, STARTING_Y)];
-        [_firstGraphPath addLineToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, barSource.barHeight)];
+        [_firstGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, STARTING_Y)];
+        [_firstGraphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
 
     for (GraphPlotObj *barSource in _secondPlotArray)
     {
-        [_secondGraphPath moveToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, STARTING_Y)];
-        [_secondGraphPath addLineToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, barSource.barHeight)];
+        [_secondGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, STARTING_Y)];
+        [_secondGraphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
 
     _firstGraphLayer.path = [_firstGraphPath CGPath];

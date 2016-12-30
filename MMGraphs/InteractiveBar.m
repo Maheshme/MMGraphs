@@ -13,7 +13,7 @@
 
 #define STARTING_Y                      self.frame.size.height*0.9
 #define ENDING_Y                        11.0
-#define STARTING_X                      self.frame.size.width*0
+#define STARTING_X                      self.frame.size.width*0.0
 #define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
 #define BAR_WIDTH                       40.0
 #define SPACING                         10.0
@@ -136,7 +136,11 @@
     
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _plotArray)
+    {
         barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
+        barData.coordinate.y = barData.barHeight;
+    }
 }
 
 -(void)drawBarGraph
@@ -153,8 +157,8 @@
     
     for (GraphPlotObj *barSource in _plotArray)
     {
-        [_graphPath moveToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, STARTING_Y)];
-        [_graphPath addLineToPoint:CGPointMake((barSource.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X, barSource.barHeight)];
+        [_graphPath moveToPoint:CGPointMake(barSource.coordinate.x, STARTING_Y)];
+        [_graphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
     
     _graphLayer.path = [_graphPath CGPath];
