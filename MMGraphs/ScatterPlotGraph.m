@@ -62,7 +62,7 @@
 {
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
     if(!_isScrolling)
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
@@ -133,6 +133,7 @@
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.strokeColor = COLOR(233.0, 245.0, 252.0, 1).CGColor;
     _graphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
+    /**/_graphLayer.geometryFlipped = YES;
     _graphLayer.lineCap = @"round";
     _graphLayer.lineJoin = @"round";
     _graphLayer.path = [_graphPath CGPath];
@@ -164,7 +165,7 @@
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _plotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(barData.value/_yMax);
         barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
         barData.coordinate.y = barData.barHeight;
     }
@@ -248,7 +249,7 @@
         if (_valueLabel.center.x != (result.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2)
         {
             _valueLabel.transform = CGAffineTransformMakeScale(PERCENTAGE_OF_BAR, PERCENTAGE_OF_BAR);
-            _valueLabel.center = CGPointMake((result.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, result.barHeight);
+            _valueLabel.center = CGPointMake((result.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, STARTING_Y - result.barHeight);
             //Display bubble if touch is on bar
             [UIView animateWithDuration:0.3
                                   delay:0

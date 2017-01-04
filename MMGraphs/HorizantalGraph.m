@@ -76,7 +76,7 @@
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
         {
             xAxisxLabel.frame = CGRectMake(0, (xAxisxLabel.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2+STARTING_Y, STARTING_X, self.frame.size.height/TOTAL_BAR_HEIGHT);
-            xAxisxLabel.center = CGPointMake(xAxisxLabel.center.x, STARTING_Y+(xAxisxLabel.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2+STARTING_Y);
+            xAxisxLabel.center = CGPointMake(xAxisxLabel.center.x, STARTING_Y+(xAxisxLabel.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2);
             [self bringSubviewToFront:xAxisxLabel];
         }
 }
@@ -198,7 +198,7 @@
 //Get value for the touched point on Button
 -(void)getValueWith:(CGPoint)touchPoint
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)(touchPoint.y/TOTAL_BAR_HEIGHT)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)((touchPoint.y - STARTING_Y)/TOTAL_BAR_HEIGHT)];
     NSArray *resultArray = [_plotArray filteredArrayUsingPredicate:predicate];
     
     GraphPlotObj *result;
@@ -210,7 +210,7 @@
         if ((touchPoint.x <= result.barHeight && touchPoint.x > STARTING_X) || result.value < 0)
         {
             if (result.value >= 0)//If values are positive
-                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake(result.barHeight,(result.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2)];
+                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake(result.barHeight,(result.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2+STARTING_Y)];
             else if(touchPoint.y >= STARTING_Y)//If values are negative
                 [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake(STARTING_X, (result.position*TOTAL_BAR_HEIGHT)+TOTAL_BAR_HEIGHT/2)];
             [self bringSubviewToFront:_bubble];

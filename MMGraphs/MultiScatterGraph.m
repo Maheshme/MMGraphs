@@ -63,8 +63,8 @@
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
     _labelSeperator.frame = CGRectMake(STARTING_X, LABEL_Y_ORIGIN, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    _secondGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _secondGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
     if(_secondGraphBubble.frame.size.width <= 0)
         _secondGraphBubble.frame = CGRectMake(_secondGraphBubble.frame.origin.x, _secondGraphBubble.frame.origin.y, SCREEN_WIDTH*0.18, SCREEN_WIDTH*0.12);
@@ -137,6 +137,7 @@
     _firstGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _firstGraphLayer.lineCap = @"round";
     _firstGraphLayer.lineJoin = @"round";
+    _firstGraphLayer.geometryFlipped = YES;
     _firstGraphLayer.path = [_firstGraphPath CGPath];
     [self.layer addSublayer:_firstGraphLayer];
     
@@ -147,6 +148,7 @@
     _secondGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _secondGraphLayer.lineCap = @"round";
     _secondGraphLayer.lineJoin = @"round";
+    _secondGraphLayer.geometryFlipped = YES;
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
     
@@ -165,14 +167,14 @@
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _firstPlotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(barData.value/_yMax);
         barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
         barData.coordinate.y = barData.barHeight;
     }
     
     for (GraphPlotObj *barData in _secondPlotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(barData.value/_yMax);
         barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
         barData.coordinate.y = barData.barHeight;
     }

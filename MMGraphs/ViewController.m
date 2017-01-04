@@ -25,7 +25,7 @@
 @property (nonatomic, strong) MenuView *menuView;
 @property (nonatomic, strong) NSArray *arrayOfGraphs;
 @property (nonatomic, strong) UIImageView *backGroundImageView;
-
+@property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) UIScrollView *graphView;
 
 @end
@@ -112,6 +112,12 @@
 
 -(void)removeCurrentGraph
 {
+    if (_updateTimer != nil)
+    {
+        [_updateTimer invalidate];
+        _updateTimer = nil;
+    }
+    
     if (_graphView != nil)
     {
         [_graphView removeFromSuperview];
@@ -132,53 +138,56 @@
     
     if ([clickedButton.titleLabel.text isEqualToString:@"Interactive Bar"])
     {
-        InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithPlotArray:[GraphModel getDataForDays:20 withUpperLimit:100 andLowerlimit:0]];
         _graphView = interaciveBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Horizontal bar"])
     {
-        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = interaciveHorizantalBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Symmetry"])
     {
-        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365] andSecondPlotArray:[GraphModel getDataForDays:365]];
+        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0] andSecondPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = interaciveSymmetryBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Scattert Plot"])
     {
-        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365]];
+        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = scatterPlotGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Multi scatter Plot"])
     {
-        MultiScatterGraph *multiScatterPlotGraph = [[MultiScatterGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365] andSecondPlotArray:[GraphModel getDataForDays:365]];
+        MultiScatterGraph *multiScatterPlotGraph = [[MultiScatterGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0] andSecondPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = multiScatterPlotGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic line"])
     {
-        DynamicGraphs *interactiveLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
-        _graphView = interactiveLine;
+        DynamicGraphs *dynamicLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
+        _graphView = dynamicLine;
+        [self createTimer];
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Interactive Line"])
     {
-        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:60]];
+        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:76]];
         _graphView = interactiveLine;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Area graph"])
     {
-        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30]];
+        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:70 andLowerlimit:40] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
         _graphView = areaGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic Bar"])
     {
         DynamicGraphs *dynamicBar = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Bar];
         _graphView = dynamicBar;
+        [self createTimer];
     }
     else if([clickedButton.titleLabel.text isEqualToString:@"Dynamic Scattert"])
     {
         DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Scatter];
         _graphView = dynamicScattert;
+        [self createTimer];
     }
     
    
@@ -188,5 +197,22 @@
         _removeGraph.hidden = NO;
     }
 }
+
+//Trigger timer at start of minute
+-(void)createTimer
+{
+    if (_updateTimer == nil)
+        _updateTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                        target:self
+                                                      selector:@selector(createData)
+                                                      userInfo:nil
+                                                       repeats:YES];
+}
+
+-(void)createData
+{
+    [((DynamicGraphs *)_graphView) createDataWithPlotObj:[GraphModel getMinuteDataInBetween:0 upper:100]] ;
+}
+
 
 @end

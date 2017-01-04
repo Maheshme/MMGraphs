@@ -10,7 +10,7 @@
 
 @implementation GraphModel
 
-+(NSArray *)getDataForDays:(int)days
++(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit
 {
     NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [gregorian components:( NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
@@ -33,7 +33,7 @@
     for (int i = 0; i < days; i++)
     {
         GraphPlotObj *graphObj = [[GraphPlotObj alloc]init];
-        graphObj.value = [GraphModel getRandomNumberInBetween:0 upper:100];
+        graphObj.value = [GraphModel getRandomNumberInBetween:lowerLimit upper:upperLimit];
         graphObj.position = i;
         graphObj.timeStamp = referenceTime + i*SECONDS_IN_A_DAY;
         graphObj.labelName = [dateFormat stringFromDate:[NSDate dateWithTimeIntervalSince1970:graphObj.timeStamp]];
@@ -51,10 +51,9 @@
     return rndValue;
 }
 
-+(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper forMinute:(int)min
++(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper
 {
     GraphPlotObj *plotObject = [[GraphPlotObj alloc]init];
-    plotObject.position = min;
     plotObject.value = [GraphModel getRandomNumberInBetween:lower upper:upper];
     plotObject.timeStamp = [[NSDate date] timeIntervalSince1970];
     
@@ -65,8 +64,12 @@
 {
     NSMutableArray *minuteData = [[NSMutableArray alloc]init];
     
-    for (int i = 0; i <= numberOfMinutes; i++)
-        [minuteData addObject: [GraphModel getMinuteDataInBetween:0 upper:100 forMinute:i]];
+    for (int i = 0; i < numberOfMinutes; i++)
+    {
+        GraphPlotObj *plotObj = [GraphModel getMinuteDataInBetween:0 upper:100];
+        plotObj.position = i;
+        [minuteData addObject:plotObj];
+    }
     
     return (NSArray *)minuteData;
 }

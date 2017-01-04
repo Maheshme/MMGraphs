@@ -82,7 +82,7 @@
         _seperationHeight = (self.frame.size.height - (MENU_SIZE.width/2+MENU_CENTER.y))/(_arrayOfGraphButtons.count+1);
         for (UIButton *menu in _arrayOfGraphButtons)
         {
-            menu.frame = CGRectMake(0, 0, self.frame.size.width*0.5, MINIMUM_HEIGHT_OF_BUTTON/2);
+            menu.frame = CGRectMake(0, 0, self.frame.size.width*0.5, MINIMUM_HEIGHT_OF_BUTTON*0.8);
             menu.center = CGPointMake(-2*MENU_SIZE.width, (menu.tag+1)*_seperationHeight + (MENU_SIZE.width/2+MENU_CENTER.y));
         }
     }

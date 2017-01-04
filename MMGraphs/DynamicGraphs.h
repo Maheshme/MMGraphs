@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphPlotObj.h"
 
 typedef NS_ENUM(NSInteger, Graph_Type) {
     Graph_Type_Line,
@@ -18,5 +19,6 @@ typedef NS_ENUM(NSInteger, Graph_Type) {
 @interface DynamicGraphs : VisualScrollView
 
 -(instancetype)initWithTypeOfGraph:(Graph_Type)typeOfGraph;
+-(void)createDataWithPlotObj:(GraphPlotObj *)plotObj;
 
 @end

@@ -12,8 +12,9 @@
 #import "BubbleView.h"
 
 #define STARTING_Y                      self.frame.size.height*0.45
+#define HEIGHTT_OF_GRAPH                self.frame.size.height*0.45
 #define ENDING_Y                        0
-#define STARTING_X                      self.frame.size.width*0
+#define STARTING_X                      self.frame.size.width*0.1
 #define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
 #define BAR_WIDTH                       40.0
 #define SPACING                         10.0
@@ -64,8 +65,8 @@
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
     _labelSeperator.frame = CGRectMake(STARTING_X, LABEL_Y_ORIGIN, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    _secondGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, HEIGHTT_OF_GRAPH);//CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _secondGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, HEIGHTT_OF_GRAPH);
     
     if(_secondGraphBubble.frame.size.width <= 0)
         _secondGraphBubble.frame = CGRectMake(_secondGraphBubble.frame.origin.x, _secondGraphBubble.frame.origin.y, SCREEN_WIDTH*0.18, SCREEN_WIDTH*0.12);
@@ -135,6 +136,7 @@
     _firstGraphLayer = [CAShapeLayer layer];
     _firstGraphLayer.fillColor = [[UIColor clearColor] CGColor];
     _firstGraphLayer.strokeColor = COLOR(152.0, 73.0, 118.0, 1).CGColor;
+    _firstGraphLayer.geometryFlipped = YES;
     _firstGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _firstGraphLayer.path = [_firstGraphPath CGPath];
     [self.layer addSublayer:_firstGraphLayer];
@@ -143,6 +145,7 @@
     _secondGraphLayer = [CAShapeLayer layer];
     _secondGraphLayer.fillColor = [[UIColor clearColor] CGColor];
     _secondGraphLayer.strokeColor = COLOR(40.0, 40.0, 40.0, 1).CGColor;
+    _secondGraphLayer.geometryFlipped = YES;
     _secondGraphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
@@ -161,14 +164,14 @@
     /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _firstPlotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
+        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(barData.value/_yMax) + ENDING_Y;
         barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
         barData.coordinate.y = barData.barHeight;
     }
     
     for (GraphPlotObj *barData in _secondPlotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 + barData.value/_yMax) + ENDING_Y;
+        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(-barData.value/_yMax) + ENDING_Y;
         barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
         barData.coordinate.y = barData.barHeight;
     }
@@ -199,13 +202,14 @@
     
     for (GraphPlotObj *barSource in _firstPlotArray)
     {
-        [_firstGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, STARTING_Y)];
+        [_firstGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, 0)];
         [_firstGraphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
 
     for (GraphPlotObj *barSource in _secondPlotArray)
     {
-        [_secondGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, STARTING_Y)];
+        NSLog(@"barSource : %f",barSource.value);
+        [_secondGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, 0)];
         [_secondGraphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
 
@@ -239,7 +243,7 @@
 //Get value for the touched point on Button
 -(void)getValueWith:(CGPoint)touchPoint
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)(touchPoint.x/TOTAL_BAR_WIDTH)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)((touchPoint.x-STARTING_X)/TOTAL_BAR_WIDTH)];
     NSArray *firstResultArray = [_firstPlotArray filteredArrayUsingPredicate:predicate];
     NSArray *secondResultArray = [_secondPlotArray filteredArrayUsingPredicate:predicate];
     
@@ -250,17 +254,17 @@
         firstResult = (GraphPlotObj *)[firstResultArray firstObject];
         secondResult = (GraphPlotObj *)[secondResultArray firstObject];
         //Display bubble if touch is in between symmetry graph
-        if ((touchPoint.y >= firstResult.barHeight && touchPoint.y <= secondResult.barHeight) || (touchPoint.y >= firstResult.barHeight && secondResult == nil) || (touchPoint.y <= secondResult.barHeight && firstResult == nil))
+        if ((touchPoint.y >= STARTING_Y - firstResult.barHeight && touchPoint.y <= STARTING_Y - secondResult.barHeight) || (touchPoint.y >= firstResult.barHeight && secondResult == nil) || (touchPoint.y <= secondResult.barHeight && firstResult == nil))
         {
             if (firstResult.value >= 0)//If values are positive
-                [self createFirstBubbleWithValueToBeDisplayed:firstResult.value andCenter:CGPointMake((firstResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, firstResult.barHeight)];
+                [self createFirstBubbleWithValueToBeDisplayed:firstResult.value andCenter:CGPointMake((firstResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y - firstResult.barHeight)];
             else
-                [self createFirstBubbleWithValueToBeDisplayed:firstResult.value andCenter:CGPointMake((firstResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, STARTING_Y)];
+                [self createFirstBubbleWithValueToBeDisplayed:firstResult.value andCenter:CGPointMake((firstResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y)];
             
             if (secondResult.value >= 0)//If values are positive
-                [self createSecondBubbleWithValueToBeDisplayed:secondResult.value andCenter:CGPointMake((secondResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, secondResult.barHeight)];
+                [self createSecondBubbleWithValueToBeDisplayed:secondResult.value andCenter:CGPointMake((secondResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y - secondResult.barHeight)];
             else
-                [self createSecondBubbleWithValueToBeDisplayed:secondResult.value andCenter:CGPointMake((secondResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2, STARTING_Y)];
+                [self createSecondBubbleWithValueToBeDisplayed:secondResult.value andCenter:CGPointMake((secondResult.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y)];
         }
         else
             [self removeBubble];

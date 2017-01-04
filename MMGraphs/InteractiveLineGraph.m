@@ -12,7 +12,7 @@
 #import "GraphModel.h"
 #import "Coordinates.h"
 
-#define MAX_X_AXIS_LABELS                               5
+#define MAX_X_AXIS_LABELS                               10
 #define TIME_INTERVAL                                   5     //Minutes
 #define X_AXIS_LABELS_FONT                              11
 #define SEPERATOR_HEIGHT                                1
@@ -26,13 +26,14 @@
 
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
-@property (nonatomic) float maxY, minY, minX, maxX, rangeOfY, xUnit, slope;
+@property (nonatomic) float maxY, minY, minX, maxX, rangeOfY, xUnit, slope, labelCount;
 @property (nonatomic, strong) UIView *separator;
 @property (nonatomic) BOOL isScrolling, labelAllocated;
 @property (nonatomic, strong) NSArray *plotArray;
 @property (nonatomic, strong) UIButton *graphButton, *scroller;
 @property (nonatomic, strong) Coordinates *previousCoord, *nextCoord;
 @property (nonatomic, strong) CABasicAnimation *drawAnimation;
+@property (nonatomic, strong) CAGradientLayer *grad;
 
 
 @end
@@ -46,6 +47,7 @@
     {
         self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
+        self.bounces = NO;
 
         _plotArray = [NSArray arrayWithArray:plotArray];
         
@@ -71,17 +73,17 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _separator.frame = CGRectMake(0, STARTING_Y, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _separator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
+    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
     if (!_isScrolling)
     {
         NSArray *labelsArray = [[self subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[XAxisGraphLabel class]]];
         for (XAxisGraphLabel *xAxisLabel in labelsArray)
         {
-            xAxisLabel.frame = CGRectMake((xAxisLabel.position*_xUnit*TIME_INTERVAL), STARTING_Y, _xUnit*TIME_INTERVAL, self.frame.size.height*0.14);
+            xAxisLabel.frame = CGRectMake((xAxisLabel.position*_xUnit*TIME_INTERVAL)+STARTING_X, STARTING_Y, _xUnit*TIME_INTERVAL, self.frame.size.height*0.14);
             if(xAxisLabel.position != 0)
-                xAxisLabel.center = CGPointMake(xAxisLabel.position*_xUnit, xAxisLabel.center.y);
+                xAxisLabel.center = CGPointMake(xAxisLabel.position*_xUnit+STARTING_X, xAxisLabel.center.y);
             [self bringSubviewToFront:xAxisLabel];
         }
     }
@@ -108,7 +110,7 @@
 
 -(void)drawRect:(CGRect)rect
 {
-    _xUnit = (self.frame.size.width / MAX_X_AXIS_LABELS)/TIME_INTERVAL;
+    _xUnit = ((self.frame.size.width - STARTING_X) / (MAX_X_AXIS_LABELS*TIME_INTERVAL));
     if (!_labelAllocated)
         [self createLabels];
     [self alterCoordinates];
@@ -135,6 +137,7 @@
     _graphLayer.lineWidth = 1;
     _graphLayer.lineCap = LINE_CAP_ROUND;
     _graphLayer.lineJoin = LINE_CAP_ROUND;
+    _graphLayer.geometryFlipped = YES;
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
@@ -159,7 +162,14 @@
     _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     _drawAnimation.duration = 2.5;
     _drawAnimation.repeatCount = 1.0;
+    [_drawAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];//[CAMediaTimingFunction functionWithControlPoints:0.0 :0.25 :0.56 :0.73]
 
+    _grad = [[CAGradientLayer alloc]init];
+    _grad.colors = @[(__bridge id)COLOR(210.0, 181.0, 59.0, 1).CGColor, (__bridge id)COLOR(241.0, 108.0, 32.0, 1).CGColor, (__bridge id)COLOR(192.0, 49.0, 32.0, 1).CGColor ];
+    _grad.startPoint = CGPointMake(0,0.0);
+    _grad.endPoint = CGPointMake(0,1.0);
+    [self.layer addSublayer:_grad];
+    
 }
 
 
@@ -167,17 +177,17 @@
 {
     for (GraphPlotObj *graphData in _plotArray)
     {
-        graphData.barHeight = (((_maxY - graphData.value)/_rangeOfY)*MAX_HEIGHT_OF_GRAPH) + ENDING_Y;
+        /**/graphData.barHeight = ((graphData.value/_rangeOfY)*MAX_HEIGHT_OF_GRAPH);// + ENDING_Y;//(((_maxY - graphData.value)/_rangeOfY)*MAX_HEIGHT_OF_GRAPH) + ENDING_Y;
         graphData.coordinate.y = graphData.barHeight;
-        graphData.coordinate.x = _xUnit*graphData.position;
+        graphData.coordinate.x = _xUnit*graphData.position+STARTING_X;
     }
 }
 
 -(void)createLabels
 {
     //Time Label creation in x-axis
-    int labelCount = ((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ? ((_maxX/TIME_INTERVAL) + 1) : MAX_X_AXIS_LABELS;
-    for (int i = 0; i < labelCount  ; i++)
+    _labelCount = ((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ? ((_maxX/TIME_INTERVAL) + 1) : MAX_X_AXIS_LABELS;
+    for (int i = 0; i < _labelCount  ; i++)
         [self createLabelsWithLabelCount:i*TIME_INTERVAL];
     
     _labelAllocated = YES;
@@ -198,33 +208,34 @@
 {
     //Remove complete plot
     [_graphPath removeAllPoints];
+    self.contentSize = CGSizeMake(_xUnit*_plotArray.count+STARTING_X, self.frame.size.height);
     
     for (GraphPlotObj *graphData  in _plotArray)
     {
         if ([graphData isEqual:[_plotArray firstObject]])
             [_graphPath moveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
         else
-//            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*0.2, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*0.2, graphData.coordinate.y)];
-            [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
+            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*0.2, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*0.2, graphData.coordinate.y)];
+//            [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
     }
     
     _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
     _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
     
     _graphLayer.path = [_graphPath CGPath];
-    
+    _grad.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
+    _grad.mask = _graphLayer;
+
     [_graphLayer addAnimation:_drawAnimation forKey:@"drawCircleAnimation"];
-    
-    self.contentSize = CGSizeMake(_xUnit*_plotArray.count, self.frame.size.height);
 }
 
 //Getting values based on move of Scroll button
 - (void) dragMoving:(UIControl *)c withEvent:ev
 {
     float xPos;
-    
-    if ([[[ev allTouches] anyObject] locationInView:self].x >= STARTING_X)
-        xPos =[[[ev allTouches] anyObject] locationInView:self].x;
+
+   if ([[[ev allTouches] anyObject] locationInView:self].x > STARTING_X)
+       xPos =[[[ev allTouches] anyObject] locationInView:self].x;
     else
         xPos = STARTING_X;
     
@@ -250,7 +261,7 @@
     {
         GraphPlotObj *lastPoint = (GraphPlotObj *)[_plotArray lastObject];
         if(!isnan(lastPoint.coordinate.y))
-            _graphButton.center = CGPointMake(lastPoint.coordinate.x, lastPoint.coordinate.y);
+            _graphButton.center = CGPointMake(lastPoint.coordinate.x, self.frame.size.height*0.9 - lastPoint.coordinate.y);
     }
 }
 
@@ -262,23 +273,23 @@
     GraphPlotObj *cord = [[[_plotArray filteredArrayUsingPredicate:predicateForLowest] sortedArrayUsingDescriptors:@[discriptor]] firstObject];
     
     _previousCoord.x = cord.coordinate.x;
-    _previousCoord.y = cord.coordinate.y;
+    _previousCoord.y = self.frame.size.height*0.9 - cord.coordinate.y;
     
     NSPredicate *predicateForNext =[NSPredicate predicateWithFormat:@"coordinate.x > %f", xPos];
     NSSortDescriptor *discriptorNe = [NSSortDescriptor sortDescriptorWithKey:@"coordinate.x" ascending:YES];
     GraphPlotObj *cordNext = [[[_plotArray filteredArrayUsingPredicate:predicateForNext] sortedArrayUsingDescriptors:@[discriptorNe]] firstObject];
     
     _nextCoord.x = cordNext.coordinate.x;
-    _nextCoord.y = cordNext.coordinate.y;
+    _nextCoord.y = self.frame.size.height*0.9 - cordNext.coordinate.y;
     
-    _slope = (cordNext.coordinate.y - cord.coordinate.y)/(cordNext.coordinate.x - cord.coordinate.x);
+    _slope = (_nextCoord.y - _previousCoord.y)/(_nextCoord.x - _previousCoord.x);
 }
 
 #pragma  mark - Time calluculation based on movement of scroll buttton
 //Get timer acc to x value
 -(NSString *)getTimeWithXPosition:(float)xPos
 {
-    float time = (xPos/self.contentSize.width) * (_maxX+1) * 60;
+    float time = ((xPos - STARTING_X)/(self.contentSize.width - STARTING_X)) * (TIME_INTERVAL*(((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ?_labelCount - 1 : _labelCount)) * 60;
     int timeInMin = (int)time / 60;
     int timeLeft = (int)time%60;
     int timeInHr = timeInMin /60;

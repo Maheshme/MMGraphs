@@ -11,6 +11,6 @@
 
 @interface AreaGraph : VisualScrollView
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray;
+- (instancetype)initWithPlotArray:(NSArray *)plotArray withecondPlotArray:(NSArray *)secondPlotArray andThirdPlotArray:(NSArray *)thirdPlotArray;
 
 @end

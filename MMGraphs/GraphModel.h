@@ -11,8 +11,8 @@
 
 @interface GraphModel : NSObject
 
-+(NSArray *)getDataForDays:(int)days;
-+(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper forMinute:(int)min;
++(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit;
++(GraphPlotObj *)getMinuteDataInBetween:(int)lower upper:(int)upper;
 +(NSArray *)getMinuteDataFor:(int)numberOfMinutes;
 
 @end

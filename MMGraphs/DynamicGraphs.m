@@ -18,7 +18,7 @@
 #define SEPERATOR_HEIGHT                                1
 #define STARTING_Y                                      (self.frame.size.height*0.9)
 #define ENDING_Y                                        (self.frame.size.height*0.1)
-#define STARTING_X                                      (self.frame.size.width*0.0)
+#define STARTING_X                                      (self.frame.size.width*0.05)
 #define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
 
@@ -72,18 +72,18 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _xUnit = (self.frame.size.width / MAX_X_AXIS_LABELS)/TIME_INTERVAL;
-    _separator.frame = CGRectMake(0, STARTING_Y, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _xUnit = ((self.frame.size.width - STARTING_X) / MAX_X_AXIS_LABELS)/TIME_INTERVAL;
+    _separator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
+    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
     if (!_isScrolling)
     {
         NSArray *labelsArray = [[self subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[XAxisGraphLabel class]]];
         for (XAxisGraphLabel *xAxisLabel in labelsArray)
         {
-            xAxisLabel.frame = CGRectMake((xAxisLabel.position*_xUnit*TIME_INTERVAL), STARTING_Y, _xUnit*TIME_INTERVAL, self.frame.size.height*0.14);
+            xAxisLabel.frame = CGRectMake((xAxisLabel.position*_xUnit*TIME_INTERVAL)+STARTING_X, STARTING_Y, _xUnit*TIME_INTERVAL, self.frame.size.height*0.14);
             if(xAxisLabel.position != 0)
-                xAxisLabel.center = CGPointMake(xAxisLabel.position*_xUnit, xAxisLabel.center.y);
+                xAxisLabel.center = CGPointMake(xAxisLabel.position*_xUnit+STARTING_X, xAxisLabel.center.y);
             [self bringSubviewToFront:xAxisLabel];
         }
         self.contentSize = CGSizeMake((self.frame.size.width > self.contentSize.width) ? self.frame.size.width : self.contentSize.width, self.frame.size.height);
@@ -94,8 +94,8 @@
 {
     if (_typeOfGraph == Graph_Type_Line)
     {
-        _graphLayer.lineWidth = 1;
-        _graphPath.lineWidth = 1;
+        _graphLayer.lineWidth = 2;
+        _graphPath.lineWidth = 2;
     }
     else
     {
@@ -104,7 +104,6 @@
     }
     
     [self checkForRangeChanges];
-    [self createTimer];
 }
 
 //Allocate needs for grah
@@ -127,8 +126,9 @@
     //CAShapeLayer for graph allocation
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
+    _graphLayer.geometryFlipped = YES;
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
-    _graphLayer.lineWidth = 1;
+    _graphLayer.lineWidth = 2;
     if (_typeOfGraph == Graph_Type_Line || _typeOfGraph == Graph_Type_Scatter)
     {
         _graphLayer.lineCap = LINE_CAP_ROUND;
@@ -153,7 +153,7 @@
 -(void)createLabelsWithLabelCount:(int)labelNumber
 {
     XAxisGraphLabel *label = [[XAxisGraphLabel alloc]initWithText:[NSString stringWithFormat:@"%d",labelNumber] textAlignement:(labelNumber == 0) ? NSTextAlignmentLeft : NSTextAlignmentCenter andTextColor:[UIColor blackColor]];
-    label.dotView.alpha = 0;
+    label.dotView.alpha = 1;
     label.position = labelNumber;
     [self addSubview:label];
     _latestLabel = labelNumber;
@@ -178,21 +178,11 @@
     return rangeChanged;
 }
 
-//Trigger timer at start of minute
--(void)createTimer
+-(void)createDataWithPlotObj:(GraphPlotObj *)plotObj
 {
-    if (_updateTimer == nil)
-        _updateTimer = [NSTimer scheduledTimerWithTimeInterval:5
-                                                        target:self
-                                                      selector:@selector(createData)
-                                                      userInfo:nil
-                                                       repeats:YES];
-}
-
--(void)createData
-{
-    GraphPlotObj *plotObject = [GraphModel getMinuteDataInBetween:0 upper:100 forMinute:(int)[_dynamicPlotArray count]];
-    [_dynamicPlotArray addObject:plotObject];
+    plotObj.position = (int)[_dynamicPlotArray count];
+    
+    [_dynamicPlotArray addObject:plotObj];
     
     [self updateGraph];
 }
@@ -235,16 +225,19 @@
                 [_graphPath moveToPoint:plotPoint];
             else
                 [_graphPath addLineToPoint:plotPoint];
+            NSLog(@"plotObject : %f",plotObject.value);
         }
         else if(_typeOfGraph == Graph_Type_Scatter)
         {
             [_graphPath moveToPoint:plotPoint];
             [_graphPath addLineToPoint:plotPoint];
+            NSLog(@"plotObject : %f",plotObject.value);
         }
         else if(_typeOfGraph == Graph_Type_Bar)
         {
-            [_graphPath moveToPoint:CGPointMake(plotPoint.x, STARTING_Y)];
+            [_graphPath moveToPoint:CGPointMake(plotPoint.x, 0)];
             [_graphPath addLineToPoint:plotPoint];
+            NSLog(@"plotObject : %f",plotObject.value);
         }
        
         
@@ -272,7 +265,7 @@
 
 -(void)increaseContentSizeForValue:(float)xValue
 {
-    self.contentSize = CGSizeMake((xValue+TIME_INTERVAL)*_xUnit, self.frame.size.height);
+    self.contentSize = CGSizeMake((xValue+TIME_INTERVAL)*_xUnit+STARTING_X, self.frame.size.height);
     [self setContentOffset:CGPointMake(self.contentSize.width - self.frame.size.width, 0) animated:YES];
     
     int missedLabels =  (((int)xValue - (int)_latestLabel)%5 == 0) ? ((xValue - _latestLabel)/5) : ((xValue - _latestLabel)/5)+1;
@@ -284,28 +277,15 @@
 -(CGPoint)calculatePointwithXValue:(float)xValue andYvalue:(float)yValue
 {
     CGPoint pointInGraph;
-    float plotPercent = (1 - yValue/_maxY);
+    /**/float plotPercent = (yValue/_maxY);
     plotPercent = isnan(plotPercent) ? 1 : plotPercent;
-    pointInGraph.y = (plotPercent*MAX_HEIGHT_OF_GRAPH) + ENDING_Y;
-    pointInGraph.x = xValue * _xUnit;
+    pointInGraph.y = (plotPercent*MAX_HEIGHT_OF_GRAPH);
+    pointInGraph.x = (xValue * _xUnit) +  STARTING_X;
     
     if (_maxY == 0)
-        pointInGraph.y = STARTING_Y + ENDING_Y;
+        pointInGraph.y = MAX_HEIGHT_OF_GRAPH;
     
     return pointInGraph;
 }
-
-//Remove timer and cancel perform selector request
--(void)removeTimerAndObserver
-{
-    [_updateTimer invalidate];
-    _updateTimer = nil;
-}
-
--(void)dealloc
-{
-    [self removeTimerAndObserver];
-}
-
 
 @end
