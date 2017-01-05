@@ -18,7 +18,7 @@
 #define SEPERATOR_HEIGHT                                1
 #define STARTING_Y                                      (self.frame.size.height*0.9)
 #define ENDING_Y                                        (self.frame.size.height*0.1)
-#define STARTING_X                                      (self.frame.size.width*0.05)
+#define STARTING_X                                      (self.frame.size.width*0.0)
 #define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
 
