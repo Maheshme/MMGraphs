@@ -14,7 +14,7 @@
 #define STARTING_Y                      self.frame.size.height*0.45
 #define HEIGHTT_OF_GRAPH                self.frame.size.height*0.45
 #define ENDING_Y                        0
-#define STARTING_X                      self.frame.size.width*0.1
+#define STARTING_X                      self.frame.size.width*0.0
 #define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
 #define BAR_WIDTH                       40.0
 #define SPACING                         10.0
