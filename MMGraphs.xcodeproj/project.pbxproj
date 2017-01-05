@@ -7,13 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6B31E11484C00608C81 /* MenuView.m */; };
+		3D6CD6C31E1240FF00608C81 /* GraphModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C21E1240FF00608C81 /* GraphModel.m */; };
+		3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C51E12413100608C81 /* InteractiveBar.m */; };
+		3D6CD6C91E12417F00608C81 /* GraphPlotObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */; };
+		3D6CD6CD1E12721400608C81 /* VisualScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6CC1E12721400608C81 /* VisualScrollView.m */; };
+		3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */; };
+		3D6CD6D31E127FFB00608C81 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6D21E127FFB00608C81 /* BubbleView.m */; };
+		3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */; };
+		3D6CD6F81E13830D00608C81 /* SymmetryBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */; };
+		3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */; };
+		3D6CD7001E139A1300608C81 /* MultiScatterGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */; };
+		3D6CD7081E13D7A900608C81 /* InteractiveLineGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */; };
+		3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD70F1E13E78300608C81 /* Coordinates.m */; };
+		3D6CD7131E150D2000608C81 /* AreaGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7121E150D2000608C81 /* AreaGraph.m */; };
+		3D6CD7171E15460100608C81 /* DynamicGraphs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7161E15460100608C81 /* DynamicGraphs.m */; };
 		3D91DD981E090EFF002F12BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD971E090EFF002F12BB /* main.m */; };
 		3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9A1E090EFF002F12BB /* AppDelegate.m */; };
 		3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9D1E090EFF002F12BB /* ViewController.m */; };
-		3D91DDA11E090EFF002F12BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DD9F1E090EFF002F12BB /* Main.storyboard */; };
 		3D91DDA41E090EFF002F12BB /* MMGraphs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */; };
 		3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA51E090EFF002F12BB /* Assets.xcassets */; };
-		3D91DDA91E090EFF002F12BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */; };
 		3D91DDB41E090EFF002F12BB /* MMGraphsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */; };
 		3D91DDBF1E090EFF002F12BB /* MMGraphsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */; };
 /* End PBXBuildFile section */
@@ -36,16 +49,46 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D6CD6B01E11431400608C81 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		3D6CD6B11E11432F00608C81 /* AppCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCommon.h; sourceTree = "<group>"; };
+		3D6CD6B21E11484C00608C81 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
+		3D6CD6B31E11484C00608C81 /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
+		3D6CD6C11E1240FF00608C81 /* GraphModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphModel.h; sourceTree = "<group>"; };
+		3D6CD6C21E1240FF00608C81 /* GraphModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphModel.m; sourceTree = "<group>"; };
+		3D6CD6C41E12413100608C81 /* InteractiveBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractiveBar.h; sourceTree = "<group>"; };
+		3D6CD6C51E12413100608C81 /* InteractiveBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractiveBar.m; sourceTree = "<group>"; };
+		3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPlotObj.h; sourceTree = "<group>"; };
+		3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPlotObj.m; sourceTree = "<group>"; };
+		3D6CD6CB1E12721400608C81 /* VisualScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualScrollView.h; sourceTree = "<group>"; };
+		3D6CD6CC1E12721400608C81 /* VisualScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisualScrollView.m; sourceTree = "<group>"; };
+		3D6CD6CE1E12788D00608C81 /* XAxisGraphLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAxisGraphLabel.h; sourceTree = "<group>"; };
+		3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAxisGraphLabel.m; sourceTree = "<group>"; };
+		3D6CD6D11E127FFB00608C81 /* BubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleView.h; sourceTree = "<group>"; };
+		3D6CD6D21E127FFB00608C81 /* BubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleView.m; sourceTree = "<group>"; };
+		3D6CD6F31E12922E00608C81 /* HorizantalGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizantalGraph.h; sourceTree = "<group>"; };
+		3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizantalGraph.m; sourceTree = "<group>"; };
+		3D6CD6F61E13830D00608C81 /* SymmetryBarGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymmetryBarGraph.h; sourceTree = "<group>"; };
+		3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SymmetryBarGraph.m; sourceTree = "<group>"; };
+		3D6CD6FA1E13969A00608C81 /* ScatterPlotGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScatterPlotGraph.h; sourceTree = "<group>"; };
+		3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScatterPlotGraph.m; sourceTree = "<group>"; };
+		3D6CD6FE1E139A1300608C81 /* MultiScatterGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScatterGraph.h; sourceTree = "<group>"; };
+		3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScatterGraph.m; sourceTree = "<group>"; };
+		3D6CD7061E13D7A900608C81 /* InteractiveLineGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractiveLineGraph.h; sourceTree = "<group>"; };
+		3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractiveLineGraph.m; sourceTree = "<group>"; };
+		3D6CD70E1E13E78300608C81 /* Coordinates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinates.h; sourceTree = "<group>"; };
+		3D6CD70F1E13E78300608C81 /* Coordinates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinates.m; sourceTree = "<group>"; };
+		3D6CD7111E150D2000608C81 /* AreaGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaGraph.h; sourceTree = "<group>"; };
+		3D6CD7121E150D2000608C81 /* AreaGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaGraph.m; sourceTree = "<group>"; };
+		3D6CD7151E15460100608C81 /* DynamicGraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicGraphs.h; sourceTree = "<group>"; };
+		3D6CD7161E15460100608C81 /* DynamicGraphs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicGraphs.m; sourceTree = "<group>"; };
 		3D91DD931E090EFF002F12BB /* MMGraphs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMGraphs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DD971E090EFF002F12BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D91DD991E090EFF002F12BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3D91DD9A1E090EFF002F12BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3D91DD9C1E090EFF002F12BB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3D91DD9D1E090EFF002F12BB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		3D91DDA01E090EFF002F12BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D91DDA31E090EFF002F12BB /* MMGraphs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MMGraphs.xcdatamodel; sourceTree = "<group>"; };
 		3D91DDA51E090EFF002F12BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3D91DDA81E090EFF002F12BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D91DDAA1E090EFF002F12BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D91DDAF1E090EFF002F12BB /* MMGraphsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMGraphsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMGraphsTests.m; sourceTree = "<group>"; };
@@ -80,6 +123,172 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D6CD6AF1E1142F500608C81 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6B01E11431400608C81 /* PrefixHeader.pch */,
+				3D6CD6B11E11432F00608C81 /* AppCommon.h */,
+			);
+			name = Commons;
+			sourceTree = "<group>";
+		};
+		3D6CD6B61E1160FC00608C81 /* BarGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6BD1E11617500608C81 /* HorizantalBar */,
+				3D6CD6BC1E11615F00608C81 /* SymmetryBar */,
+				3D6CD6BB1E11614D00608C81 /* InteractiveBarGraph */,
+			);
+			name = BarGraphs;
+			sourceTree = "<group>";
+		};
+		3D6CD6B71E11610800608C81 /* LineGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7011E13BE5C00608C81 /* InteractiveStaticLine */,
+			);
+			name = LineGraphs;
+			sourceTree = "<group>";
+		};
+		3D6CD6B81E11611600608C81 /* ScatterGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6FD1E1399D500608C81 /* MultiScatter */,
+				3D6CD6F91E13966B00608C81 /* SingleScatter */,
+			);
+			name = ScatterGraphs;
+			sourceTree = "<group>";
+		};
+		3D6CD6B91E11612500608C81 /* AreaGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7111E150D2000608C81 /* AreaGraph.h */,
+				3D6CD7121E150D2000608C81 /* AreaGraph.m */,
+			);
+			name = AreaGraphs;
+			sourceTree = "<group>";
+		};
+		3D6CD6BA1E11613200608C81 /* Graphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6BF1E1240C000608C81 /* Graph Model */,
+				3D6CD6BE1E1240AD00608C81 /* GraphViews */,
+				3D6CD6C01E1240CA00608C81 /* Graph Controller */,
+			);
+			name = Graphs;
+			sourceTree = "<group>";
+		};
+		3D6CD6BB1E11614D00608C81 /* InteractiveBarGraph */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6C41E12413100608C81 /* InteractiveBar.h */,
+				3D6CD6C51E12413100608C81 /* InteractiveBar.m */,
+			);
+			name = InteractiveBarGraph;
+			sourceTree = "<group>";
+		};
+		3D6CD6BC1E11615F00608C81 /* SymmetryBar */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6F61E13830D00608C81 /* SymmetryBarGraph.h */,
+				3D6CD6F71E13830D00608C81 /* SymmetryBarGraph.m */,
+			);
+			name = SymmetryBar;
+			sourceTree = "<group>";
+		};
+		3D6CD6BD1E11617500608C81 /* HorizantalBar */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6F31E12922E00608C81 /* HorizantalGraph.h */,
+				3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */,
+			);
+			name = HorizantalBar;
+			sourceTree = "<group>";
+		};
+		3D6CD6BE1E1240AD00608C81 /* GraphViews */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6CA1E12710000608C81 /* Commons */,
+				3D6CD6B91E11612500608C81 /* AreaGraphs */,
+				3D6CD6B61E1160FC00608C81 /* BarGraphs */,
+				3D6CD7141E1545DA00608C81 /* DynamicGraphs */,
+				3D6CD6B71E11610800608C81 /* LineGraphs */,
+				3D6CD6B81E11611600608C81 /* ScatterGraphs */,
+			);
+			name = GraphViews;
+			sourceTree = "<group>";
+		};
+		3D6CD6BF1E1240C000608C81 /* Graph Model */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
+				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
+				3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */,
+				3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */,
+				3D6CD70E1E13E78300608C81 /* Coordinates.h */,
+				3D6CD70F1E13E78300608C81 /* Coordinates.m */,
+			);
+			name = "Graph Model";
+			sourceTree = "<group>";
+		};
+		3D6CD6C01E1240CA00608C81 /* Graph Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
+				3D91DD9D1E090EFF002F12BB /* ViewController.m */,
+			);
+			name = "Graph Controller";
+			sourceTree = "<group>";
+		};
+		3D6CD6CA1E12710000608C81 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6CE1E12788D00608C81 /* XAxisGraphLabel.h */,
+				3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */,
+				3D6CD6CB1E12721400608C81 /* VisualScrollView.h */,
+				3D6CD6CC1E12721400608C81 /* VisualScrollView.m */,
+				3D6CD6D11E127FFB00608C81 /* BubbleView.h */,
+				3D6CD6D21E127FFB00608C81 /* BubbleView.m */,
+			);
+			name = Commons;
+			sourceTree = "<group>";
+		};
+		3D6CD6F91E13966B00608C81 /* SingleScatter */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6FA1E13969A00608C81 /* ScatterPlotGraph.h */,
+				3D6CD6FB1E13969A00608C81 /* ScatterPlotGraph.m */,
+			);
+			name = SingleScatter;
+			sourceTree = "<group>";
+		};
+		3D6CD6FD1E1399D500608C81 /* MultiScatter */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6FE1E139A1300608C81 /* MultiScatterGraph.h */,
+				3D6CD6FF1E139A1300608C81 /* MultiScatterGraph.m */,
+			);
+			name = MultiScatter;
+			sourceTree = "<group>";
+		};
+		3D6CD7011E13BE5C00608C81 /* InteractiveStaticLine */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7061E13D7A900608C81 /* InteractiveLineGraph.h */,
+				3D6CD7071E13D7A900608C81 /* InteractiveLineGraph.m */,
+			);
+			name = InteractiveStaticLine;
+			sourceTree = "<group>";
+		};
+		3D6CD7141E1545DA00608C81 /* DynamicGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD7151E15460100608C81 /* DynamicGraphs.h */,
+				3D6CD7161E15460100608C81 /* DynamicGraphs.m */,
+			);
+			name = DynamicGraphs;
+			sourceTree = "<group>";
+		};
 		3D91DD8A1E090EFF002F12BB = {
 			isa = PBXGroup;
 			children = (
@@ -103,15 +312,11 @@
 		3D91DD951E090EFF002F12BB /* MMGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6BA1E11613200608C81 /* Graphs */,
+				3D6CD6AF1E1142F500608C81 /* Commons */,
+				3D91DDD01E093C54002F12BB /* Menu */,
 				3D91DD991E090EFF002F12BB /* AppDelegate.h */,
 				3D91DD9A1E090EFF002F12BB /* AppDelegate.m */,
-				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
-				3D91DD9D1E090EFF002F12BB /* ViewController.m */,
-				3D91DD9F1E090EFF002F12BB /* Main.storyboard */,
-				3D91DDA51E090EFF002F12BB /* Assets.xcassets */,
-				3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */,
-				3D91DDAA1E090EFF002F12BB /* Info.plist */,
-				3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */,
 				3D91DD961E090EFF002F12BB /* Supporting Files */,
 			);
 			path = MMGraphs;
@@ -120,6 +325,9 @@
 		3D91DD961E090EFF002F12BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D91DDA51E090EFF002F12BB /* Assets.xcassets */,
+				3D91DDAA1E090EFF002F12BB /* Info.plist */,
+				3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */,
 				3D91DD971E090EFF002F12BB /* main.m */,
 			);
 			name = "Supporting Files";
@@ -141,6 +349,15 @@
 				3D91DDC01E090EFF002F12BB /* Info.plist */,
 			);
 			path = MMGraphsUITests;
+			sourceTree = "<group>";
+		};
+		3D91DDD01E093C54002F12BB /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6B21E11484C00608C81 /* MenuView.h */,
+				3D6CD6B31E11484C00608C81 /* MenuView.m */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,9 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D91DDA91E090EFF002F12BB /* LaunchScreen.storyboard in Resources */,
 				3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */,
-				3D91DDA11E090EFF002F12BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,9 +495,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D91DDA41E090EFF002F12BB /* MMGraphs.xcdatamodeld in Sources */,
+				3D6CD6CD1E12721400608C81 /* VisualScrollView.m in Sources */,
 				3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */,
+				3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */,
+				3D6CD7001E139A1300608C81 /* MultiScatterGraph.m in Sources */,
+				3D6CD6C31E1240FF00608C81 /* GraphModel.m in Sources */,
 				3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */,
+				3D6CD6D31E127FFB00608C81 /* BubbleView.m in Sources */,
+				3D6CD7171E15460100608C81 /* DynamicGraphs.m in Sources */,
 				3D91DD981E090EFF002F12BB /* main.m in Sources */,
+				3D6CD7131E150D2000608C81 /* AreaGraph.m in Sources */,
+				3D6CD6F81E13830D00608C81 /* SymmetryBarGraph.m in Sources */,
+				3D6CD6C91E12417F00608C81 /* GraphPlotObj.m in Sources */,
+				3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */,
+				3D6CD7081E13D7A900608C81 /* InteractiveLineGraph.m in Sources */,
+				3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */,
+				3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */,
+				3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */,
+				3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,25 +546,6 @@
 			targetProxy = 3D91DDBB1E090EFF002F12BB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3D91DD9F1E090EFF002F12BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D91DDA01E090EFF002F12BB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3D91DDA71E090EFF002F12BB /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D91DDA81E090EFF002F12BB /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3D91DDC11E090EFF002F12BB /* Debug */ = {
@@ -431,8 +642,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7663BSBBY;
+				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -443,8 +658,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7663BSBBY;
+				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,6 +739,7 @@
 				3D91DDC51E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D91DDC61E090EFF002F12BB /* Build configuration list for PBXNativeTarget "MMGraphsTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +748,7 @@
 				3D91DDC81E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D91DDC91E090EFF002F12BB /* Build configuration list for PBXNativeTarget "MMGraphsUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +757,7 @@
 				3D91DDCB1E090EFF002F12BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
