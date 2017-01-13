@@ -179,7 +179,7 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:AREA_GRAPH])
     {
-        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:70 andLowerlimit:40] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
+        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:80 andLowerlimit:30] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
         _graphView = areaGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_LINE_GRAPH])

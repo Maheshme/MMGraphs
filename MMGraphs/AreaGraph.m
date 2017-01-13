@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UIView *xAxisSeperator;
 @property (nonatomic, strong) UIBezierPath *graphPath, *graphPath2, *graphPath3;
 @property (nonatomic, strong) CAShapeLayer *graphLayer, *graphLayer2, *graphLayer3;
+@property (nonatomic, strong) CAGradientLayer *gradientLayer, *gradientLayer2, *gradientLayer3;
 
 @end
 
@@ -64,8 +65,13 @@
 {
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _graphLayer2.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _graphLayer2.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
+    _gradientLayer.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
+    _gradientLayer2.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
+    _gradientLayer3.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
     
     if(!_isScrolling)
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
@@ -150,6 +156,24 @@
     _graphLayer3.path = [_graphPath3 CGPath];
     [self.layer addSublayer:_graphLayer3];
     
+    _gradientLayer = [CAGradientLayer layer];
+    _gradientLayer.colors = @[(__bridge id)COLOR(211.0, 104.0, 41.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer.startPoint = CGPointMake(0, 1-[[_plotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer.endPoint = CGPointMake(0,1 - [[_plotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer];
+    
+    _gradientLayer2 = [CAGradientLayer layer];
+    _gradientLayer2.colors = @[(__bridge id)COLOR(73.0, 209.0, 225.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer2.startPoint = CGPointMake(0, 1-[[_secondPlotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer2.endPoint = CGPointMake(0,1 - [[_secondPlotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer2];
+    
+    _gradientLayer3 = [CAGradientLayer layer];
+    _gradientLayer3.colors = @[(__bridge id)COLOR(224.0, 49.0, 113.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer3.startPoint = CGPointMake(0, 1-[[_thirdPlotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer3.endPoint = CGPointMake(0,1 - [[_thirdPlotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer3];
+    
 //    for (CALayer *layer in self.blurrView.layer.sublayers)
 //        if ([layer isEqual:_graphLayer] || [layer isEqual:_graphLayer2] || [layer isEqual:_graphLayer3])
 //            [layer removeFromSuperlayer];
@@ -221,43 +245,9 @@
     _graphLayer2.path = [_graphPath2 CGPath];
     _graphLayer3.path = [_graphPath3 CGPath];
     
-    
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer.colors = @[(__bridge id)COLOR(211.0, 104.0, 41.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer.startPoint = CGPointMake(0,0.0);
-    gradientLayer.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer.mask = _graphLayer;
-    
-    CAGradientLayer *gradientLayer2 = [CAGradientLayer layer];
-    
-    gradientLayer2.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer2.colors = @[(__bridge id)COLOR(73.0, 209.0, 225.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer2.startPoint = CGPointMake(0,0.0);
-    gradientLayer2.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer2];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer2.mask = _graphLayer2;
-    
-    CAGradientLayer *gradientLayer3 = [CAGradientLayer layer];
-    
-    gradientLayer3.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer3.colors = @[(__bridge id)COLOR(224.0, 49.0, 113.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer3.startPoint = CGPointMake(0,0.0);
-    gradientLayer3.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer3];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer3.mask = _graphLayer3;
-
-    
+    _gradientLayer.mask = _graphLayer;
+    _gradientLayer2.mask = _graphLayer2;
+    _gradientLayer3.mask = _graphLayer3;
 }
 
 -(void)labelCreation
