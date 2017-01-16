@@ -11,4 +11,4 @@ Contains<br />
 <br /> 9)Dynamic Bar
 <br /> 10)Dynamic Scattert Plot graphs in it
   
-<br />  Created by using minimum number of instances, to avoid memory issues. Supports negitive plot. 
+<br />  Light weight graphs. Supports negitive plot. Effective interaction.
