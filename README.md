@@ -1,15 +1,15 @@
 # MMGraphs
 ##Contains:<br />
-*Interactive Line
-*Interactive Bar
-*Interactive Horizontal bar
-*Interactive Symmetry
-*Interactive Scattert Plot
-*Multi scatter Plot
-*Area graph
-*Dynamic line
-*Dynamic Bar
-*Dynamic Scattert Plot graphs in it
+-Interactive Line
+-Interactive Bar
+-Interactive Horizontal bar
+-Interactive Symmetry
+-Interactive Scattert Plot
+-Multi scatter Plot
+-Area graph
+-Dynamic line
+-Dynamic Bar
+-Dynamic Scattert Plot graphs in it
   
 <br />  Light weight graphs, supports negitive plot, effective interaction.<br />
 
