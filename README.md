@@ -11,4 +11,4 @@ Contains<br />
 <br /> 9)Dynamic Bar
 <br /> 10)Dynamic Scattert Plot graphs in it
   
-<br />  Light weight graphs. Supports negitive plot. Effective interaction.
+<br />  Light weight graphs, supports negitive plot, effective interaction.
