@@ -177,7 +177,7 @@
 {
     for (GraphPlotObj *graphData in _plotArray)
     {
-        /**/graphData.barHeight = ((graphData.value/_rangeOfY)*MAX_HEIGHT_OF_GRAPH);// + ENDING_Y;//(((_maxY - graphData.value)/_rangeOfY)*MAX_HEIGHT_OF_GRAPH) + ENDING_Y;
+        graphData.barHeight = ((graphData.value/_rangeOfY)*MAX_HEIGHT_OF_GRAPH);
         graphData.coordinate.y = graphData.barHeight;
         graphData.coordinate.x = _xUnit*graphData.position+STARTING_X;
     }
@@ -210,13 +210,19 @@
     [_graphPath removeAllPoints];
     self.contentSize = CGSizeMake(_xUnit*_plotArray.count+STARTING_X, self.frame.size.height);
     
+    float curvatureFactor = 0.2;
+    
     for (GraphPlotObj *graphData  in _plotArray)
     {
         if ([graphData isEqual:[_plotArray firstObject]])
             [_graphPath moveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
         else
-            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*0.2, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*0.2, graphData.coordinate.y)];
+        {
+        /*If u need jst line but not curve then comment the line below and uncomment the line below that(i.e.., addLineToPoint) or make curvatureFactor = 0. Then u will get line graph. If u need to increase the curvature, then increase the factor to 0.5. Play arround by changing curvatureFactor. But recommend curvatureFactor shoubd be (0 - 0.5). But if u make curvatureFactor to 0.5 grah will be more curvy, so the graph button will not stick to graph. If there is no curvature then graph button will work correctly. Recommend curvatureFactor is 0.2 so we can get both.*/
+            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*curvatureFactor, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*curvatureFactor, graphData.coordinate.y)];
+        
 //            [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
+        }
     }
     
     _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
