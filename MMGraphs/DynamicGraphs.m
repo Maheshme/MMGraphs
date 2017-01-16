@@ -277,7 +277,7 @@
 -(CGPoint)calculatePointwithXValue:(float)xValue andYvalue:(float)yValue
 {
     CGPoint pointInGraph;
-    /**/float plotPercent = (yValue/_maxY);
+    float plotPercent = (yValue/_maxY);
     plotPercent = isnan(plotPercent) ? 1 : plotPercent;
     pointInGraph.y = (plotPercent*MAX_HEIGHT_OF_GRAPH);
     pointInGraph.x = (xValue * _xUnit) +  STARTING_X;

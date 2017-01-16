@@ -221,12 +221,9 @@
 		3D6CD6BF1E1240C000608C81 /* Graph Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D8BD8D21E2C9750006009EC /* PlotObjects */,
 				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
 				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
-				3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */,
-				3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */,
-				3D6CD70E1E13E78300608C81 /* Coordinates.h */,
-				3D6CD70F1E13E78300608C81 /* Coordinates.m */,
 			);
 			name = "Graph Model";
 			sourceTree = "<group>";
@@ -287,6 +284,17 @@
 				3D6CD7161E15460100608C81 /* DynamicGraphs.m */,
 			);
 			name = DynamicGraphs;
+			sourceTree = "<group>";
+		};
+		3D8BD8D21E2C9750006009EC /* PlotObjects */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */,
+				3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */,
+				3D6CD70E1E13E78300608C81 /* Coordinates.h */,
+				3D6CD70F1E13E78300608C81 /* Coordinates.m */,
+			);
+			name = PlotObjects;
 			sourceTree = "<group>";
 		};
 		3D91DD8A1E090EFF002F12BB = {
@@ -422,12 +430,13 @@
 		3D91DD8B1E090EFF002F12BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Mahesh.me;
 				TargetAttributes = {
 					3D91DD921E090EFF002F12BB = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S7663BSBBY;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					3D91DDAE1E090EFF002F12BB = {
@@ -566,6 +575,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -614,6 +624,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -642,6 +653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7663BSBBY;
@@ -651,6 +663,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MMGraphs/MMGraphs-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -658,6 +673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7663BSBBY;
@@ -667,6 +683,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.mahesh.MMGraphs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MMGraphs/MMGraphs-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

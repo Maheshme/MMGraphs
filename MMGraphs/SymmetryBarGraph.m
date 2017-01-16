@@ -65,7 +65,7 @@
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
     _labelSeperator.frame = CGRectMake(STARTING_X, LABEL_Y_ORIGIN, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, HEIGHTT_OF_GRAPH);//CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _firstGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, HEIGHTT_OF_GRAPH);
     _secondGraphLayer.frame = CGRectMake(0, 0, self.frame.size.width, HEIGHTT_OF_GRAPH);
     
     if(_secondGraphBubble.frame.size.width <= 0)

@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UIView *xAxisSeperator;
 @property (nonatomic, strong) UIBezierPath *graphPath, *graphPath2, *graphPath3;
 @property (nonatomic, strong) CAShapeLayer *graphLayer, *graphLayer2, *graphLayer3;
+@property (nonatomic, strong) CAGradientLayer *gradientLayer, *gradientLayer2, *gradientLayer3;
 
 @end
 
@@ -43,13 +44,15 @@
         self.delegate = self;
         self.bounces  = NO;
         
+        //Plot array of three diff area graphs
         _plotArray = [NSArray arrayWithArray:plotArray];
         _secondPlotArray = [NSArray arrayWithArray:secondPlotArray];
         _thirdPlotArray = [NSArray arrayWithArray:thirdPlotArray];
-        _labelArray = [[NSMutableArray alloc]init];
         
+        _labelArray = [[NSMutableArray alloc]init];
         _isScrolling = NO;
         
+        //Finding max of all area graphs as this graph is plotted 0 - max
         _yMax = [[plotArray valueForKeyPath:@"@max.value"] floatValue] > [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue] ? [[plotArray valueForKeyPath:@"@max.value"] floatValue] : [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue];
         
         _yMax = _yMax > [[thirdPlotArray valueForKeyPath:@"@max.value"] floatValue] ? _yMax : [[thirdPlotArray valueForKeyPath:@"@max.value"] floatValue];
@@ -64,8 +67,13 @@
 {
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _graphLayer2.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _graphLayer2.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
+    _gradientLayer.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
+    _gradientLayer2.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
+    _gradientLayer3.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height*0.9);
     
     if(!_isScrolling)
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
@@ -84,7 +92,7 @@
     if (_labelArray.count == 0)
         [self labelCreation];
     
-    [self drawBarGraph];
+    [self drawAreaGraph];
 }
 
 //Scroll view delegates to restrict layout subviews during scroll
@@ -126,7 +134,7 @@
     [_graphPath3 setLineWidth:TOTAL_BAR_WIDTH];
     [[UIColor blackColor] setStroke];
     
-    //CAShapeLayer for graph
+    //CAShapeLayer for graphs
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = COLOR(211.0, 104.0, 41.0, 1).CGColor;
     _graphLayer.strokeColor = COLOR(211.0, 104.0, 41.0, 1).CGColor;
@@ -134,7 +142,6 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-    //CAShapeLayer for graph
     _graphLayer2 = [CAShapeLayer layer];
     _graphLayer2.fillColor = COLOR(73.0, 209.0, 225.0, 1).CGColor;
     _graphLayer2.strokeColor = COLOR(73.0, 209.0, 225.0, 1).CGColor;
@@ -142,7 +149,6 @@
     _graphLayer2.path = [_graphPath2 CGPath];
     [self.layer addSublayer:_graphLayer2];
     
-    //CAShapeLayer for graph
     _graphLayer3 = [CAShapeLayer layer];
     _graphLayer3.fillColor = COLOR(224.0, 49.0, 113.0, 1).CGColor;
     _graphLayer3.strokeColor = COLOR(224.0, 49.0, 113.0, 1).CGColor;
@@ -150,17 +156,31 @@
     _graphLayer3.path = [_graphPath3 CGPath];
     [self.layer addSublayer:_graphLayer3];
     
-//    for (CALayer *layer in self.blurrView.layer.sublayers)
-//        if ([layer isEqual:_graphLayer] || [layer isEqual:_graphLayer2] || [layer isEqual:_graphLayer3])
-//            [layer removeFromSuperlayer];
+    //Gradients for different graphs
+    _gradientLayer = [CAGradientLayer layer];
+    _gradientLayer.colors = @[(__bridge id)COLOR(211.0, 104.0, 41.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer.startPoint = CGPointMake(0, 1-[[_plotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer.endPoint = CGPointMake(0,1 - [[_plotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer];
     
+    _gradientLayer2 = [CAGradientLayer layer];
+    _gradientLayer2.colors = @[(__bridge id)COLOR(73.0, 209.0, 225.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer2.startPoint = CGPointMake(0, 1-[[_secondPlotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer2.endPoint = CGPointMake(0,1 - [[_secondPlotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer2];
+    
+    _gradientLayer3 = [CAGradientLayer layer];
+    _gradientLayer3.colors = @[(__bridge id)COLOR(224.0, 49.0, 113.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
+    _gradientLayer3.startPoint = CGPointMake(0, 1-[[_thirdPlotArray valueForKeyPath:@"@max.value"] floatValue]/100);
+    _gradientLayer3.endPoint = CGPointMake(0,1 - [[_thirdPlotArray valueForKeyPath:@"@min.value"] floatValue]/100+0.1);
+    [self.layer addSublayer:_gradientLayer3];
     
 }
 
 //Alter heights for change in orientation
 -(void)alterHeights
 {
-    /*Here we are giving a gap 10% of screen height from origin. So for calluculated height of the bar we add 10% of height, because we plot in inverce compared to coordinate geometry.*/
+    /*Here we are giving a gap ENDING_Y from origin. So for calluculated height of the bar we add ENDING_Y, because we plot in inverce compared to coordinate geometry.*/
     for (GraphPlotObj *barData in _plotArray)
     {
         barData.barHeight = (MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
@@ -184,17 +204,32 @@
 
 }
 
--(void)drawBarGraph
+//Plot Graph
+-(void)drawAreaGraph
 {
     [_graphPath removeAllPoints];
     _graphPath = nil;
     
+    [_graphPath2 removeAllPoints];
+    _graphPath2 = nil;
+    
+    [_graphPath3 removeAllPoints];
+    _graphPath3 = nil;
+    
     //Bezier path for ploting graph
-    if (_graphPath == nil)
-        _graphPath = [[UIBezierPath alloc]init];
+    _graphPath = [[UIBezierPath alloc]init];
     [_graphPath setLineWidth:TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR];
-    [[UIColor blackColor] setStroke];
-    self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*_plotArray.count, self.frame.size.height);
+    
+    _graphPath2 = [[UIBezierPath alloc]init];
+    [_graphPath2 setLineWidth:TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR];
+    
+    _graphPath3 = [[UIBezierPath alloc]init];
+    [_graphPath3 setLineWidth:TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR];
+    
+    //Content size of scroll view based on number plot Array count
+    int maxXCount = (_plotArray.count > _secondPlotArray.count) ? (int)_plotArray.count : (int)_secondPlotArray.count;
+    maxXCount = (maxXCount > _thirdPlotArray.count) ? maxXCount : (int)_thirdPlotArray.count;
+    self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*maxXCount, self.frame.size.height);
     
     [_graphPath moveToPoint:CGPointMake(STARTING_X - TOTAL_BAR_WIDTH, STARTING_Y)];
     
@@ -221,43 +256,9 @@
     _graphLayer2.path = [_graphPath2 CGPath];
     _graphLayer3.path = [_graphPath3 CGPath];
     
-    
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer.colors = @[(__bridge id)COLOR(211.0, 104.0, 41.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer.startPoint = CGPointMake(0,0.0);
-    gradientLayer.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer.mask = _graphLayer;
-    
-    CAGradientLayer *gradientLayer2 = [CAGradientLayer layer];
-    
-    gradientLayer2.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer2.colors = @[(__bridge id)COLOR(73.0, 209.0, 225.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer2.startPoint = CGPointMake(0,0.0);
-    gradientLayer2.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer2];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer2.mask = _graphLayer2;
-    
-    CAGradientLayer *gradientLayer3 = [CAGradientLayer layer];
-    
-    gradientLayer3.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    gradientLayer3.colors = @[(__bridge id)COLOR(224.0, 49.0, 113.0, 1).CGColor, (__bridge id)[UIColor clearColor].CGColor ];
-    gradientLayer3.startPoint = CGPointMake(0,0.0);
-    gradientLayer3.endPoint = CGPointMake(0,1.0);
-    
-    [self.layer addSublayer:gradientLayer3];
-    //Using arc as a mask instead of adding it as a sublayer.
-    //[self.view.layer addSublayer:arc];
-    gradientLayer3.mask = _graphLayer3;
-
-    
+    _gradientLayer.mask = _graphLayer;
+    _gradientLayer2.mask = _graphLayer2;
+    _gradientLayer3.mask = _graphLayer3;
 }
 
 -(void)labelCreation
