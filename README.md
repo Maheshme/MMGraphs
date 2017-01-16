@@ -1,6 +1,6 @@
 # MMGraphs
 Contains<br />
-<br />  1)Interactive Line
+<br /  >  1)Interactive Line
 <br />  2)Interactive Bar
 <br />  3)Interactive Horizontal bar
 <br />  4)Interactive Symmetry
