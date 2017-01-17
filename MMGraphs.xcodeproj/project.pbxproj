@@ -22,6 +22,11 @@
 		3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD70F1E13E78300608C81 /* Coordinates.m */; };
 		3D6CD7131E150D2000608C81 /* AreaGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7121E150D2000608C81 /* AreaGraph.m */; };
 		3D6CD7171E15460100608C81 /* DynamicGraphs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD7161E15460100608C81 /* DynamicGraphs.m */; };
+		3D8BD8E41E2DF88C006009EC /* InteractiveScatter.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BD8DF1E2DF88C006009EC /* InteractiveScatter.gif */; };
+		3D8BD8E51E2DF88C006009EC /* InteracriveBarAndSymmetry.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BD8E01E2DF88C006009EC /* InteracriveBarAndSymmetry.gif */; };
+		3D8BD8E61E2DF88C006009EC /* Dynamic.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BD8E11E2DF88C006009EC /* Dynamic.gif */; };
+		3D8BD8E71E2DF88C006009EC /* NonInteractiveScatterAndArea.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BD8E21E2DF88C006009EC /* NonInteractiveScatterAndArea.gif */; };
+		3D8BD8E81E2DF88C006009EC /* InteractiveLineAndBAr.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BD8E31E2DF88C006009EC /* InteractiveLineAndBAr.gif */; };
 		3D91DD981E090EFF002F12BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD971E090EFF002F12BB /* main.m */; };
 		3D91DD9B1E090EFF002F12BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9A1E090EFF002F12BB /* AppDelegate.m */; };
 		3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DD9D1E090EFF002F12BB /* ViewController.m */; };
@@ -81,6 +86,11 @@
 		3D6CD7121E150D2000608C81 /* AreaGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaGraph.m; sourceTree = "<group>"; };
 		3D6CD7151E15460100608C81 /* DynamicGraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicGraphs.h; sourceTree = "<group>"; };
 		3D6CD7161E15460100608C81 /* DynamicGraphs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicGraphs.m; sourceTree = "<group>"; };
+		3D8BD8DF1E2DF88C006009EC /* InteractiveScatter.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = InteractiveScatter.gif; sourceTree = "<group>"; };
+		3D8BD8E01E2DF88C006009EC /* InteracriveBarAndSymmetry.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = InteracriveBarAndSymmetry.gif; sourceTree = "<group>"; };
+		3D8BD8E11E2DF88C006009EC /* Dynamic.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Dynamic.gif; sourceTree = "<group>"; };
+		3D8BD8E21E2DF88C006009EC /* NonInteractiveScatterAndArea.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = NonInteractiveScatterAndArea.gif; sourceTree = "<group>"; };
+		3D8BD8E31E2DF88C006009EC /* InteractiveLineAndBAr.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = InteractiveLineAndBAr.gif; sourceTree = "<group>"; };
 		3D91DD931E090EFF002F12BB /* MMGraphs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMGraphs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DD971E090EFF002F12BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D91DD991E090EFF002F12BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -297,6 +307,18 @@
 			name = PlotObjects;
 			sourceTree = "<group>";
 		};
+		3D8BD8DE1E2DF875006009EC /* DemoGIf */ = {
+			isa = PBXGroup;
+			children = (
+				3D8BD8DF1E2DF88C006009EC /* InteractiveScatter.gif */,
+				3D8BD8E01E2DF88C006009EC /* InteracriveBarAndSymmetry.gif */,
+				3D8BD8E11E2DF88C006009EC /* Dynamic.gif */,
+				3D8BD8E21E2DF88C006009EC /* NonInteractiveScatterAndArea.gif */,
+				3D8BD8E31E2DF88C006009EC /* InteractiveLineAndBAr.gif */,
+			);
+			name = DemoGIf;
+			sourceTree = "<group>";
+		};
 		3D91DD8A1E090EFF002F12BB = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +355,7 @@
 		3D91DD961E090EFF002F12BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D8BD8DE1E2DF875006009EC /* DemoGIf */,
 				3D91DDA51E090EFF002F12BB /* Assets.xcassets */,
 				3D91DDAA1E090EFF002F12BB /* Info.plist */,
 				3D91DDA21E090EFF002F12BB /* MMGraphs.xcdatamodeld */,
@@ -478,6 +501,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D8BD8E71E2DF88C006009EC /* NonInteractiveScatterAndArea.gif in Resources */,
+				3D8BD8E81E2DF88C006009EC /* InteractiveLineAndBAr.gif in Resources */,
+				3D8BD8E61E2DF88C006009EC /* Dynamic.gif in Resources */,
+				3D8BD8E51E2DF88C006009EC /* InteracriveBarAndSymmetry.gif in Resources */,
+				3D8BD8E41E2DF88C006009EC /* InteractiveScatter.gif in Resources */,
 				3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
