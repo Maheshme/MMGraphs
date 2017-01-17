@@ -26,5 +26,5 @@
 ##Important Note:
 <br/>Except for the Area graph all plots are in normal geometry by performing ```geometryFlipped = YES``` to CALayer. It is the property of CALayer where we invert the geometry of CALayer. So all the graph calluculations can be done normaly. But in the Area graph we can't afford to use that propery, beacuse here we are filling color for ploted the area, so where the graph goes and below that point. So if we geometry is flipped then the area will also be inverted. So the filling will be in the opposit direction, to avoid that we are ploting as inverted geometry. All these have been handled.<br />
 ##Interacive Line and Bar gif:
-![](MMGraphs/MMGraphs/InteractiveLineAndBAr.gif)
+![](https://github.com/Maheshme/MMGraphs/blob/master/MMGraphs/InteractiveLineAndBAr.gif)
 
