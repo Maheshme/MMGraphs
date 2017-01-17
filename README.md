@@ -29,8 +29,7 @@ by going into that class. These are macros so just change them at declaration. A
 
 ```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```
 ```<br />return your data in the array of```GraphPlotObj``` form.<br /><br />
- **This is dummy data. You need to alter method or get data inside method**
- 
+ **This is dummy data. You need to alter method or get data inside method**<br />
 ```+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit
 {
     NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
