@@ -23,10 +23,14 @@
 #define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
 #define BAR_WIDTH                       40.0
 #define SPACING                         10.0
-```<br />
-by going into that class. These are macros so just change them at declaration. And for data in ```GraphModel.m``` <br />```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```, return your data in the array of```GraphPlotObj``` form.<br /><br />
-``` **This is dummy data. You need to alter method or get data inside method**
-+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit
+```
+<br />
+by going into that class. These are macros so just change them at declaration. And for data in ```GraphModel.m```. <br /><br />
+
+```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```
+```<br />return your data in the array of```GraphPlotObj``` form.<br /><br />
+ **This is dummy data. You need to alter method or get data inside method**
+```+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit
 {
     NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [gregorian components:( NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
