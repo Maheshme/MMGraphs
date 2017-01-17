@@ -25,9 +25,26 @@
 #define SPACING                         10.0
 ```
 by going into that class. These are macros so just change them at declaration. And for data in ```GraphModel.m```. <br /><br /> ```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```
+<br />
+```
++(NSArray *)getMinuteDataFor:(int)numberOfMinutes
+{
+    NSMutableArray *minuteData = [[NSMutableArray alloc]init];//==> Your data source
+    
+    for (int i = 0; i < numberOfMinutes; i++)
+    {
+        GraphPlotObj *plotObj = [GraphModel getMinuteDataInBetween:0 upper:100];//==> Data from datasource
+        plotObj.position = i;
+        [minuteData addObject:plotObj];
+    }
+    
+    return (NSArray *)minuteData;
+}
+```
+
 <br />return your data in the array of```GraphPlotObj``` form.<br />
 
-<br /> <br />Follow same for Interactive Bar, Interactive Horizontal bar, Interactive Scatter Plot, Interactive Symmetry, Multi scatter Plot. Use<br /><br /> ```+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit``` <br />
+Follow same for Interactive Bar, Interactive Horizontal bar, Interactive Scatter Plot, Interactive Symmetry, Multi scatter Plot. Use<br />```+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit``` <br />
 
 ***This is dummy data. You need to alter method or get data inside method***
 ```
@@ -68,7 +85,18 @@ by going into that class. These are macros so just change them at declaration. A
 
 
 <br />method to return data for all of them.I have used a common method to generate data, you can handle by placing conditions for different graphs. But don't forget to convert your data to ```GraphPlotObj```.<br />
-<br />For dynamic graphs we will trigger a timer in View controller and that will call a method in the view class, which will update graph. You can change the timer and send your required data. <br />```-(void)createTimer``` is method in view controller triggers <br />```-(void)createData```.<br /> You need to create ```GraphPlotObj``` and call<br /> ```-(void)createDataWithPlotObj:(GraphPlotObj *)plotObj```<br /> in Dynamic graph class.<br />
+<br />For dynamic graphs we will trigger a timer in View controller and that will call a method in the view class, which will update graph. You can change the timer and send your required data. <br />```-(void)createTimer``` is method in view controller triggers```-(void)createData```<br />
+
+```
+-(void)createData
+{
+    [((DynamicGraphs *)_graphView) createDataWithPlotObj:[GraphModel getMinuteDataInBetween:0 upper:100]] ;
+    //==>Sending dynamic data to DynamicGraphs. Get  dynamic data and send that.
+}
+
+```
+
+<br /> You need to create ```GraphPlotObj``` and call<br /> ```-(void)createDataWithPlotObj:(GraphPlotObj *)plotObj```<br /> in Dynamic graph class.<br />
 <br />If you want to change bar width or spacing or where the graph should start, go to class and change the macros as suggested above. Don't worry if values go negitive, both interaction and ploting are being handled. <br />
 <br />*Download and play arround and check different type of interaction for diferent the graphs, there is no interacion for dyanmic graphs.*<br /><br />
 ##Lightweight:
