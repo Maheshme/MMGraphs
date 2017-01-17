@@ -24,7 +24,6 @@
 #define BAR_WIDTH                       40.0
 #define SPACING                         10.0
 ```
-<br />
 by going into that class. These are macros so just change them at declaration. And for data in ```GraphModel.m```. <br /><br /> ```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```
 <br />return your data in the array of```GraphPlotObj``` form.<br />
 ***This is dummy data. You need to alter method or get data inside method***
@@ -61,7 +60,8 @@ by going into that class. These are macros so just change them at declaration. A
     }
     
     return (NSArray *)arrayOfPlotData;
-}```
+}
+```
 
 <br /> <br />Follow same for Interactive Bar, Interactive Horizontal bar, Interactive Scatter Plot, Interactive Symmetry, Multi scatter Plot. Use<br /><br /> ```+(NSArray *)getDataForDays:(int)days withUpperLimit:(int)upperLimit andLowerlimit:(int)lowerLimit``` <br /><br />method to return data for all of them.I have used a common method to generate data, you can handle by placing conditions for different graphs. But don't forget to convert your data to ```GraphPlotObj```.<br />
 <br />For dynamic graphs we will trigger a timer in View controller and that will call a method in the view class, which will update graph. You can change the timer and send your required data. <br />```-(void)createTimer``` is method in view controller triggers <br />```-(void)createData```.<br /> You need to create ```GraphPlotObj``` and call<br /> ```-(void)createDataWithPlotObj:(GraphPlotObj *)plotObj```<br /> in Dynamic graph class.<br />
