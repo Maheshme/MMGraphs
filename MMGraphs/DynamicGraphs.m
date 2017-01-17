@@ -106,6 +106,24 @@
     [self checkForRangeChanges];
 }
 
+//Scroll view delegates to restrict layout subviews during scroll
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    _isScrolling = YES;
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    _isScrolling = NO;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+        _isScrolling = NO;
+}
+
+
 //Allocate needs for grah
 -(void)allocateRequirments
 {

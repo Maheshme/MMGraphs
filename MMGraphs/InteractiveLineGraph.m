@@ -12,7 +12,7 @@
 #import "GraphModel.h"
 #import "Coordinates.h"
 
-#define MAX_X_AXIS_LABELS                               10
+#define MAX_X_AXIS_LABELS                               5
 #define TIME_INTERVAL                                   5     //Minutes
 #define X_AXIS_LABELS_FONT                              11
 #define SEPERATOR_HEIGHT                                1
@@ -21,6 +21,7 @@
 #define STARTING_X                                      (self.frame.size.width*0.0)
 #define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
+#define GRAPH_WIDTH                                     2
 
 @interface InteractiveLineGraph ()
 
@@ -29,6 +30,7 @@
 @property (nonatomic) float maxY, minY, minX, maxX, rangeOfY, xUnit, slope, labelCount;
 @property (nonatomic, strong) UIView *separator;
 @property (nonatomic) BOOL isScrolling, labelAllocated;
+@property (nonatomic, strong) UILabel *valueLabel;
 @property (nonatomic, strong) NSArray *plotArray;
 @property (nonatomic, strong) UIButton *graphButton, *scroller;
 @property (nonatomic, strong) Coordinates *previousCoord, *nextCoord;
@@ -76,6 +78,9 @@
     _separator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
     _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
     
+    if (_valueLabel.frame.size.width <= 0)
+        _valueLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.1);
+    
     if (!_isScrolling)
     {
         NSArray *labelsArray = [[self subviews] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.class == %@",[XAxisGraphLabel class]]];
@@ -117,6 +122,25 @@
     [self drawGraph];
 }
 
+//Scroll view delegates to restrict layout subviews during scroll
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    _isScrolling = YES;
+    _valueLabel.center = CGPointMake(scrollView.contentOffset.x + SCREEN_WIDTH/2, _valueLabel.center.y);
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    _isScrolling = NO;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+        _isScrolling = NO;
+}
+
+
 //Allocate needs for grah
 -(void)allocateRequirments
 {
@@ -127,14 +151,14 @@
     
     //Bezier path for ploting graph
     _graphPath = [[UIBezierPath alloc]init];
-    [_graphPath setLineWidth:10];
+    [_graphPath setLineWidth:GRAPH_WIDTH];
     [[UIColor blackColor] setStroke];
     
     //CAShapeLayer for graph allocation
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
-    _graphLayer.lineWidth = 1;
+    _graphLayer.lineWidth = GRAPH_WIDTH;
     _graphLayer.lineCap = LINE_CAP_ROUND;
     _graphLayer.lineJoin = LINE_CAP_ROUND;
     _graphLayer.geometryFlipped = YES;
@@ -169,6 +193,13 @@
     _grad.startPoint = CGPointMake(0,0.0);
     _grad.endPoint = CGPointMake(0,1.0);
     [self.layer addSublayer:_grad];
+    
+    _valueLabel = [[UILabel alloc]init];
+    _valueLabel.backgroundColor = [UIColor clearColor];
+    [_valueLabel setTextAlignment:NSTextAlignmentCenter];
+    [_valueLabel setTextColor:[UIColor blackColor]];
+    [_valueLabel setFont:[UIFont systemFontOfSize:14]];
+    [self addSubview:_valueLabel];
     
 }
 
@@ -287,6 +318,8 @@
     
     _nextCoord.x = cordNext.coordinate.x;
     _nextCoord.y = self.frame.size.height*0.9 - cordNext.coordinate.y;
+    
+    [_valueLabel setText:[NSString stringWithFormat:@"Value : %d", (int)cord.value]];
     
     _slope = (_nextCoord.y - _previousCoord.y)/(_nextCoord.x - _previousCoord.x);
 }
