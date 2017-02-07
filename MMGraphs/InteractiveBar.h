@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphConfig.h"
 
 @interface InteractiveBar : VisualScrollView
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray;
+- (instancetype)initWithConfigData:(GraphConfig *)configData;
 
 @end

@@ -11,15 +11,6 @@
 #import "XAxisGraphLabel.h"
 #import "BubbleView.h"
 
-#define STARTING_Y                      self.frame.size.height*0.9
-#define ENDING_Y                        11.0
-#define STARTING_X                      self.frame.size.width*0.0
-#define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
-#define BAR_WIDTH                       40.0
-#define SPACING                         10.0
-#define TOTAL_BAR_WIDTH                 (BAR_WIDTH + SPACING)
-#define PERCENTAGE_OF_BAR               (BAR_WIDTH/TOTAL_BAR_WIDTH)
-
 
 @interface InteractiveBar ()<UIScrollViewDelegate>
 
@@ -35,27 +26,32 @@
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @property (nonatomic, strong) CABasicAnimation *drawAnimation;
 
+@property (nonatomic, strong) GraphConfig *layoutConfig;
 @end
 
 @implementation InteractiveBar
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray
+- (instancetype)initWithConfigData:(GraphConfig *)configData
 {
     self = [super init];
+    
     if (self)
     {
+        [configData needCalluculator];
+        
+        _layoutConfig = configData;
         self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
         
-        _plotArray = [NSArray arrayWithArray:plotArray];
+        _plotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
         _labelArray = [[NSMutableArray alloc]init];
         
         _isScrolling = NO;
         
-        _yMax = [[plotArray valueForKeyPath:@"@max.value"] floatValue];
+        _yMax = [[configData.firstPlotAraay valueForKeyPath:@"@max.value"] floatValue];
         
         [self allocateRequirments];
-
+        
     }
     return self;
 }
@@ -63,19 +59,19 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _xAxisSeperator.frame = CGRectMake(STARTING_X, STARTING_Y, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width-STARTING_X, 1);
-    _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.9);
+    _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width-_layoutConfig.startingX, 1);
+    _graphLayer.frame = CGRectMake(0, _layoutConfig.endingY, self.frame.size.width, _layoutConfig.maxHeightOfBar);
     
     if(_bubble.frame.size.width <= 0)
         _bubble.frame = CGRectMake(_bubble.frame.origin.x, _bubble.frame.origin.y, SCREEN_WIDTH*0.18, SCREEN_WIDTH*0.12);
     
-    _gradientLayer.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
+    _gradientLayer.frame = CGRectMake(0, _layoutConfig.endingY, self.contentSize.width, _layoutConfig.maxHeightOfBar);
     
-    if(!_isScrolling)
+    if(!_isScrolling && _layoutConfig.xAxisLabelsEnabled)
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
         {
-            xAxisxLabel.frame = CGRectMake((xAxisxLabel.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y, SCREEN_WIDTH*0.2, self.frame.size.height*0.1);
-            xAxisxLabel.center = CGPointMake((xAxisxLabel.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y+xAxisxLabel.frame.size.height/2);
+            xAxisxLabel.frame = CGRectMake((xAxisxLabel.position*_layoutConfig.totalBarWidth)+_layoutConfig.totalBarWidth/2+_layoutConfig.startingX, _layoutConfig.startingY, SCREEN_WIDTH*0.2, self.frame.size.height*0.1);
+            xAxisxLabel.center = CGPointMake((xAxisxLabel.position*_layoutConfig.totalBarWidth)+_layoutConfig.totalBarWidth/2+_layoutConfig.startingX, _layoutConfig.startingY+xAxisxLabel.frame.size.height/2);
             [self bringSubviewToFront:xAxisxLabel];
         }
 }
@@ -83,9 +79,9 @@
 -(void)drawRect:(CGRect)rect
 {
     [self alterHeights];
-    _graphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
+    _graphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     
-    if (_labelArray.count == 0)
+    if (_labelArray.count == 0 && _layoutConfig.xAxisLabelsEnabled)
         [self labelCreation];
     
     [self drawBarGraph];
@@ -117,7 +113,7 @@
     
     //Bezier path for ploting graph
     _graphPath = [[UIBezierPath alloc]init];
-    [_graphPath setLineWidth:TOTAL_BAR_WIDTH];
+    [_graphPath setLineWidth:_layoutConfig.totalBarWidth];
     [[UIColor blackColor] setStroke];
     
     //CAShapeLayer for graph
@@ -125,7 +121,7 @@
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
     _graphLayer.geometryFlipped = YES;
-    _graphLayer.lineWidth = TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR;
+    _graphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
@@ -134,10 +130,18 @@
     _drawAnimation.duration = 3.0;
     _drawAnimation.repeatCount = 1.0;
     
-    _gradientLayer = [CAGradientLayer layer];
-    _gradientLayer.colors = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor ];
-    _gradientLayer.startPoint = CGPointMake(0,0.0);
-    _gradientLayer.endPoint = CGPointMake(0,1.0);
+    if (_layoutConfig.colorsArray != nil)
+    {
+        if(_layoutConfig.colorsArray.count == 1)
+            _graphLayer.strokeColor = (__bridge CGColorRef _Nullable)[_layoutConfig.colorsArray firstObject];
+        else
+        {
+            _gradientLayer = [CAGradientLayer layer];
+            _gradientLayer.colors = _layoutConfig.colorsArray;
+            _gradientLayer.startPoint = CGPointMake(0,0.0);
+            _gradientLayer.endPoint = CGPointMake(0,1.0);
+        }
+    }
     
     [self.layer addSublayer:_gradientLayer];
 }
@@ -149,8 +153,8 @@
     
     for (GraphPlotObj *barData in _plotArray)
     {
-        barData.barHeight = (MAX_HEIGHT_OF_BAR)*(barData.value/_yMax);
-        barData.coordinate.x = (barData.position *TOTAL_BAR_WIDTH)+(TOTAL_BAR_WIDTH/2)+STARTING_X;
+        barData.barHeight = (_layoutConfig.maxHeightOfBar)*(barData.value/_yMax);
+        barData.coordinate.x = (barData.position *_layoutConfig.totalBarWidth)+(_layoutConfig.totalBarWidth/2)+_layoutConfig.startingX;
         barData.coordinate.y = barData.barHeight;
     }
 }
@@ -164,10 +168,10 @@
     //Bezier path for ploting graph
     if (_graphPath == nil)
         _graphPath = [[UIBezierPath alloc]init];
-    [_graphPath setLineWidth:TOTAL_BAR_WIDTH*PERCENTAGE_OF_BAR];
+    [_graphPath setLineWidth:_layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot];
     [[UIColor blackColor] setStroke];
     
-    self.contentSize = CGSizeMake(TOTAL_BAR_WIDTH*_plotArray.count+STARTING_X, self.frame.size.height);
+    self.contentSize = CGSizeMake(_layoutConfig.totalBarWidth*_plotArray.count+_layoutConfig.startingX, self.frame.size.height);
     
     for (GraphPlotObj *barSource in _plotArray)
     {
@@ -177,7 +181,8 @@
     
     _graphLayer.path = [_graphPath CGPath];
     
-    _gradientLayer.mask = _graphLayer;
+    if(_layoutConfig.colorsArray.count > 1)
+        _gradientLayer.mask = _graphLayer;
     
     _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
     _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
@@ -211,7 +216,7 @@
 //Get value for the touched point on Button
 -(void)getValueWith:(CGPoint)touchPoint
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)((touchPoint.x-STARTING_X)/TOTAL_BAR_WIDTH)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.position == %d", (int)((touchPoint.x-_layoutConfig.startingX)/_layoutConfig.totalBarWidth)];
     NSArray *resultArray = [_plotArray filteredArrayUsingPredicate:predicate];
     
     GraphPlotObj *result;
@@ -220,12 +225,12 @@
     {
         result = (GraphPlotObj *)[resultArray firstObject];
         //Display bubble if touch is on bar
-        if ((touchPoint.y >= STARTING_Y - result.barHeight && touchPoint.y < STARTING_Y) || result.value < 0)
+        if ((touchPoint.y >= _layoutConfig.endingY+ (_layoutConfig.startingY - result.barHeight) && touchPoint.y < _layoutConfig.startingY) || result.value < 0)
         {
             if (result.value >= 0)//If values are positive
-                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake((result.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y - result.barHeight)];
-            else if(touchPoint.y >= STARTING_Y)//If values are negative
-                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake((result.position*TOTAL_BAR_WIDTH)+TOTAL_BAR_WIDTH/2+STARTING_X, STARTING_Y)];
+                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake((result.position*_layoutConfig.totalBarWidth)+_layoutConfig.totalBarWidth/2+_layoutConfig.startingX, _layoutConfig.endingY+ (_layoutConfig.startingY - result.barHeight))];
+            else if(touchPoint.y >= _layoutConfig.startingY)//If values are negative
+                [self createBubbleWithValueToBeDisplayed:result.value andCenter:CGPointMake((result.position*_layoutConfig.totalBarWidth)+_layoutConfig.totalBarWidth/2+_layoutConfig.startingX, _layoutConfig.startingY)];
             [self bringSubviewToFront:_bubble];
         }
         else //On touch of graph above bar height
@@ -299,8 +304,5 @@
                      } completion:^(BOOL finished) {
                      }];
 }
-
-//(MAX_HEIGHT_OF_BAR)*(1 - barData.value/_yMax) + ENDING_Y;
-
 
 @end

@@ -34,31 +34,58 @@
 @property (nonatomic, strong) CAShapeLayer *firstGraphLayer, *secondGraphLayer;
 @property (nonatomic, strong) BubbleView *firstGraphBubble, *secondGraphBubble;
 
+@property (nonatomic, strong) GraphConfig *layoutConfig;
+ 
 @end
 
 
 @implementation SymmetryBarGraph
 
-- (instancetype)initWithFirstPlotArray:(NSArray *)firstPlotArray andSecondPlotArray:(NSArray *)secondPlotArray
+- (instancetype)initWithConfigData:(GraphConfig *)configData
 {
     self = [super init];
     if (self)
     {
+        [configData needCalluculator];
+        configData.maxHeightOfBar *= 2;
+        _layoutConfig = configData;
+        
         self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
         
-        _firstPlotArray = [NSArray arrayWithArray:firstPlotArray];
-        _secondPlotArray = [NSArray arrayWithArray:secondPlotArray];
+        _firstPlotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
+        _secondPlotArray = [NSArray arrayWithArray:configData.secondPlotArray];
         _labelArray = [[NSMutableArray alloc]init];
         
         _isScrolling = NO;
         
-        _yMax = ([[firstPlotArray valueForKeyPath:@"@max.value"] floatValue] > [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue]) ? [[firstPlotArray valueForKeyPath:@"@max.value"] floatValue] : [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue];
+        _yMax = ([[configData.firstPlotAraay valueForKeyPath:@"@max.value"] floatValue] > [[configData.secondPlotArray valueForKeyPath:@"@max.value"] floatValue]) ? [[configData.firstPlotAraay valueForKeyPath:@"@max.value"] floatValue] : [[configData.secondPlotArray valueForKeyPath:@"@max.value"] floatValue];
         
         [self allocateRequirments];
     }
     return self;
 }
+
+//- (instancetype)initWithFirstPlotArray:(NSArray *)firstPlotArray andSecondPlotArray:(NSArray *)secondPlotArray
+//{
+//    self = [super init];
+//    if (self)
+//    {
+//        self.backgroundColor = [UIColor clearColor];
+//        self.delegate = self;
+//        
+//        _firstPlotArray = [NSArray arrayWithArray:firstPlotArray];
+//        _secondPlotArray = [NSArray arrayWithArray:secondPlotArray];
+//        _labelArray = [[NSMutableArray alloc]init];
+//        
+//        _isScrolling = NO;
+//        
+//        _yMax = ([[firstPlotArray valueForKeyPath:@"@max.value"] floatValue] > [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue]) ? [[firstPlotArray valueForKeyPath:@"@max.value"] floatValue] : [[secondPlotArray valueForKeyPath:@"@max.value"] floatValue];
+//        
+//        [self allocateRequirments];
+//    }
+//    return self;
+//}
 
 -(void)layoutSubviews
 {
