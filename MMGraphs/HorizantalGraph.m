@@ -58,7 +58,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, 1, (self.frame.size.height > self.contentSize.height)?self.frame.size.height:self.contentSize.height);
+    _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, 1, (self.frame.size.height > self.contentSize.height)?self.frame.size.height:self.contentSize.height - _layoutConfig.startingY);
     _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     
     if(_bubble.frame.size.width <= 0)
@@ -161,7 +161,7 @@
     
     _graphLayer.path = [_graphPath CGPath];
 
-    self.contentSize = CGSizeMake(self.frame.size.width, _layoutConfig.totalBarWidth*_plotArray.count);
+    self.contentSize = CGSizeMake(self.frame.size.width, _layoutConfig.totalBarWidth*_plotArray.count+_layoutConfig.startingY);
 }
 
 -(void)labelCreation

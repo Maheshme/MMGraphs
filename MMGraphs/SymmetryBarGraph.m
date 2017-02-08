@@ -57,8 +57,8 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
-    _labelSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY+_layoutConfig.maxHeightOfBar, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width, 1);
+    _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width - _layoutConfig.startingX, 1);
+    _labelSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY+_layoutConfig.maxHeightOfBar, (self.frame.size.width > self.contentSize.width)?self.frame.size.width:self.contentSize.width - _layoutConfig.startingX, 1);
     _firstGraphLayer.frame = CGRectMake(0, _layoutConfig.endingY, self.frame.size.width, _layoutConfig.maxHeightOfBar);
     _secondGraphLayer.frame = CGRectMake(0, _layoutConfig.startingY , self.frame.size.width,_layoutConfig.maxHeightOfBar);
     
@@ -201,14 +201,14 @@
 
     for (GraphPlotObj *barSource in _secondPlotArray)
     {
-        [_secondGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, 0)];//_layoutConfig.maxHeightOfBar)];
+        [_secondGraphPath moveToPoint:CGPointMake(barSource.coordinate.x, 0)];
         [_secondGraphPath addLineToPoint:CGPointMake(barSource.coordinate.x, barSource.coordinate.y)];
     }
 
     _firstGraphLayer.path = [_firstGraphPath CGPath];
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     
-    self.contentSize = CGSizeMake(_layoutConfig.totalBarWidth*_firstPlotArray.count, self.frame.size.height);
+    self.contentSize = CGSizeMake(_layoutConfig.totalBarWidth*_firstPlotArray.count+_layoutConfig.startingX, self.frame.size.height);
 }
 
 -(void)labelCreation

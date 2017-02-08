@@ -156,7 +156,7 @@
     else if ([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_BAR_GRAPH])
     {
         GraphConfig* config = [[GraphConfig alloc]init];
-        config.startingX = 0;
+        config.startingX = 50;
         config.endingX = 375;
         config.startingY = (self.view.frame.size.height*0.5)*0.9;
         config.endingY = 0;
@@ -173,7 +173,7 @@
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_SYMMETRY_GRAPH])
     {
         GraphConfig* config = [[GraphConfig alloc]init];
-        config.startingX = 0;
+        config.startingX = 50;
         config.endingX = 375;
         config.startingY = (self.view.frame.size.height*0.5)*0.4;
         config.endingY = 0;
@@ -193,7 +193,7 @@
         GraphConfig* config = [[GraphConfig alloc]init];
         config.startingX = 100;
         config.endingX = self.view.frame.size.width*0.7;
-        config.startingY = 0;
+        config.startingY = 100;
         config.endingY = (self.view.frame.size.height*0.5);
         config.widthOfPath = 40;
         config.unitSpacing = 5;
@@ -203,12 +203,23 @@
         config.labelFont = [UIFont systemFontOfSize:14];
         
         HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc] initWithConfigData:config];
-//        [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = interaciveHorizantalBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_SCATTER_PLOT_GRAPH])
     {
-        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 100;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.8;
+        config.endingY = 50;
+        config.widthOfPath = 10;
+        config.unitSpacing = 40;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getDataForDays:20 withUpperLimit:100 andLowerlimit:0];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc] initWithConfigData:config];
         _graphView = scatterPlotGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:MULTI_SCATTER_PLOT_GRAPH])
