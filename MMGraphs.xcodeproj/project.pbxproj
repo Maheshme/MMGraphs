@@ -471,7 +471,7 @@
 				TargetAttributes = {
 					3D91DD921E090EFF002F12BB = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = S7663BSBBY;
+						DevelopmentTeam = G3VP65D683;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -698,7 +698,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = S7663BSBBY;
+				DEVELOPMENT_TEAM = G3VP65D683;
 				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -718,7 +718,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = S7663BSBBY;
+				DEVELOPMENT_TEAM = G3VP65D683;
 				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

@@ -175,17 +175,17 @@
         GraphConfig* config = [[GraphConfig alloc]init];
         config.startingX = 0;
         config.endingX = 375;
-        config.startingY = (self.view.frame.size.height*0.5)*0.9;
+        config.startingY = (self.view.frame.size.height*0.5)*0.4;
         config.endingY = 0;
         config.widthOfPath = 40;
         config.unitSpacing = 5;
         config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
-        config.firstPlotAraay = [GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0];
-        config.secondPlotArray = [GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0];
+        config.firstPlotAraay = [GraphModel getDataForDays:20 withUpperLimit:100 andLowerlimit:0];
+        config.secondPlotArray = [GraphModel getDataForDays:20 withUpperLimit:100 andLowerlimit:0];
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithFirstPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0] andSecondPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
+        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithConfigData:config];
         _graphView = interaciveSymmetryBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_HORIZANTAL_BAR_GRAPH])
