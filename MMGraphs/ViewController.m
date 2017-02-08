@@ -190,7 +190,20 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_HORIZANTAL_BAR_GRAPH])
     {
-        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 100;
+        config.endingX = self.view.frame.size.width*0.7;
+        config.startingY = 0;
+        config.endingY = (self.view.frame.size.height*0.5);
+        config.widthOfPath = 40;
+        config.unitSpacing = 5;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getDataForDays:20 withUpperLimit:100 andLowerlimit:0];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc] initWithConfigData:config];
+//        [[HorizantalGraph alloc]initWithPlotArray:[GraphModel getDataForDays:365 withUpperLimit:100 andLowerlimit:0]];
         _graphView = interaciveHorizantalBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_SCATTER_PLOT_GRAPH])

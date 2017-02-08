@@ -12,7 +12,6 @@
 
 @interface SymmetryBarGraph : VisualScrollView
 
-//- (instancetype)initWithFirstPlotArray:(NSArray *)firstPlotArray andSecondPlotArray:(NSArray *)secondPlotArray;
 - (instancetype)initWithConfigData:(GraphConfig *)configData;
 
 @end

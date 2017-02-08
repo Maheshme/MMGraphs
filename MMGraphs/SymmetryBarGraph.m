@@ -67,7 +67,7 @@
     if(_firstGraphBubble.frame.size.width <= 0)
         _firstGraphBubble.frame = CGRectMake(_firstGraphBubble.frame.origin.x, _firstGraphBubble.frame.origin.y, SCREEN_WIDTH*0.18, SCREEN_WIDTH*0.12);
     
-    if(!_isScrolling)
+    if(!_isScrolling && _layoutConfig.xAxisLabelsEnabled)
         for (XAxisGraphLabel *xAxisxLabel in _labelArray)
         {
             xAxisxLabel.frame = CGRectMake((xAxisxLabel.position*_layoutConfig.totalBarWidth)+_layoutConfig.totalBarWidth/2+_layoutConfig.startingX, _layoutConfig.maxHeightOfBar*2, SCREEN_WIDTH*0.2, self.frame.size.height*0.1);
@@ -84,7 +84,7 @@
     _firstGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _secondGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     
-    if (_labelArray.count == 0)
+    if (_labelArray.count == 0 && _layoutConfig.xAxisLabelsEnabled)
         [self labelCreation];
     
     [self drawBarGraph];
@@ -348,7 +348,6 @@
                          _firstGraphBubble.center = CGPointMake(newXcenter, newYCenter-_firstGraphBubble.frame.size.height/2);
                          _firstGraphBubble.alpha = 1;
                      } completion:^(BOOL finished) {
-                         
                      }];
 }
 
@@ -362,49 +361,47 @@
     [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-     {
-         _secondGraphBubble.alpha = 1;
-         
-         _secondGraphBubble.frame = CGRectMake(_secondGraphBubble.frame.origin.x, _secondGraphBubble.frame.origin.y, size.width*1.5, _secondGraphBubble.frame.size.height);
-         _secondGraphBubble.indicationView.center =  CGPointMake((size.width*1.5)/2, _secondGraphBubble.indicationView.center.y);
-         float newYCenter = center.y;
-         float newXcenter = center.x;
-         
-         //Shifting indicator and bubble center (y) if bubble is going above grap
-         if (center.y+_secondGraphBubble.frame.size.height < (self.frame.size.height*0.9))
-         {
-             newYCenter = center.y+_secondGraphBubble.frame.size.height;
-             _secondGraphBubble.mainView.center = CGPointMake(_secondGraphBubble.frame.size.width/2, _secondGraphBubble.mainView.frame.size.height/2+_secondGraphBubble.indicationView.frame.size.height/2);
-             _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.indicationView.center.x, 0);
-         }//Shifting indicator and bubble center (y) nor normal conditions
-         else if(_secondGraphBubble.mainView.center.y != _secondGraphBubble.mainView.frame.size.height/2)
-         {
-             _secondGraphBubble.mainView.center = CGPointMake(_secondGraphBubble.frame.size.width/2, _secondGraphBubble.mainView.frame.size.height/2);
-             _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.indicationView.center.x, _secondGraphBubble.mainView.frame.size.height);
-         }
-         
-         //Shifting indicator and bubble center (x) if bubble is going to -x axis
-         if (center.x - _secondGraphBubble.frame.size.width/2 <= 0)
-         {
-             _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.25, _secondGraphBubble.indicationView.center.y);
-             newXcenter = newXcenter + _secondGraphBubble.frame.size.width*0.25;
-         }//Shifting indicator and bubble center (x) if bubble is going beyond width of graph
-         else if (center.x + _secondGraphBubble.frame.size.width/2 >= self.contentSize.width)
-         {
-             _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.75, _secondGraphBubble.indicationView.center.y);
-             newXcenter = newXcenter - _secondGraphBubble.frame.size.width*0.25;
-         }//Shifting indicator and bubble center (x) if bubble for normal conditions
-         else if(_secondGraphBubble.indicationView.center.x != _secondGraphBubble.frame.size.width*0.5)
-         {
-             _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.5, _secondGraphBubble.indicationView.center.y);
-         }
-         
-         _secondGraphBubble.center = CGPointMake(newXcenter, newYCenter-_secondGraphBubble.frame.size.height/2);
-         _secondGraphBubble.alpha = 1;
-     } completion:^(BOOL finished) {
-         
-     }];
+                     animations:^{
+                     _secondGraphBubble.alpha = 1;
+                     
+                     _secondGraphBubble.frame = CGRectMake(_secondGraphBubble.frame.origin.x, _secondGraphBubble.frame.origin.y, size.width*1.5, _secondGraphBubble.frame.size.height);
+                     _secondGraphBubble.indicationView.center =  CGPointMake((size.width*1.5)/2, _secondGraphBubble.indicationView.center.y);
+                     float newYCenter = center.y;
+                     float newXcenter = center.x;
+                     
+                     //Shifting indicator and bubble center (y) if bubble is going above grap
+                     if (center.y+_secondGraphBubble.frame.size.height < (self.frame.size.height*0.9))
+                     {
+                         newYCenter = center.y+_secondGraphBubble.frame.size.height;
+                         _secondGraphBubble.mainView.center = CGPointMake(_secondGraphBubble.frame.size.width/2, _secondGraphBubble.mainView.frame.size.height/2+_secondGraphBubble.indicationView.frame.size.height/2);
+                         _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.indicationView.center.x, 0);
+                     }//Shifting indicator and bubble center (y) nor normal conditions
+                     else if(_secondGraphBubble.mainView.center.y != _secondGraphBubble.mainView.frame.size.height/2)
+                     {
+                         _secondGraphBubble.mainView.center = CGPointMake(_secondGraphBubble.frame.size.width/2, _secondGraphBubble.mainView.frame.size.height/2);
+                         _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.indicationView.center.x, _secondGraphBubble.mainView.frame.size.height);
+                     }
+                     
+                     //Shifting indicator and bubble center (x) if bubble is going to -x axis
+                     if (center.x - _secondGraphBubble.frame.size.width/2 <= 0)
+                     {
+                         _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.25, _secondGraphBubble.indicationView.center.y);
+                         newXcenter = newXcenter + _secondGraphBubble.frame.size.width*0.25;
+                     }//Shifting indicator and bubble center (x) if bubble is going beyond width of graph
+                     else if (center.x + _secondGraphBubble.frame.size.width/2 >= self.contentSize.width)
+                     {
+                         _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.75, _secondGraphBubble.indicationView.center.y);
+                         newXcenter = newXcenter - _secondGraphBubble.frame.size.width*0.25;
+                     }//Shifting indicator and bubble center (x) if bubble for normal conditions
+                     else if(_secondGraphBubble.indicationView.center.x != _secondGraphBubble.frame.size.width*0.5)
+                     {
+                         _secondGraphBubble.indicationView.center = CGPointMake(_secondGraphBubble.frame.size.width*0.5, _secondGraphBubble.indicationView.center.y);
+                     }
+                     
+                     _secondGraphBubble.center = CGPointMake(newXcenter, newYCenter-_secondGraphBubble.frame.size.height/2);
+                     _secondGraphBubble.alpha = 1;
+                 } completion:^(BOOL finished) {
+                 }];
 }
 
 @end

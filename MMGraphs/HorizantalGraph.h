@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphConfig.h"
 
 @interface HorizantalGraph : VisualScrollView
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray;
+//- (instancetype)initWithPlotArray:(NSArray *)plotArray;
+- (instancetype)initWithConfigData:(GraphConfig *)configData;
 
 @end

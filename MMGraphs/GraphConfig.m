@@ -22,6 +22,7 @@
 -(void)needCalluculator
 {
     _maxHeightOfBar = _startingY - _endingY;
+    _maxWidthOfBar = _endingX - _startingX;
     _totalBarWidth = _widthOfPath+_unitSpacing;
     _percentageOfPlot = _widthOfPath/_totalBarWidth;
         
