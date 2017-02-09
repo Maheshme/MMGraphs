@@ -242,7 +242,22 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:AREA_GRAPH])
     {
-        AreaGraph *areaGraph = [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:80 andLowerlimit:30] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 0;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.9;
+        config.endingY = 10;
+        config.widthOfPath = 3;
+        config.unitSpacing = 45;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getDataForDays:30 withUpperLimit:160 andLowerlimit:90];
+        config.secondPlotArray = [GraphModel getDataForDays:30 withUpperLimit:80 andLowerlimit:40];
+        config.thirdPlotArray = [GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:20];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+
+        AreaGraph *areaGraph = [[AreaGraph alloc] initWithConfigData:config];
+//        [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:80 andLowerlimit:30] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
         _graphView = areaGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_LINE_GRAPH])

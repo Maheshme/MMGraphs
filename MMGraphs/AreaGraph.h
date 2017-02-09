@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphConfig.h"
 
 @interface AreaGraph : VisualScrollView
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray withecondPlotArray:(NSArray *)secondPlotArray andThirdPlotArray:(NSArray *)thirdPlotArray;
+//- (instancetype)initWithPlotArray:(NSArray *)plotArray withecondPlotArray:(NSArray *)secondPlotArray andThirdPlotArray:(NSArray *)thirdPlotArray;
+- (instancetype)initWithConfigData:(GraphConfig *)configData;
 
 @end

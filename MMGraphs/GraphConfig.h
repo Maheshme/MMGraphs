@@ -13,7 +13,7 @@
 @interface GraphConfig : NSObject
 
 @property (nonatomic) float startingX, startingY, endingX, endingY, widthOfPath, unitSpacing, maxHeightOfBar, totalBarWidth, percentageOfPlot, maxWidthOfBar;
-@property (nonatomic, strong) NSArray<GraphPlotObj *> *firstPlotAraay, *secondPlotArray;
+@property (nonatomic, strong) NSArray<GraphPlotObj *> *firstPlotAraay, *secondPlotArray, *thirdPlotArray;
 @property (nonatomic, strong) NSArray *colorsArray;
 @property (nonatomic) BOOL xAxisLabelsEnabled;
 @property (nonatomic,strong) UIFont *labelFont;
