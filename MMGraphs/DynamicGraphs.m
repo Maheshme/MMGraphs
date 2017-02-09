@@ -41,6 +41,11 @@
 
 @implementation DynamicGraphs
 
+//- (instancetype)initWithConfigData:(GraphConfig *)configData
+//{
+//    
+//}
+
 - (instancetype)initWithTypeOfGraph:(Graph_Type)typeOfGraph
 {
     self = [super init];

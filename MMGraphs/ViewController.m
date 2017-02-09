@@ -156,9 +156,9 @@
         config.startingY = (self.view.frame.size.height*0.5)*0.9;
         config.endingY = 40;
         config.widthOfPath = 3;
-        config.unitSpacing = 10;
+        config.unitSpacing = 90;
         config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
-        config.firstPlotAraay = [GraphModel getDataForDays:101 withUpperLimit:100 andLowerlimit:0];
+        config.firstPlotAraay = [GraphModel getDataForDays:45 withUpperLimit:100 andLowerlimit:0];
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         

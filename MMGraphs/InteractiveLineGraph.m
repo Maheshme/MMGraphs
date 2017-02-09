@@ -12,22 +12,22 @@
 #import "GraphModel.h"
 #import "Coordinates.h"
 
-#define MAX_X_AXIS_LABELS                               5
-#define TIME_INTERVAL                                   10    //Minutes
-#define X_AXIS_LABELS_FONT                              11
-#define SEPERATOR_HEIGHT                                1
-#define STARTING_Y                                      (self.frame.size.height*0.9)
-#define ENDING_Y                                        (self.frame.size.height*0.1)
-#define STARTING_X                                      (self.frame.size.width*0.0)
-#define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
+//#define MAX_X_AXIS_LABELS                               5
+#define TIME_INTERVAL                                   1    //Minutes
+//#define X_AXIS_LABELS_FONT                              11
+//#define SEPERATOR_HEIGHT                                1
+//#define STARTING_Y                                      (self.frame.size.height*0.9)
+//#define ENDING_Y                                        (self.frame.size.height*0.1)
+//#define STARTING_X                                      (self.frame.size.width*0.0)
+//#define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
-#define GRAPH_WIDTH                                     2
+//#define GRAPH_WIDTH                                     2
 
 @interface InteractiveLineGraph ()
 
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
-@property (nonatomic) float maxY, minY, minX, maxX, rangeOfY/*, xUnit*/, slope, labelCount;
+@property (nonatomic) float maxY, minY, minX, maxX, rangeOfY, slope, labelCount;
 @property (nonatomic, strong) UIView *separator;
 @property (nonatomic) BOOL isScrolling, labelAllocated;
 @property (nonatomic, strong) UILabel *valueLabel;
@@ -76,40 +76,10 @@
     return self;
 }
 
-//- (instancetype)initWithPlotArray:(NSArray *)plotArray
-//{
-//    self = [super init];
-//    if (self)
-//    {
-//        self.backgroundColor = [UIColor clearColor];
-//        self.delegate = self;
-//        self.bounces = NO;
-//
-//        _plotArray = [NSArray arrayWithArray:plotArray];
-//        
-//        _maxY = [[plotArray valueForKeyPath:@"@max.value"] floatValue];
-//        _minY = [[plotArray valueForKeyPath:@"@min.value"] floatValue];
-//        
-//        _maxX =[[plotArray valueForKeyPath:@"@max.position"] floatValue];
-//        _minX = [[plotArray valueForKeyPath:@"@min.position"] floatValue];
-//        
-//        _previousCoord = [[Coordinates alloc]init];
-//        _nextCoord = [[Coordinates alloc]init];
-//        
-//        _rangeOfY = _maxY - _minY;
-//        
-//        _isScrolling = NO;
-//        _labelAllocated = NO;
-//
-//        [self allocateRequirments];
-//    }
-//    return self;
-//}
-
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _separator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, SEPERATOR_HEIGHT);
+    _separator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, 1);
     _graphLayer.frame = CGRectMake(0, _layoutConfig.endingY, self.frame.size.width, _layoutConfig.maxHeightOfBar);
     
     if (_valueLabel.frame.size.width <= 0)
@@ -191,7 +161,7 @@
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
-    _graphLayer.lineWidth = GRAPH_WIDTH;
+    _graphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _graphLayer.lineCap = LINE_CAP_ROUND;
     _graphLayer.lineJoin = LINE_CAP_ROUND;
     _graphLayer.geometryFlipped = YES;
@@ -219,8 +189,7 @@
     _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     _drawAnimation.duration = 2.5;
     _drawAnimation.repeatCount = 1.0;
-    [_drawAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];//[CAMediaTimingFunction functionWithControlPoints:0.0 :0.25 :0.56 :0.73]
-
+    [_drawAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     _grad = [[CAGradientLayer alloc]init];
     _grad.colors = @[(__bridge id)COLOR(210.0, 181.0, 59.0, 1).CGColor, (__bridge id)COLOR(241.0, 108.0, 32.0, 1).CGColor, (__bridge id)COLOR(192.0, 49.0, 32.0, 1).CGColor ];
     _grad.startPoint = CGPointMake(0,0.0);
@@ -243,14 +212,14 @@
     {
         graphData.barHeight = ((graphData.value/_rangeOfY)*_layoutConfig.maxHeightOfBar);
         graphData.coordinate.y = graphData.barHeight;
-        graphData.coordinate.x = (graphData.position *_layoutConfig.totalBarWidth)+_layoutConfig.startingX;//_xUnit*graphData.position+_layoutConfig.startingX;
+        graphData.coordinate.x = (graphData.position *_layoutConfig.totalBarWidth)+_layoutConfig.startingX;
     }
 }
 
 -(void)createLabels
 {
     //Time Label creation in x-axis
-    _labelCount = ((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ? ((_maxX/TIME_INTERVAL) + 1) : MAX_X_AXIS_LABELS;
+    _labelCount = (_maxX/TIME_INTERVAL) + 1;//((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ? ((_maxX/TIME_INTERVAL) + 1) : MAX_X_AXIS_LABELS;
     for (int i = 0; i < _labelCount  ; i++)
         [self createLabelsWithLabelCount:i*TIME_INTERVAL];
     
@@ -274,19 +243,12 @@
     [_graphPath removeAllPoints];
     self.contentSize = CGSizeMake(_layoutConfig.totalBarWidth*(_plotArray.count-1)+_layoutConfig.startingX, self.frame.size.height);
     
-    float curvatureFactor = 0.2;
-    
     for (GraphPlotObj *graphData  in _plotArray)
     {
         if ([graphData isEqual:[_plotArray firstObject]])
             [_graphPath moveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
         else
-        {
-        /*If u need jst line but not curve then comment the line below and uncomment the line below that(i.e.., addLineToPoint) or make curvatureFactor = 0. Then u will get line graph. If u need to increase the curvature, then increase the factor to 0.5. Play arround by changing curvatureFactor. But recommend curvatureFactor shoubd be (0 - 0.5). But if u make curvatureFactor to 0.5 grah will be more curvy, so the graph button will not stick to graph. If there is no curvature then graph button will work correctly. Recommend curvatureFactor is 0.2 so we can get both.*/
-//            [_graphPath addCurveToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y) controlPoint1:CGPointMake(_graphPath.currentPoint.x+_xUnit*curvatureFactor, _graphPath.currentPoint.y) controlPoint2:CGPointMake(graphData.coordinate.x-_xUnit*curvatureFactor, graphData.coordinate.y)];
-        
             [_graphPath addLineToPoint:CGPointMake(graphData.coordinate.x, graphData.coordinate.y)];
-        }
     }
     
     _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
@@ -350,7 +312,7 @@
     GraphPlotObj *cordNext = [[[_plotArray filteredArrayUsingPredicate:predicateForNext] sortedArrayUsingDescriptors:@[discriptorNe]] firstObject];
     
     _nextCoord.x = cordNext.coordinate.x;
-    _nextCoord.y = /*self.frame.size.height*0.9 -*/_layoutConfig.endingY +_layoutConfig.maxHeightOfBar - cordNext.coordinate.y;
+    _nextCoord.y = _layoutConfig.endingY +_layoutConfig.maxHeightOfBar - cordNext.coordinate.y;
     
     [_valueLabel setText:[NSString stringWithFormat:@"Value : %d", (int)cord.value]];
     
@@ -361,7 +323,7 @@
 //Get timer acc to x value
 -(NSString *)getTimeWithXPosition:(float)xPos
 {
-    float time = ((xPos - _layoutConfig.startingX)/(self.contentSize.width - _layoutConfig.startingX)) * (TIME_INTERVAL*(((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ?_labelCount - 1 : _labelCount)) * 60;
+    float time = ((xPos - _layoutConfig.startingX)/(self.contentSize.width - _layoutConfig.startingX)) * ((self.contentSize.width - _layoutConfig.startingX)/_layoutConfig.totalBarWidth)*60;
     int timeInMin = (int)time / 60;
     int timeLeft = (int)time%60;
     int timeInHr = timeInMin /60;
