@@ -150,7 +150,19 @@
     
     if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_LINE_GRAPH])
     {
-        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc]initWithPlotArray:[GraphModel getMinuteDataFor:76]];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 40;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.9;
+        config.endingY = 40;
+        config.widthOfPath = 3;
+        config.unitSpacing = 10;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getDataForDays:101 withUpperLimit:100 andLowerlimit:0];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc] initWithConfigData:config];
         _graphView = interactiveLine;
     }
     else if ([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_BAR_GRAPH])
@@ -257,7 +269,6 @@
         config.labelFont = [UIFont systemFontOfSize:14];
 
         AreaGraph *areaGraph = [[AreaGraph alloc] initWithConfigData:config];
-//        [[AreaGraph alloc]initWithPlotArray:[GraphModel getDataForDays:30 withUpperLimit:100 andLowerlimit:50]withecondPlotArray:[GraphModel getDataForDays:30 withUpperLimit:80 andLowerlimit:30] andThirdPlotArray:[GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:0]];
         _graphView = areaGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_LINE_GRAPH])
