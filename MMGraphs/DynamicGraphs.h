@@ -19,8 +19,8 @@ typedef NS_ENUM(NSInteger, Graph_Type) {
 
 @interface DynamicGraphs : VisualScrollView
 
--(instancetype)initWithTypeOfGraph:(Graph_Type)typeOfGraph;
+//-(instancetype)initWithTypeOfGraph:(Graph_Type)typeOfGraph;
 -(void)createDataWithPlotObj:(GraphPlotObj *)plotObj;
-- (instancetype)initWithConfigData:(GraphConfig *)configData;
+- (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph;
 
 @end

@@ -158,7 +158,7 @@
         config.widthOfPath = 3;
         config.unitSpacing = 90;
         config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
-        config.firstPlotAraay = [GraphModel getDataForDays:45 withUpperLimit:100 andLowerlimit:0];
+        config.firstPlotAraay = [GraphModel getMinuteDataFor:45];
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
@@ -273,19 +273,55 @@
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_LINE_GRAPH])
     {
-        DynamicGraphs *dynamicLine = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Line];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 80;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.7;
+        config.endingY = 100;
+        config.widthOfPath = 10;
+        config.unitSpacing = 10;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        DynamicGraphs *dynamicLine = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Line];
         _graphView = dynamicLine;
         [self createTimer];
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_BAR_GRAPH])
     {
-        DynamicGraphs *dynamicBar = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Bar];
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 80;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.7;
+        config.endingY = 100;
+        config.widthOfPath = 10;
+        config.unitSpacing = 10;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getMinuteDataFor:45];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        DynamicGraphs *dynamicBar = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Bar];
         _graphView = dynamicBar;
         [self createTimer];
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_SCATTER_GRAPH])
     {
-        DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc]initWithTypeOfGraph:Graph_Type_Scatter];
+
+        GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 80;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.7;
+        config.endingY = 100;
+        config.widthOfPath = 10;
+        config.unitSpacing = 10;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getMinuteDataFor:45];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Scatter];
         _graphView = dynamicScattert;
         [self createTimer];
     }
