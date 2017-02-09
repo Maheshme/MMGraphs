@@ -13,12 +13,6 @@
 #import "GraphModel.h"
 
 #define TIME_INTERVAL                                   10     //Minutes
-//#define X_AXIS_LABELS_FONT                              11
-//#define SEPERATOR_HEIGHT                                1
-//#define STARTING_Y                                      (self.frame.size.height*0.9)
-//#define ENDING_Y                                        (self.frame.size.height*0.1)
-//#define STARTING_X                                      (self.frame.size.width*0.0)
-//#define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
 
 @interface DynamicGraphs ()
