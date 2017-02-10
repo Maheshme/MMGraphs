@@ -10,7 +10,7 @@
 #import "GraphPlotObj.h"
 #import "XAxisGraphLabel.h"
 
-@interface AreaGraph ()
+@interface AreaGraph ()<UIScrollViewDelegate>
 
 @property (nonatomic) float yMax, firstMax, secondMax, thirdMax;;
 @property (nonatomic, strong) NSMutableArray *labelArray;
@@ -33,7 +33,6 @@
     if (self)
     {
         [configData needCalluculator];
-        
         _layoutConfig = configData;
         
         self.backgroundColor = [UIColor clearColor];

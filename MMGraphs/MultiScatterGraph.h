@@ -10,9 +10,8 @@
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
 
-@interface MultiScatterGraph : VisualScrollView
+@interface MultiScatterGraph : UIScrollView
 
-//- (instancetype)initWithFirstPlotArray:(NSArray *)firstPlotArray andSecondPlotArray:(NSArray *)secondPlotArray;
 - (instancetype)initWithConfigData:(GraphConfig *)configData;
 
 @end

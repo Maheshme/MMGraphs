@@ -10,7 +10,7 @@
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
 
-@interface ScatterPlotGraph : VisualScrollView
+@interface ScatterPlotGraph : UIScrollView
 
 - (instancetype)initWithConfigData:(GraphConfig *)configData;
 

@@ -11,7 +11,7 @@
 #import "XAxisGraphLabel.h"
 #import "BubbleView.h"
 
-@interface ScatterPlotGraph ()
+@interface ScatterPlotGraph ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray *plotArray;
 @property (nonatomic) float yMax;
@@ -136,9 +136,7 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_graphLayer])
-            [layer removeFromSuperlayer];
+
     
     _xAxisScrollButton = [[UIButton alloc]init];
     _xAxisScrollButton.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);

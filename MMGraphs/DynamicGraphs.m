@@ -15,7 +15,7 @@
 #define TIME_INTERVAL                                   10     //Minutes
 #define LINE_CAP_ROUND                                  @"round"
 
-@interface DynamicGraphs ()
+@interface DynamicGraphs ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
@@ -152,9 +152,9 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_graphLayer])
-            [layer removeFromSuperlayer];
+//    for (CALayer *layer in self.blurrView.layer.sublayers)
+//        if ([layer isEqual:_graphLayer])
+//            [layer removeFromSuperlayer];
     
     //Animation for drawing the path
     _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];

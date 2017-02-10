@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, Graph_Type) {
     Graph_Type_Scatter
 };
 
-@interface DynamicGraphs : VisualScrollView
+@interface DynamicGraphs : UIScrollView
 
 -(void)createDataWithPlotObj:(GraphPlotObj *)plotObj;
 - (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph;

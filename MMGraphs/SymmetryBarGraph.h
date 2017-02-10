@@ -10,7 +10,7 @@
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
 
-@interface SymmetryBarGraph : VisualScrollView
+@interface SymmetryBarGraph : UIScrollView
 
 - (instancetype)initWithConfigData:(GraphConfig *)configData;
 

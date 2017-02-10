@@ -143,9 +143,7 @@
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_firstGraphLayer] || [layer isEqual:_secondGraphLayer])
-            [layer removeFromSuperlayer];
+
 }
 
 //Alter heights for change in orientation

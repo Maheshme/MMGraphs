@@ -121,10 +121,8 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_graphLayer])
-            [layer removeFromSuperlayer];
 
+    
 }
 
 //Alter heights for change in orientation

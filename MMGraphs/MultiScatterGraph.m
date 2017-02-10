@@ -147,9 +147,9 @@
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_firstGraphLayer] || [layer isEqual:_secondGraphLayer])
-            [layer removeFromSuperlayer];
+//    for (CALayer *layer in self.blurrView.layer.sublayers)
+//        if ([layer isEqual:_firstGraphLayer] || [layer isEqual:_secondGraphLayer])
+//            [layer removeFromSuperlayer];
     
 }
 

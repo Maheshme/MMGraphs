@@ -12,18 +12,10 @@
 #import "GraphModel.h"
 #import "Coordinates.h"
 
-//#define MAX_X_AXIS_LABELS                               5
 #define TIME_INTERVAL                                   1    //Minutes
-//#define X_AXIS_LABELS_FONT                              11
-//#define SEPERATOR_HEIGHT                                1
-//#define STARTING_Y                                      (self.frame.size.height*0.9)
-//#define ENDING_Y                                        (self.frame.size.height*0.1)
-//#define STARTING_X                                      (self.frame.size.width*0.0)
-//#define MAX_HEIGHT_OF_GRAPH                             (STARTING_Y - ENDING_Y)
 #define LINE_CAP_ROUND                                  @"round"
-//#define GRAPH_WIDTH                                     2
 
-@interface InteractiveLineGraph ()
+@interface InteractiveLineGraph ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
@@ -168,9 +160,9 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-    for (CALayer *layer in self.blurrView.layer.sublayers)
-        if ([layer isEqual:_graphLayer])
-            [layer removeFromSuperlayer];
+//    for (CALayer *layer in self.blurrView.layer.sublayers)
+//        if ([layer isEqual:_graphLayer])
+//            [layer removeFromSuperlayer];
     
     _scroller = [[UIButton alloc]init];
     _scroller.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);

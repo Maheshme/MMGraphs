@@ -10,7 +10,7 @@
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
 
-@interface InteractiveBar : VisualScrollView
+@interface InteractiveBar : UIScrollView
 
 - (instancetype)initWithConfigData:(GraphConfig *)configData;
 
