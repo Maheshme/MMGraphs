@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
 @interface HorizantalGraph : UIScrollView
 
-//- (instancetype)initWithPlotArray:(NSArray *)plotArray;
-- (instancetype)initWithConfigData:(GraphConfig *)configData;
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance;
 
 @end

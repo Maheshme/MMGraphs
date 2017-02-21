@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
 #import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
 @interface ScatterPlotGraph : UIScrollView
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData;
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance;
 
 @end

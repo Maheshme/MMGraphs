@@ -42,7 +42,6 @@
         _valueLabel = [[UILabel alloc]init];
         _valueLabel.textAlignment = NSTextAlignmentCenter;
         _valueLabel.backgroundColor = [UIColor clearColor];
-        [_valueLabel setFont:[UIFont systemFontOfSize:BUBBLE_VALUE_FONT_SIZE]];
         [_valueLabel setTextColor:[UIColor whiteColor]];
         [_mainView addSubview:_valueLabel];
         

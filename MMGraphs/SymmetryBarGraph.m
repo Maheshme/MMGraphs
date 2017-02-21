@@ -24,21 +24,23 @@
 @property (nonatomic, strong) BubbleView *firstGraphBubble, *secondGraphBubble;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
  
 @end
 
 
 @implementation SymmetryBarGraph
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     if (self)
     {
         [configData needCalluculator];
         _layoutConfig = configData;
+        _graphLuminance = luminance;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _firstPlotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
@@ -129,7 +131,7 @@
     //CAShapeLayer for graph
     _firstGraphLayer = [CAShapeLayer layer];
     _firstGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _firstGraphLayer.strokeColor = COLOR(152.0, 73.0, 118.0, 1).CGColor;
+    _firstGraphLayer.strokeColor = [_graphLuminance.gradientColors firstObject] ? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject] : COLOR(152.0, 73.0, 118.0, 1).CGColor;
     _firstGraphLayer.geometryFlipped = YES;
     _firstGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _firstGraphLayer.path = [_firstGraphPath CGPath];
@@ -138,7 +140,7 @@
     //CAShapeLayer for graph
     _secondGraphLayer = [CAShapeLayer layer];
     _secondGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _secondGraphLayer.strokeColor = COLOR(40.0, 40.0, 40.0, 1).CGColor;
+    _secondGraphLayer.strokeColor = [_graphLuminance.gradientColors lastObject] ? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors lastObject] : COLOR(40.0, 40.0, 40.0, 1).CGColor;
     _secondGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
@@ -213,10 +215,12 @@
 {
     for (GraphPlotObj *barSource in _firstPlotArray)
     {
-        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:COLOR(210.0, 211.0, 211.0, 1)];
+        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor];
         [self addSubview:label];
         label.numberOfLines = 0;
         label.dotView.alpha = 0;
+        if (_graphLuminance.labelFont != nil)
+            [label setFont:_graphLuminance.labelFont];
         label.position = barSource.position;
         
         [_labelArray addObject:label];
@@ -273,19 +277,23 @@
     //BubbleView creation
     _firstGraphBubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Vertical];
     _firstGraphBubble.userInteractionEnabled = NO;
+    if (_graphLuminance.bubbleFont != nil)
+        [_firstGraphBubble.valueLabel setFont:_graphLuminance.bubbleFont];
     [self addSubview:_firstGraphBubble];
     
     _secondGraphBubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Vertical];
     _secondGraphBubble.userInteractionEnabled = NO;
+    if (_graphLuminance.bubbleFont != nil)
+        [_firstGraphBubble.valueLabel setFont:_graphLuminance.bubbleFont];
     [self addSubview:_secondGraphBubble];
     
-    _firstGraphBubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-    _firstGraphBubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-    _secondGraphBubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-    _secondGraphBubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
+    _firstGraphBubble.mainView.backgroundColor = [_graphLuminance.bubbleColors firstObject] ? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
+    _firstGraphBubble.indicationView.backgroundColor = [_graphLuminance.bubbleColors firstObject] ? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
+    _secondGraphBubble.mainView.backgroundColor = [_graphLuminance.bubbleColors firstObject] ? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
+    _secondGraphBubble.indicationView.backgroundColor = [_graphLuminance.bubbleColors firstObject] ? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
     
-    [_firstGraphBubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
-    [_secondGraphBubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
+    [_firstGraphBubble.valueLabel setTextColor: _graphLuminance.bubbleTextColor ? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1)];
+    [_secondGraphBubble.valueLabel setTextColor: _graphLuminance.bubbleTextColor ? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1)];
     
     _firstGraphBubble.alpha = 0;
     _secondGraphBubble.alpha = 0;

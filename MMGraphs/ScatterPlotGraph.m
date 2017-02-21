@@ -25,12 +25,13 @@
 @property (nonatomic, strong) UILabel *valueLabel;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 
 @end
 
 @implementation ScatterPlotGraph
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     if (self)
@@ -38,8 +39,9 @@
         [configData needCalluculator];
         
         _layoutConfig = configData;
+        _graphLuminance = luminance;
 
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _plotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
@@ -128,9 +130,9 @@
     //CAShapeLayer for graph
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _graphLayer.strokeColor = COLOR(233.0, 245.0, 252.0, 1).CGColor;
+    _graphLayer.strokeColor = [_graphLuminance.gradientColors firstObject]? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject] : COLOR(233.0, 245.0, 252.0, 1).CGColor;
     _graphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
-    /**/_graphLayer.geometryFlipped = YES;
+    _graphLayer.geometryFlipped = YES;
     _graphLayer.lineCap = @"round";
     _graphLayer.lineJoin = @"round";
     _graphLayer.path = [_graphPath CGPath];
@@ -139,8 +141,8 @@
 
     
     _xAxisScrollButton = [[UIButton alloc]init];
-    _xAxisScrollButton.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-    [_xAxisScrollButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    _xAxisScrollButton.backgroundColor = [_graphLuminance.bubbleColors firstObject] ? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
+    [_xAxisScrollButton.titleLabel setFont:_graphLuminance.bubbleFont ? _graphLuminance.bubbleFont : [UIFont systemFontOfSize:11]];
     [_xAxisScrollButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_xAxisScrollButton setTitle:@"--" forState:UIControlStateNormal];
     [_xAxisScrollButton addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
@@ -149,8 +151,8 @@
     _valueLabel = [[UILabel alloc]init];
     _valueLabel.textAlignment = NSTextAlignmentCenter;
     [_valueLabel setClipsToBounds:YES];
-    _valueLabel.backgroundColor = COLOR(170.0, 204.0, 225.0, 0.6);
-    [_valueLabel setTextColor:COLOR(8.0, 48.0, 69.0, 1)];
+    _valueLabel.backgroundColor = [_graphLuminance.bubbleColors lastObject]? [_graphLuminance.bubbleColors lastObject] : COLOR(170.0, 204.0, 225.0, 0.6);
+    [_valueLabel setTextColor:_graphLuminance.bubbleTextColor ? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1)];
     [self addSubview:_valueLabel];
 }
 
@@ -192,10 +194,12 @@
 {
     for (GraphPlotObj *barSource in _plotArray)
     {
-        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:COLOR(210.0, 211.0, 211.0, 1)];
+        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor? _graphLuminance.labelTextColor :COLOR(210.0, 211.0, 211.0, 1)];
         [self addSubview:label];
         label.numberOfLines = 0;
         label.dotView.alpha = 0;
+        if (_graphLuminance.labelFont != nil)
+            [label setFont:_graphLuminance.labelFont];
         label.position = barSource.position;
         
         [_labelArray addObject:label];

@@ -23,23 +23,26 @@
 @property (nonatomic, strong) UIBezierPath *graphPath;
 @property (nonatomic, strong) CAShapeLayer *graphLayer;
 @property (nonatomic, strong) BubbleView *bubble;
+@property (nonatomic, strong) CAGradientLayer *gradientLayer;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 
 @end
 
 
 @implementation HorizantalGraph
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     if (self)
     {
         [configData needCalluculator];
         _layoutConfig = configData;
+        _graphLuminance = luminance;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _plotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
@@ -60,6 +63,7 @@
     [super layoutSubviews];
     _xAxisSeperator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, 1, (self.frame.size.height > self.contentSize.height)?self.frame.size.height:self.contentSize.height - _layoutConfig.startingY);
     _graphLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _gradientLayer.frame = CGRectMake(0, 0, self.frame.size.width ,self.contentSize.height+_layoutConfig.endingY);
     
     if(_bubble.frame.size.width <= 0)
         _bubble.frame = CGRectMake(_bubble.frame.origin.x, _bubble.frame.origin.y, SCREEN_WIDTH*0.18, SCREEN_WIDTH*0.12);
@@ -121,8 +125,21 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-
+    if (_graphLuminance.gradientColors != nil)
+    {
+        if(_graphLuminance.gradientColors.count == 1)
+            _graphLayer.strokeColor = (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject];
+        else
+        {
+            _gradientLayer = [CAGradientLayer layer];
+            _gradientLayer.colors = _graphLuminance.gradientColors;
+            _gradientLayer.startPoint = CGPointMake(0,0.0);
+            _gradientLayer.endPoint = CGPointMake(1.0,0.0);
+        }
+    }
     
+    [self.layer addSublayer:_gradientLayer];
+        
 }
 
 //Alter heights for change in orientation
@@ -158,6 +175,9 @@
     }
     
     _graphLayer.path = [_graphPath CGPath];
+    
+    if(_graphLuminance.gradientColors.count > 1)
+        _gradientLayer.mask = _graphLayer;
 
     self.contentSize = CGSizeMake(self.frame.size.width, _layoutConfig.totalBarWidth*_plotArray.count+_layoutConfig.startingY);
 }
@@ -166,10 +186,12 @@
 {
     for (GraphPlotObj *barSource in _plotArray)
     {
-        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:COLOR(210.0, 211.0, 211.0, 1)];
+        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor];
         [self addSubview:label];
         label.numberOfLines = 0;
         label.dotView.alpha = 0;
+        if (_graphLuminance.labelFont != nil)
+            [label setFont:_graphLuminance.labelFont];
         label.position = barSource.position;
         
         [_labelArray addObject:label];
@@ -219,9 +241,11 @@
         //BubbleView creation
         _bubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Horizantal];
         _bubble.userInteractionEnabled = NO;
-        _bubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-        _bubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-        [_bubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
+        _bubble.mainView.backgroundColor = _graphLuminance.bubbleColors.firstObject ? _graphLuminance.bubbleColors.firstObject : COLOR(238.0, 211.0, 105.0, 1);
+        _bubble.indicationView.backgroundColor = _graphLuminance.bubbleColors.firstObject ? _graphLuminance.bubbleColors.firstObject : COLOR(238.0, 211.0, 105.0, 1);
+        [_bubble.valueLabel setTextColor:_graphLuminance.bubbleTextColor ? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1)];
+        if (_graphLuminance.bubbleFont != nil)
+            [_bubble.valueLabel setFont:_graphLuminance.bubbleFont];
         [self addSubview:_bubble];
         
         _bubble.alpha = 0;

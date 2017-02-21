@@ -30,20 +30,22 @@
 @property (nonatomic, strong) CAGradientLayer *grad;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 
 @end
 
 @implementation InteractiveLineGraph
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     if (self)
     {
         [configData needCalluculator];
         _layoutConfig = configData;
+        _graphLuminance = luminance;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         self.bounces = NO;
         
@@ -73,7 +75,7 @@
     [super layoutSubviews];
     _separator.frame = CGRectMake(_layoutConfig.startingX, _layoutConfig.startingY, (self.contentSize.width > self.frame.size.width) ? self.contentSize.width : self.frame.size.width, 1);
     _graphLayer.frame = CGRectMake(0, _layoutConfig.endingY, self.frame.size.width, _layoutConfig.maxHeightOfBar);
-    
+    _grad.frame = CGRectMake(0, _layoutConfig.endingY, self.contentSize.width, _layoutConfig.maxHeightOfBar + _layoutConfig.widthOfPath);
     if (_valueLabel.frame.size.width <= 0)
         _valueLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.1);
     
@@ -101,8 +103,6 @@
     _graphButton.layer.cornerRadius = _graphButton.frame.size.width/2;
     [self bringSubviewToFront:_graphButton];
     
-   
-
     [self bringSubviewToFront:_scroller];
     [self bringSubviewToFront:_graphButton];
     
@@ -160,21 +160,16 @@
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
     
-//    for (CALayer *layer in self.blurrView.layer.sublayers)
-//        if ([layer isEqual:_graphLayer])
-//            [layer removeFromSuperlayer];
-    
     _scroller = [[UIButton alloc]init];
-    _scroller.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-    [_scroller setTitleColor:COLOR(8.0, 48.0, 69.0, 1) forState:UIControlStateNormal];
-    [_scroller.titleLabel setFont:[UIFont systemFontOfSize:11]];
-    [_scroller setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_scroller setTitle:@"--" forState:UIControlStateNormal];
+    _scroller.backgroundColor = [_graphLuminance.bubbleColors firstObject]? [_graphLuminance.bubbleColors firstObject] : COLOR(238.0, 211.0, 105.0, 1);
+    [_scroller setTitleColor:_graphLuminance.bubbleTextColor ? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1) forState:UIControlStateNormal];
+    [_scroller.titleLabel setFont:_graphLuminance.bubbleFont ? _graphLuminance.bubbleFont : [UIFont systemFontOfSize:11]];
+    [_scroller setTitle:@"0:00:00" forState:UIControlStateNormal];
     [_scroller addTarget:self action:@selector(dragMoving:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self addSubview:_scroller];
     
     _graphButton = [[UIButton alloc]init];
-    _graphButton.backgroundColor = COLOR(13.0, 60.0, 85.0, 1);
+    _graphButton.backgroundColor = [_graphLuminance.bubbleColors lastObject] ? [_graphLuminance.bubbleColors lastObject] : COLOR(13.0, 60.0, 85.0, 1);
     [self addSubview:_graphButton];
 
     //Animation for drawing the path
@@ -182,19 +177,28 @@
     _drawAnimation.duration = 2.5;
     _drawAnimation.repeatCount = 1.0;
     [_drawAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    _grad = [[CAGradientLayer alloc]init];
-    _grad.colors = @[(__bridge id)COLOR(210.0, 181.0, 59.0, 1).CGColor, (__bridge id)COLOR(241.0, 108.0, 32.0, 1).CGColor, (__bridge id)COLOR(192.0, 49.0, 32.0, 1).CGColor ];
-    _grad.startPoint = CGPointMake(0,0.0);
-    _grad.endPoint = CGPointMake(0,1.0);
-    [self.layer addSublayer:_grad];
     
+    
+    if (_graphLuminance.gradientColors != nil)
+    {
+        if(_graphLuminance.gradientColors.count == 1)
+            _graphLayer.strokeColor = (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject];
+        else
+        {
+            _grad = [CAGradientLayer layer];
+            _grad.colors = _graphLuminance.gradientColors;
+            _grad.startPoint = CGPointMake(0,0.0);
+            _grad.endPoint = CGPointMake(0,1.0);
+            [self.layer addSublayer:_grad];
+        }
+    }
+
     _valueLabel = [[UILabel alloc]init];
     _valueLabel.backgroundColor = [UIColor clearColor];
     [_valueLabel setTextAlignment:NSTextAlignmentCenter];
     [_valueLabel setTextColor:[UIColor blackColor]];
-    [_valueLabel setFont:[UIFont systemFontOfSize:14]];
+    [_valueLabel setFont:_graphLuminance.bubbleFont ? _graphLuminance.bubbleFont : [UIFont systemFontOfSize:14]];
     [self addSubview:_valueLabel];
-    
 }
 
 
@@ -202,7 +206,7 @@
 {
     for (GraphPlotObj *graphData in _plotArray)
     {
-        graphData.barHeight = ((graphData.value/_rangeOfY)*_layoutConfig.maxHeightOfBar);
+        graphData.barHeight = ((graphData.value/_rangeOfY)*_layoutConfig.maxHeightOfBar)+_layoutConfig.endingY;
         graphData.coordinate.y = graphData.barHeight;
         graphData.coordinate.x = (graphData.position *_layoutConfig.totalBarWidth)+_layoutConfig.startingX;
     }
@@ -211,7 +215,7 @@
 -(void)createLabels
 {
     //Time Label creation in x-axis
-    _labelCount = (_maxX/TIME_INTERVAL) + 1;//((_maxX/TIME_INTERVAL) > MAX_X_AXIS_LABELS) ? ((_maxX/TIME_INTERVAL) + 1) : MAX_X_AXIS_LABELS;
+    _labelCount = (_maxX/TIME_INTERVAL) + 1;
     for (int i = 0; i < _labelCount  ; i++)
         [self createLabelsWithLabelCount:i*TIME_INTERVAL];
     
@@ -247,9 +251,9 @@
     _drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
     
     _graphLayer.path = [_graphPath CGPath];
-    _grad.frame = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    _grad.mask = _graphLayer;
-
+    if (_graphLuminance.gradientColors != nil && _graphLuminance.gradientColors.count > 1)
+        _grad.mask = _graphLayer;
+    
     [_graphLayer addAnimation:_drawAnimation forKey:@"drawCircleAnimation"];
 }
 
@@ -279,7 +283,7 @@
         
         float y = (_slope * (xPos-_previousCoord.x))+_previousCoord.y;
         if (!isnan(y))
-            _graphButton.center = CGPointMake(c.center.x, y);
+            _graphButton.center = CGPointMake(c.center.x, y+_layoutConfig.endingY);
     }
     else
     {

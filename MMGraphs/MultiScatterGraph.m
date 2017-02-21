@@ -24,20 +24,22 @@
 @property (nonatomic, strong) BubbleView *firstGraphBubble, *secondGraphBubble;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 
 @end
 
 @implementation MultiScatterGraph
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     if (self)
     {
         [configData needCalluculator];
         _layoutConfig = configData;
+        _graphLuminance = luminance;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _firstPlotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
@@ -128,7 +130,7 @@
     //CAShapeLayer for graph
     _firstGraphLayer = [CAShapeLayer layer];
     _firstGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _firstGraphLayer.strokeColor = COLOR(168.0, 183.0, 137.0, 1).CGColor;
+    _firstGraphLayer.strokeColor = [_graphLuminance.gradientColors firstObject]? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject] : COLOR(168.0, 183.0, 137.0, 1).CGColor;
     _firstGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _firstGraphLayer.lineCap = @"round";
     _firstGraphLayer.lineJoin = @"round";
@@ -139,18 +141,13 @@
     //CAShapeLayer for graph
     _secondGraphLayer = [CAShapeLayer layer];
     _secondGraphLayer.fillColor = [[UIColor clearColor] CGColor];
-    _secondGraphLayer.strokeColor = COLOR(255.0, 215.0, 71.0, 1).CGColor;
+    _secondGraphLayer.strokeColor = [_graphLuminance.gradientColors lastObject]? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors lastObject] : COLOR(255.0, 215.0, 71.0, 1).CGColor;
     _secondGraphLayer.lineWidth = _layoutConfig.totalBarWidth*_layoutConfig.percentageOfPlot;
     _secondGraphLayer.lineCap = @"round";
     _secondGraphLayer.lineJoin = @"round";
     _secondGraphLayer.geometryFlipped = YES;
     _secondGraphLayer.path = [_secondGraphPath CGPath];
     [self.layer addSublayer:_secondGraphLayer];
-    
-//    for (CALayer *layer in self.blurrView.layer.sublayers)
-//        if ([layer isEqual:_firstGraphLayer] || [layer isEqual:_secondGraphLayer])
-//            [layer removeFromSuperlayer];
-    
 }
 
 //Alter heights for change in orientation
@@ -221,10 +218,12 @@
 {
     for (GraphPlotObj *barSource in _firstPlotArray)
     {
-        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:COLOR(210.0, 211.0, 211.0, 1)];
+        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor ? _graphLuminance.labelTextColor : COLOR(210.0, 211.0, 211.0, 1)];
         [self addSubview:label];
         label.numberOfLines = 0;
         label.dotView.alpha = 0;
+        if(_graphLuminance.labelFont != nil)
+           [label setFont:_graphLuminance.labelFont];
         label.position = barSource.position;
         
         [_labelArray addObject:label];

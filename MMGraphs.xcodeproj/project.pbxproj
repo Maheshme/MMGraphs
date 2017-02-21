@@ -35,6 +35,7 @@
 		3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA51E090EFF002F12BB /* Assets.xcassets */; };
 		3D91DDB41E090EFF002F12BB /* MMGraphsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */; };
 		3D91DDBF1E090EFF002F12BB /* MMGraphsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */; };
+		3DE21B381E5971FA00F0EA17 /* GraphLuminosity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		3D91DDBA1E090EFF002F12BB /* MMGraphsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMGraphsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMGraphsUITests.m; sourceTree = "<group>"; };
 		3D91DDC01E090EFF002F12BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DE21B361E5971FA00F0EA17 /* GraphLuminosity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphLuminosity.h; sourceTree = "<group>"; };
+		3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphLuminosity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 			children = (
 				3D5E25B01E49915E0012233E /* GraphConfig.h */,
 				3D5E25B11E49915E0012233E /* GraphConfig.m */,
+				3DE21B361E5971FA00F0EA17 /* GraphLuminosity.h */,
+				3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */,
 			);
 			name = ConfigObj;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 				3D5E25B21E49915E0012233E /* GraphConfig.m in Sources */,
 				3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */,
 				3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */,
+				3DE21B381E5971FA00F0EA17 /* GraphLuminosity.m in Sources */,
 				3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

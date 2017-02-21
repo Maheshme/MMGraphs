@@ -19,6 +19,7 @@
 #import "AreaGraph.h"
 #import "DynamicGraphs.h"
 #import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
 #define INTERACTIVE_LINE_GRAPH              @"Interactive Line"
 #define INTERACTIVE_BAR_GRAPH               @"Interactive Bar"
@@ -153,21 +154,31 @@
         GraphConfig* config = [[GraphConfig alloc]init];
         config.startingX = 40;
         config.endingX = 375;
-        config.startingY = (self.view.frame.size.height*0.5)*0.9;
-        config.endingY = 40;
-        config.widthOfPath = 3;
+        config.startingY = (self.view.frame.size.height*0.5)*0.7;
+        config.endingY = 100;
+        config.widthOfPath = 10;
         config.unitSpacing = 90;
         config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
         config.firstPlotAraay = [GraphModel getMinuteDataFor:45];
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc] initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor grayColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:11];
+
+        
+        InteractiveLineGraph *interactiveLine = [[InteractiveLineGraph alloc] initWithConfigData:config andGraphLuminance:luminous];
         _graphView = interactiveLine;
     }
     else if ([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_BAR_GRAPH])
     {
-        GraphConfig* config = [[GraphConfig alloc]init];
+        GraphConfig *config = [[GraphConfig alloc]init];
         config.startingX = 50;
         config.endingX = 375;
         config.startingY = (self.view.frame.size.height*0.5)*0.9;
@@ -179,7 +190,16 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+        
+        InteractiveBar *interaciveBar = [[InteractiveBar alloc]initWithConfigData:config andGraphLuminance:luminous];
         _graphView = interaciveBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_SYMMETRY_GRAPH])
@@ -197,7 +217,16 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+        
+        SymmetryBarGraph *interaciveSymmetryBar = [[SymmetryBarGraph alloc]initWithConfigData:config andGraphLuminance:luminous];
         _graphView = interaciveSymmetryBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_HORIZANTAL_BAR_GRAPH])
@@ -214,7 +243,16 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc] initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+        
+        HorizantalGraph *interaciveHorizantalBar = [[HorizantalGraph alloc] initWithConfigData:config andGraphLuminance:luminous];
         _graphView = interaciveHorizantalBar;
     }
     else if([clickedButton.titleLabel.text isEqualToString:INTERACTIVE_SCATTER_PLOT_GRAPH])
@@ -231,7 +269,16 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc] initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+        
+        ScatterPlotGraph *scatterPlotGraph = [[ScatterPlotGraph alloc] initWithConfigData:config andGraphLuminance:luminous];
         _graphView = scatterPlotGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:MULTI_SCATTER_PLOT_GRAPH])
@@ -249,7 +296,17 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        MultiScatterGraph *multiScatterPlotGraph = [[MultiScatterGraph alloc] initWithConfigData:config];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+
+        
+        MultiScatterGraph *multiScatterPlotGraph = [[MultiScatterGraph alloc] initWithConfigData:config andGraphLuminance:luminous];
         _graphView = multiScatterPlotGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:AREA_GRAPH])

@@ -11,7 +11,6 @@
 #import "XAxisGraphLabel.h"
 #import "BubbleView.h"
 
-
 @interface InteractiveBar ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray *plotArray;
@@ -27,11 +26,12 @@
 @property (nonatomic, strong) CABasicAnimation *drawAnimation;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 @end
 
 @implementation InteractiveBar
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance
 {
     self = [super init];
     
@@ -40,7 +40,9 @@
         [configData needCalluculator];
         
         _layoutConfig = configData;
-        self.backgroundColor = [UIColor clearColor];
+        _graphLuminance = luminance;
+        
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _plotArray = [NSArray arrayWithArray:configData.firstPlotAraay];
@@ -130,14 +132,14 @@
     _drawAnimation.duration = 3.0;
     _drawAnimation.repeatCount = 1.0;
     
-    if (_layoutConfig.colorsArray != nil)
+    if (_graphLuminance.gradientColors != nil)
     {
-        if(_layoutConfig.colorsArray.count == 1)
-            _graphLayer.strokeColor = (__bridge CGColorRef _Nullable)[_layoutConfig.colorsArray firstObject];
+        if(_graphLuminance.gradientColors.count == 1)
+            _graphLayer.strokeColor = (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject];
         else
         {
             _gradientLayer = [CAGradientLayer layer];
-            _gradientLayer.colors = _layoutConfig.colorsArray;
+            _gradientLayer.colors = _graphLuminance.gradientColors;
             _gradientLayer.startPoint = CGPointMake(0,0.0);
             _gradientLayer.endPoint = CGPointMake(0,1.0);
         }
@@ -181,7 +183,7 @@
     
     _graphLayer.path = [_graphPath CGPath];
     
-    if(_layoutConfig.colorsArray.count > 1)
+    if(_graphLuminance.gradientColors.count > 1)
         _gradientLayer.mask = _graphLayer;
     
     _drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
@@ -194,10 +196,11 @@
 {
     for (GraphPlotObj *barSource in _plotArray)
     {
-        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:COLOR(210.0, 211.0, 211.0, 1)];
+        XAxisGraphLabel *label = [[XAxisGraphLabel alloc] initWithText:barSource.labelName textAlignement:NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor];
         [self addSubview:label];
         label.numberOfLines = 0;
         label.dotView.alpha = 0;
+        [label setFont:_graphLuminance.labelFont];
         label.position = barSource.position;
         
         [_labelArray addObject:label];
@@ -247,9 +250,10 @@
         //BubbleView creation
         _bubble = [[BubbleView alloc]initWithGraphType:Graph_Type_Vertical];
         _bubble.userInteractionEnabled = NO;
-        _bubble.mainView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-        _bubble.indicationView.backgroundColor = COLOR(238.0, 211.0, 105.0, 1);
-        [_bubble.valueLabel setTextColor: COLOR(8.0, 48.0, 69.0, 1)];
+        _bubble.mainView.backgroundColor = _graphLuminance.bubbleColors.firstObject ? _graphLuminance.bubbleColors.firstObject : COLOR(238.0, 211.0, 105.0, 1);
+        _bubble.indicationView.backgroundColor = _graphLuminance.bubbleColors.firstObject ? _graphLuminance.bubbleColors.firstObject : COLOR(238.0, 211.0, 105.0, 1);
+        [_bubble.valueLabel setTextColor: _graphLuminance.bubbleTextColor? _graphLuminance.bubbleTextColor : COLOR(8.0, 48.0, 69.0, 1)];
+        [_bubble.valueLabel setFont:_graphLuminance.bubbleFont? _graphLuminance.bubbleFont : [UIFont systemFontOfSize:12]];
         [self addSubview:_bubble];
         
         _bubble.alpha = 0;
