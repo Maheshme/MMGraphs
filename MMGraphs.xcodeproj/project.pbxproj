@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D5E25B21E49915E0012233E /* GraphConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5E25B11E49915E0012233E /* GraphConfig.m */; };
 		3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6B31E11484C00608C81 /* MenuView.m */; };
 		3D6CD6C31E1240FF00608C81 /* GraphModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C21E1240FF00608C81 /* GraphModel.m */; };
 		3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C51E12413100608C81 /* InteractiveBar.m */; };
@@ -34,6 +35,7 @@
 		3D91DDA61E090EFF002F12BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D91DDA51E090EFF002F12BB /* Assets.xcassets */; };
 		3D91DDB41E090EFF002F12BB /* MMGraphsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDB31E090EFF002F12BB /* MMGraphsTests.m */; };
 		3D91DDBF1E090EFF002F12BB /* MMGraphsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */; };
+		3DE21B381E5971FA00F0EA17 /* GraphLuminosity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D5E25B01E49915E0012233E /* GraphConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphConfig.h; sourceTree = "<group>"; };
+		3D5E25B11E49915E0012233E /* GraphConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphConfig.m; sourceTree = "<group>"; };
 		3D6CD6B01E11431400608C81 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		3D6CD6B11E11432F00608C81 /* AppCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCommon.h; sourceTree = "<group>"; };
 		3D6CD6B21E11484C00608C81 /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 		3D91DDBA1E090EFF002F12BB /* MMGraphsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMGraphsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D91DDBE1E090EFF002F12BB /* MMGraphsUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMGraphsUITests.m; sourceTree = "<group>"; };
 		3D91DDC01E090EFF002F12BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DE21B361E5971FA00F0EA17 /* GraphLuminosity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphLuminosity.h; sourceTree = "<group>"; };
+		3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphLuminosity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D5E25AD1E4991190012233E /* ConfigObj */ = {
+			isa = PBXGroup;
+			children = (
+				3D5E25B01E49915E0012233E /* GraphConfig.h */,
+				3D5E25B11E49915E0012233E /* GraphConfig.m */,
+				3DE21B361E5971FA00F0EA17 /* GraphLuminosity.h */,
+				3DE21B371E5971FA00F0EA17 /* GraphLuminosity.m */,
+			);
+			name = ConfigObj;
+			sourceTree = "<group>";
+		};
 		3D6CD6AF1E1142F500608C81 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +248,7 @@
 		3D6CD6BF1E1240C000608C81 /* Graph Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D5E25AD1E4991190012233E /* ConfigObj */,
 				3D8BD8D21E2C9750006009EC /* PlotObjects */,
 				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
 				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
@@ -458,7 +476,7 @@
 				TargetAttributes = {
 					3D91DD921E090EFF002F12BB = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = S7663BSBBY;
+						DevelopmentTeam = G3VP65D683;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -547,8 +565,10 @@
 				3D6CD6B41E11484C00608C81 /* MenuView.m in Sources */,
 				3D6CD7081E13D7A900608C81 /* InteractiveLineGraph.m in Sources */,
 				3D6CD7101E13E78300608C81 /* Coordinates.m in Sources */,
+				3D5E25B21E49915E0012233E /* GraphConfig.m in Sources */,
 				3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */,
 				3D6CD6FC1E13969A00608C81 /* ScatterPlotGraph.m in Sources */,
+				3DE21B381E5971FA00F0EA17 /* GraphLuminosity.m in Sources */,
 				3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,7 +704,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = S7663BSBBY;
+				DEVELOPMENT_TEAM = G3VP65D683;
 				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -704,7 +724,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = S7663BSBBY;
+				DEVELOPMENT_TEAM = G3VP65D683;
 				GCC_PREFIX_HEADER = MMGraphs/PrefixHeader.pch;
 				INFOPLIST_FILE = MMGraphs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
-@interface InteractiveLineGraph : VisualScrollView
+@interface InteractiveLineGraph : UIScrollView
 
-- (instancetype)initWithPlotArray:(NSArray *)plotArray;
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance;
 
 @end

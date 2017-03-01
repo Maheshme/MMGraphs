@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "VisualScrollView.h"
+#import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
-@interface MultiScatterGraph : VisualScrollView
+@interface MultiScatterGraph : UIScrollView
 
-- (instancetype)initWithFirstPlotArray:(NSArray *)firstPlotArray andSecondPlotArray:(NSArray *)secondPlotArray;
+- (instancetype)initWithConfigData:(GraphConfig *)configData andGraphLuminance:(GraphLuminosity *)luminance;
 
 @end
