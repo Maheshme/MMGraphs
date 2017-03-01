@@ -12,17 +12,32 @@
 -Dynamic Scatter Plot graphs in it
   
 <br />  Lightweight graphs, supports the negative plot, effective interaction.<br />
-
+<br />P.S - Creating framework, still in progress.<br />
 ##How to use:
 <br />Each graph is separate UIView component except dynamic graphs, you just need to import that and allocate using proper init, then add to subview. In dynamic graphs you need to pass what type of graph i.e.., line, bar or scatter plot.<br /> 
-<br /> The interactive line is a static graph where you can see interactions using a scroll button on the x-axis. The Value will be displayed at top of graph, and plot period is 1 min. You can customise macros based on your requirment<br />
+<br /> The interactive line is a static graph where you can see interactions using a scroll button on the x-axis. The Value will be displayed at top of graph, and plot period is 1 min. You can customise based on your requirment just fill these objects and send them to graph.<br />
 ```
-#define STARTING_Y                      self.frame.size.height*0.9
-#define ENDING_Y                        11.0
-#define STARTING_X                      self.frame.size.width*0.0
-#define MAX_HEIGHT_OF_BAR               (STARTING_Y - ENDING_Y)
-#define BAR_WIDTH                       40.0
-#define SPACING                         10.0
+ GraphConfig* config = [[GraphConfig alloc]init];
+        config.startingX = 80;
+        config.endingX = 375;
+        config.startingY = (self.view.frame.size.height*0.5)*0.7;
+        config.endingY = 100;
+        config.widthOfPath = 10;
+        config.unitSpacing = 10;
+        config.colorsArray = @[(__bridge id)COLOR(174.0, 189.0, 161.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        config.firstPlotAraay = [GraphModel getMinuteDataFor:45];
+        config.xAxisLabelsEnabled = YES;
+        config.labelFont = [UIFont systemFontOfSize:14];
+        
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+
 ```
 by going into that class. These are macros so just change them at declaration. And for data in ```GraphModel.m```. <br /><br /> ```+(NSArray *)getMinuteDataFor:(int)numberOfMinutes```
 <br />
