@@ -30,20 +30,22 @@
 @property (nonatomic) NSInteger typeOfGraph;
 
 @property (nonatomic, strong) GraphConfig *layoutConfig;
+@property (nonatomic, strong) GraphLuminosity *graphLuminance;
 
 @end
 
 @implementation DynamicGraphs
 
-- (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph
+- (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph andGraphLuminance:(GraphLuminosity *)luminance;
 {
     self = [super init];
     if (self)
     {
         [configData needCalluculator];
         _layoutConfig = configData;
+        _graphLuminance = luminance;
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = _graphLuminance.backgroundColor ? _graphLuminance.backgroundColor : [UIColor clearColor];
         self.delegate = self;
         
         _typeOfGraph = typeOfGraph;
@@ -142,7 +144,7 @@
     _graphLayer = [CAShapeLayer layer];
     _graphLayer.fillColor = [[UIColor clearColor] CGColor];
     _graphLayer.geometryFlipped = YES;
-    _graphLayer.strokeColor = COLOR(210.0, 211.0, 211.0, 1).CGColor;
+    _graphLayer.strokeColor = [_graphLuminance.gradientColors firstObject] ? (__bridge CGColorRef _Nullable)[_graphLuminance.gradientColors firstObject] : COLOR(210.0, 211.0, 211.0, 1).CGColor;
     _graphLayer.lineWidth = 2;
     if (_typeOfGraph == Graph_Type_Line || _typeOfGraph == Graph_Type_Scatter)
     {
@@ -151,10 +153,6 @@
     }
     _graphLayer.path = [_graphPath CGPath];
     [self.layer addSublayer:_graphLayer];
-    
-//    for (CALayer *layer in self.blurrView.layer.sublayers)
-//        if ([layer isEqual:_graphLayer])
-//            [layer removeFromSuperlayer];
     
     //Animation for drawing the path
     _drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -167,11 +165,13 @@
 //Creating x-axis time labels
 -(void)createLabelsWithLabelCount:(int)labelNumber
 {
-    XAxisGraphLabel *label = [[XAxisGraphLabel alloc]initWithText:[NSString stringWithFormat:@"%d",labelNumber] textAlignement:(labelNumber == 0) ? NSTextAlignmentLeft : NSTextAlignmentCenter andTextColor:[UIColor blackColor]];
+    XAxisGraphLabel *label = [[XAxisGraphLabel alloc]initWithText:[NSString stringWithFormat:@"%d",labelNumber] textAlignement:(labelNumber == 0) ? NSTextAlignmentLeft : NSTextAlignmentCenter andTextColor:_graphLuminance.labelTextColor ? _graphLuminance.labelTextColor : [UIColor blackColor]];
     label.dotView.alpha = 1;
     label.position = labelNumber;
     [self addSubview:label];
     _latestLabel = labelNumber;
+    if (_graphLuminance.labelFont)
+        [label setFont:_graphLuminance.labelFont];
     _labelAdded = YES;
     _labelAllocationStarted = YES;
     [self setNeedsLayout];

@@ -324,8 +324,18 @@
         config.thirdPlotArray = [GraphModel getDataForDays:30 withUpperLimit:50 andLowerlimit:20];
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
+        
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor grayColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
 
-        AreaGraph *areaGraph = [[AreaGraph alloc] initWithConfigData:config];
+
+        AreaGraph *areaGraph = [[AreaGraph alloc] initWithConfigData:config andGraphLuminance:luminous];
         _graphView = areaGraph;
     }
     else if([clickedButton.titleLabel.text isEqualToString:DYNAMIC_LINE_GRAPH])
@@ -341,7 +351,16 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        DynamicGraphs *dynamicLine = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Line];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+        
+        DynamicGraphs *dynamicLine = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Line andGraphLuminance:luminous];
         _graphView = dynamicLine;
         [self createTimer];
     }
@@ -359,7 +378,17 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        DynamicGraphs *dynamicBar = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Bar];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+
+        
+        DynamicGraphs *dynamicBar = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Bar andGraphLuminance:luminous];
         _graphView = dynamicBar;
         [self createTimer];
     }
@@ -378,7 +407,17 @@
         config.xAxisLabelsEnabled = YES;
         config.labelFont = [UIFont systemFontOfSize:14];
         
-        DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Scatter];
+        GraphLuminosity *luminous = [[GraphLuminosity alloc]init];
+        luminous.backgroundColor = [UIColor clearColor];
+        luminous.bubbleTextColor = [UIColor blackColor];
+        luminous.labelTextColor = [UIColor whiteColor];
+        luminous.gradientColors = @[(__bridge id)COLOR(245.0, 196.0, 10.0, 1).CGColor, (__bridge id)COLOR(0.0, 3.0, 3.0, 1).CGColor];
+        luminous.bubbleColors = @[COLOR(30.0, 119.0, 177.0, 1), COLOR(100.0, 3.0, 3.0, 1)];
+        luminous.labelFont = [UIFont systemFontOfSize:14];
+        luminous.bubbleFont = [UIFont systemFontOfSize:14];
+
+        
+        DynamicGraphs *dynamicScattert = [[DynamicGraphs alloc] initWithConfigData:config typeOfGraph:Graph_Type_Scatter andGraphLuminance:luminous];
         _graphView = dynamicScattert;
         [self createTimer];
     }

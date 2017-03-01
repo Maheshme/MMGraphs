@@ -10,6 +10,7 @@
 #import "VisualScrollView.h"
 #import "GraphPlotObj.h"
 #import "GraphConfig.h"
+#import "GraphLuminosity.h"
 
 typedef NS_ENUM(NSInteger, Graph_Type) {
     Graph_Type_Line,
@@ -20,6 +21,6 @@ typedef NS_ENUM(NSInteger, Graph_Type) {
 @interface DynamicGraphs : UIScrollView
 
 -(void)createDataWithPlotObj:(GraphPlotObj *)plotObj;
-- (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph;
+- (instancetype)initWithConfigData:(GraphConfig *)configData typeOfGraph:(Graph_Type)typeOfGraph andGraphLuminance:(GraphLuminosity *)luminance; 
 
 @end
