@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VisualScrollView.h"
 #import "GraphPlotObj.h"
 #import "GraphConfig.h"
 #import "GraphLuminosity.h"

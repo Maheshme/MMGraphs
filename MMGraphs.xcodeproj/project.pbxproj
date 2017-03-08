@@ -12,7 +12,6 @@
 		3D6CD6C31E1240FF00608C81 /* GraphModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C21E1240FF00608C81 /* GraphModel.m */; };
 		3D6CD6C61E12413100608C81 /* InteractiveBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C51E12413100608C81 /* InteractiveBar.m */; };
 		3D6CD6C91E12417F00608C81 /* GraphPlotObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */; };
-		3D6CD6CD1E12721400608C81 /* VisualScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6CC1E12721400608C81 /* VisualScrollView.m */; };
 		3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */; };
 		3D6CD6D31E127FFB00608C81 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6D21E127FFB00608C81 /* BubbleView.m */; };
 		3D6CD6F51E12922E00608C81 /* HorizantalGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6CD6F41E12922E00608C81 /* HorizantalGraph.m */; };
@@ -68,8 +67,6 @@
 		3D6CD6C51E12413100608C81 /* InteractiveBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractiveBar.m; sourceTree = "<group>"; };
 		3D6CD6C71E12417F00608C81 /* GraphPlotObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPlotObj.h; sourceTree = "<group>"; };
 		3D6CD6C81E12417F00608C81 /* GraphPlotObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPlotObj.m; sourceTree = "<group>"; };
-		3D6CD6CB1E12721400608C81 /* VisualScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualScrollView.h; sourceTree = "<group>"; };
-		3D6CD6CC1E12721400608C81 /* VisualScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisualScrollView.m; sourceTree = "<group>"; };
 		3D6CD6CE1E12788D00608C81 /* XAxisGraphLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XAxisGraphLabel.h; sourceTree = "<group>"; };
 		3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XAxisGraphLabel.m; sourceTree = "<group>"; };
 		3D6CD6D11E127FFB00608C81 /* BubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleView.h; sourceTree = "<group>"; };
@@ -139,6 +136,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D0817FE1E6F0B9500415ACA /* DataGenarator */ = {
+			isa = PBXGroup;
+			children = (
+				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
+				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
+			);
+			name = DataGenarator;
+			sourceTree = "<group>";
+		};
 		3D5E25AD1E4991190012233E /* ConfigObj */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,9 +204,9 @@
 		3D6CD6BA1E11613200608C81 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6AF1E1142F500608C81 /* Commons */,
 				3D6CD6BF1E1240C000608C81 /* Graph Model */,
 				3D6CD6BE1E1240AD00608C81 /* GraphViews */,
-				3D6CD6C01E1240CA00608C81 /* Graph Controller */,
 			);
 			name = Graphs;
 			sourceTree = "<group>";
@@ -250,8 +256,6 @@
 			children = (
 				3D5E25AD1E4991190012233E /* ConfigObj */,
 				3D8BD8D21E2C9750006009EC /* PlotObjects */,
-				3D6CD6C11E1240FF00608C81 /* GraphModel.h */,
-				3D6CD6C21E1240FF00608C81 /* GraphModel.m */,
 			);
 			name = "Graph Model";
 			sourceTree = "<group>";
@@ -259,6 +263,8 @@
 		3D6CD6C01E1240CA00608C81 /* Graph Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3D0817FE1E6F0B9500415ACA /* DataGenarator */,
+				3D91DDD01E093C54002F12BB /* Menu */,
 				3D91DD9C1E090EFF002F12BB /* ViewController.h */,
 				3D91DD9D1E090EFF002F12BB /* ViewController.m */,
 			);
@@ -270,8 +276,6 @@
 			children = (
 				3D6CD6CE1E12788D00608C81 /* XAxisGraphLabel.h */,
 				3D6CD6CF1E12788D00608C81 /* XAxisGraphLabel.m */,
-				3D6CD6CB1E12721400608C81 /* VisualScrollView.h */,
-				3D6CD6CC1E12721400608C81 /* VisualScrollView.m */,
 				3D6CD6D11E127FFB00608C81 /* BubbleView.h */,
 				3D6CD6D21E127FFB00608C81 /* BubbleView.m */,
 			);
@@ -360,9 +364,8 @@
 		3D91DD951E090EFF002F12BB /* MMGraphs */ = {
 			isa = PBXGroup;
 			children = (
+				3D6CD6C01E1240CA00608C81 /* Graph Controller */,
 				3D6CD6BA1E11613200608C81 /* Graphs */,
-				3D6CD6AF1E1142F500608C81 /* Commons */,
-				3D91DDD01E093C54002F12BB /* Menu */,
 				3D91DD991E090EFF002F12BB /* AppDelegate.h */,
 				3D91DD9A1E090EFF002F12BB /* AppDelegate.m */,
 				3D91DD961E090EFF002F12BB /* Supporting Files */,
@@ -550,7 +553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D91DDA41E090EFF002F12BB /* MMGraphs.xcdatamodeld in Sources */,
-				3D6CD6CD1E12721400608C81 /* VisualScrollView.m in Sources */,
 				3D91DD9E1E090EFF002F12BB /* ViewController.m in Sources */,
 				3D6CD6D01E12788D00608C81 /* XAxisGraphLabel.m in Sources */,
 				3D6CD7001E139A1300608C81 /* MultiScatterGraph.m in Sources */,
